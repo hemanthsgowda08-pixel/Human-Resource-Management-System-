@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -371,7 +371,7 @@
         impersonatedUserId: null, // Admin switch/view employee feature
         
         // UI & Filter States
-        theme: 'dark',
+        theme: 'light',
         mobileSidebarOpen: false,
         notifDropdownOpen: false,
         attendanceFilterStatus: 'ALL',
@@ -654,6 +654,20 @@
       },
 
       // Theme toggle
+            // Logo Renderer Helper (Solid white container for 100% contrast)
+      getOdooLogoHTML(sizeClass = 'w-14 h-14', imgSizeClass = 'h-6 w-auto') {
+        return `
+          <div class="inline-flex items-center justify-center ${sizeClass} rounded-2xl bg-white border border-slate-200/80 shadow-md p-2 flex-shrink-0">
+            <svg viewBox="0 0 782 250" class="${imgSizeClass} object-contain" aria-label="ODOO Logo">
+              <g fill="none" fill-rule="evenodd">
+                <path fill="#714B67" d="M96.5 250C43.2 250 0 206.8 0 153.5 0 100.2 43.2 57 96.5 57S193 100.2 193 153.5C193 206.8 149.8 250 96.5 250zm0-156.4c-33.1 0-60 26.9-60 60s26.9 60 60 60 60-26.9 60-60-26.9-60-60-60z"/>
+                <path fill="#8E8E8E" d="M290 250c-53.3 0-96.5-43.2-96.5-96.5 0-53.3 43.2-96.5 96.5-96.5 24.1 0 46.1 8.8 63.1 23.4V0h36.5v243.6c-17.7 4-36.2 6.4-55.2 6.4h-44.4zm6.5-156.4c-33.1 0-60 26.9-60 60s26.9 60 60 60 60-26.9 60-60-26.9-60-60-60zM543.5 250c-53.3 0-96.5-43.2-96.5-96.5 0-53.3 43.2-96.5 96.5-96.5S640 100.2 640 153.5C640 206.8 596.8 250 543.5 250zm0-156.4c-33.1 0-60 26.9-60 60s26.9 60 60 60 60-26.9 60-60-26.9-60-60-60zM735.5 250c-53.3 0-96.5-43.2-96.5-96.5 0-53.3 43.2-96.5 96.5-96.5S832 100.2 832 153.5C832 206.8 788.8 250 735.5 250zm0-156.4c-33.1 0-60 26.9-60 60s26.9 60 60 60 60-26.9 60-60-26.9-60-60-60z"/>
+              </g>
+            </svg>
+          </div>
+        `;
+      },
+
       toggleTheme() {
         this.state.theme = this.state.theme === 'dark' ? 'light' : 'dark';
         if (this.state.theme === 'dark') {
@@ -1632,7 +1646,7 @@
               <div class="flex justify-between items-start pb-6 border-b border-slate-200 dark:border-white/10 mb-6">
                 <div>
                   <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white"><i data-lucide="activity" class="w-5 h-5"></i></div>
+                    ${this.getOdooLogoHTML('w-10 h-10', 'h-4 w-auto')}
                     <span class="text-2xl font-bold font-display">ODOO Dayflow</span>
                   </div>
                   <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Embassy TechVillage, Outer Ring Road, Bengaluru, KA • payroll@dayflow.com</p>
@@ -1719,6 +1733,143 @@
       openModal(modalId) {
         const m = document.getElementById(modalId);
         if (m) m.classList.remove('hidden-view');
+      },
+
+                        openNewTaskModal() {
+        const assignees = this.state.users.map(u => `<option value="${u.id}">${u.name} (${u.designation})</option>`).join('');
+        const modalHTML = `
+          <div id="active-modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-fade-in-up">
+            ${this.ui.GlassCard(`
+              <div class="flex justify-between items-center pb-4 border-b border-white/20 dark:border-white/10 mb-6">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">Create New Task</h3>
+                <button onclick="window.app.closeModal()" class="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
+              </div>
+
+              <form onsubmit="window.app.createNewTask(event)" class="space-y-4">
+                ${this.ui.Input('task-title', 'Task Title', 'text', '', 'e.g. Prepare Q4 Financial Audit', true)}
+
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Description</label>
+                  <textarea id="task-desc" rows="3" placeholder="Add specific task instructions..." class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-sm"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div>
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Assignee</label>
+                    <select id="task-assignee" required class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
+                      ${assignees}
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Priority</label>
+                    <select id="task-priority" class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
+                      <option value="Low" class="bg-white dark:bg-slate-800">Low</option>
+                      <option value="Medium" selected class="bg-white dark:bg-slate-800">Medium</option>
+                      <option value="High" class="bg-white dark:bg-slate-800">High</option>
+                    </select>
+                  </div>
+                  ${this.ui.Input('task-due', 'Due Date', 'date', '', '', true)}
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-white/10">
+                  ${this.ui.Button('Cancel', '', 'secondary', 'window.app.closeModal()')}
+                  ${this.ui.Button('Create Task', 'plus-circle', 'primary', '', '', 'submit')}
+                </div>
+              </form>
+            `, 'w-full max-w-lg shadow-2xl relative', 'p-6')}
+          </div>
+        `;
+        document.getElementById('modal-container').innerHTML = modalHTML;
+        lucide.createIcons();
+      },
+
+      openApplyLeaveModal() {
+        const modalHTML = `
+          <div id="active-modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-fade-in-up">
+            ${this.ui.GlassCard(`
+              <div class="flex justify-between items-center pb-4 border-b border-white/20 dark:border-white/10 mb-6">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">Apply for Time Off</h3>
+                <button onclick="window.app.closeModal()" class="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
+              </div>
+
+              <form onsubmit="window.app.applyLeave(event)" class="space-y-4">
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Leave Type</label>
+                  <select id="leave-type" required class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
+                    <option value="Paid Leave" class="bg-white dark:bg-slate-800">Paid Leave (Annual)</option>
+                    <option value="Sick Leave" class="bg-white dark:bg-slate-800">Sick Leave</option>
+                    <option value="Unpaid Leave" class="bg-white dark:bg-slate-800">Unpaid Leave</option>
+                  </select>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  ${this.ui.Input('leave-start', 'Start Date', 'date', '', '', true)}
+                  ${this.ui.Input('leave-end', 'End Date', 'date', '', '', true)}
+                </div>
+
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Reason / Remarks</label>
+                  <textarea id="leave-reason" rows="3" required placeholder="Please describe the reason for your leave..." class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-sm"></textarea>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-white/10">
+                  ${this.ui.Button('Cancel', '', 'secondary', 'window.app.closeModal()')}
+                  ${this.ui.Button('Submit Application', 'send', 'primary', '', '', 'submit')}
+                </div>
+              </form>
+            `, 'w-full max-w-md shadow-2xl relative', 'p-6')}
+          </div>
+        `;
+        document.getElementById('modal-container').innerHTML = modalHTML;
+        lucide.createIcons();
+      },
+
+      openManualAttendanceModal() {
+        const usersList = this.state.users.map(u => `<option value="${u.id}">${u.name} (${u.department})</option>`).join('');
+        const modalHTML = `
+          <div id="active-modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-fade-in-up">
+            ${this.ui.GlassCard(`
+              <div class="flex justify-between items-center pb-4 border-b border-white/20 dark:border-white/10 mb-6">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">Manual Attendance Punch</h3>
+                <button onclick="window.app.closeModal()" class="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
+              </div>
+
+              <form onsubmit="window.app.adminRecordAttendance(event)" class="space-y-4">
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Select Employee</label>
+                  <select id="att-user" required class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
+                    ${usersList}
+                  </select>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  ${this.ui.Input('att-date', 'Date', 'date', new Date().toISOString().split('T')[0], '', true)}
+                  <div>
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Status</label>
+                    <select id="att-status" required class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
+                      <option value="Present" class="bg-white dark:bg-slate-800">Present</option>
+                      <option value="Late" class="bg-white dark:bg-slate-800">Late</option>
+                      <option value="Half-Day" class="bg-white dark:bg-slate-800">Half-Day</option>
+                      <option value="Absent" class="bg-white dark:bg-slate-800">Absent</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  ${this.ui.Input('att-in', 'Check In Time', 'time', '09:00', '', true)}
+                  ${this.ui.Input('att-out', 'Check Out Time', 'time', '18:00', '', true)}
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-white/10">
+                  ${this.ui.Button('Cancel', '', 'secondary', 'window.app.closeModal()')}
+                  ${this.ui.Button('Save Attendance', 'check', 'primary', '', '', 'submit')}
+                </div>
+              </form>
+            `, 'w-full max-w-md shadow-2xl relative', 'p-6')}
+          </div>
+        `;
+        document.getElementById('modal-container').innerHTML = modalHTML;
+        lucide.createIcons();
       },
 
       openPostAnnouncementModal() {
@@ -1892,9 +2043,7 @@
         if (mode === 'signin') {
           formContent = `
             <div class="w-full max-w-md text-center mb-6 animate-fade-in-down">
-              <div class="inline-flex items-center justify-center w-16 h-16 rounded-[1.6rem] bg-gradient-to-tr from-indigo-500 to-purple-500 shadow-2xl shadow-indigo-500/30 mb-4 border border-white/20">
-                <i data-lucide="activity" class="w-8 h-8 text-white"></i>
-              </div>
+              <div class="mb-4">${this.getOdooLogoHTML('w-20 h-20', 'h-9 w-auto')}</div>
               <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-2 font-display">ODOO Dayflow</h1>
               <p class="text-sm text-slate-600 dark:text-slate-400 font-medium">Enterprise Human Resource Management System</p>
             </div>
@@ -1937,9 +2086,7 @@
           // PDF 3.1 Sign Up Form
           formContent = `
             <div class="w-full max-w-lg text-center mb-6 animate-fade-in-down">
-              <div class="inline-flex items-center justify-center w-14 h-14 rounded-[1.4rem] bg-gradient-to-tr from-indigo-500 to-purple-500 shadow-xl shadow-indigo-500/30 mb-3 border border-white/20">
-                <i data-lucide="user-plus" class="w-7 h-7 text-white"></i>
-              </div>
+              <div class="mb-3">${this.getOdooLogoHTML('w-16 h-16', 'h-7 w-auto')}</div>
               <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-1 font-display">Create Account</h1>
               <p class="text-xs text-slate-600 dark:text-slate-400 font-medium">Join ODOO Dayflow with role-based access</p>
             </div>
@@ -2002,9 +2149,7 @@
           const pending = this.state.signupPendingUser;
           formContent = `
             <div class="w-full max-w-md text-center mb-6 animate-fade-in-down">
-              <div class="inline-flex items-center justify-center w-16 h-16 rounded-[1.6rem] bg-gradient-to-tr from-emerald-500 to-teal-500 shadow-2xl shadow-emerald-500/30 mb-4 border border-white/20">
-                <i data-lucide="mail-check" class="w-8 h-8 text-white"></i>
-              </div>
+              <div class="mb-4">${this.getOdooLogoHTML('w-20 h-20', 'h-9 w-auto')}</div>
               <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-2 font-display">Verify Email</h1>
               <p class="text-sm text-slate-600 dark:text-slate-400">Security code sent to <strong class="text-slate-900 dark:text-white">${pending ? pending.email : 'your email'}</strong></p>
             </div>
@@ -2126,9 +2271,7 @@
 
         const sidebarHTML = `
           <div class="p-6 sm:p-8 flex items-center gap-4 border-b border-white/40 dark:border-white/5">
-            <div class="w-11 h-11 rounded-[1.2rem] bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30 border border-white/20 flex-shrink-0">
-              <i data-lucide="activity" class="w-6 h-6 text-white"></i>
-            </div>
+            ${this.getOdooLogoHTML('w-12 h-12', 'h-5 w-auto')}
             <div>
               <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight font-display">ODOO Dayflow</h2>
               ${this.ui.Badge(u.role === 'admin' ? 'HR Administrator' : 'Staff Employee', u.role === 'admin' ? 'info' : 'default', '!text-[10px] uppercase tracking-wider mt-0.5')}
@@ -2290,7 +2433,7 @@
         const announcementHTML = this.ui.GlassCard(`
           <div class="flex justify-between items-center mb-3 border-b border-slate-200 dark:border-white/10 pb-2">
             <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="megaphone" class="w-4 h-4 text-indigo-500"></i> Notice Board</h3>
-            ${isAdmin ? this.ui.Button('Post New', 'plus', 'secondary', 'window.app.openModal("post-announcement-modal")', '!text-[10px] !py-1 !px-2') : ''}
+            ${isAdmin ? this.ui.Button('Post New', 'plus', 'secondary', 'window.app.openPostAnnouncementModal()', '!text-[10px] !py-1 !px-2') : ''}
           </div>
           <div class="space-y-3">
             ${this.state.announcements.length ? this.state.announcements.slice(0,3).map(ann => `
@@ -2512,7 +2655,7 @@
                   <div class="space-y-2">
                     ${this.ui.Button('Process August Payroll (₹)', 'wallet', 'secondary', 'window.app.processMonthlyPayroll()', 'w-full justify-start !text-xs !py-2.5')}
                     ${this.ui.Button('Audit Expense Claims', 'receipt', 'secondary', 'window.app.navigate("expenses")', 'w-full justify-start !text-xs !py-2.5')}
-                    ${this.ui.Button('Manual Attendance Punch', 'clock', 'secondary', 'window.app.openModal("manual-attendance-modal")', 'w-full justify-start !text-xs !py-2.5')}
+                    ${this.ui.Button('Manual Attendance Punch', 'clock', 'secondary', 'window.app.openManualAttendanceModal()', 'w-full justify-start !text-xs !py-2.5')}
                   </div>
                 `)}
               </div>
@@ -2669,7 +2812,7 @@
                 <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight font-display">Attendance & Timesheets</h2>
                 <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${isAdmin ? 'Master organization attendance tracker and manual timesheet logger.' : 'Track your daily shift logs and weekly work hours.'}</p>
               </div>
-              ${isAdmin ? this.ui.Button('Manual Attendance Punch', 'plus-circle', 'primary', 'window.app.openModal("manual-attendance-modal")') : ''}
+              ${isAdmin ? this.ui.Button('Manual Attendance Punch', 'plus-circle', 'primary', 'window.app.openManualAttendanceModal()') : ''}
             </div>
 
             <!-- Employee Top Section: Live Punch Widget + Current Week -->
@@ -2871,7 +3014,7 @@
                 <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight font-display">Time Off & Leave Management</h2>
                 <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${isAdmin ? 'Review, approve, or reject employee leave requests with comments.' : 'Check your leave quotas and track application statuses.'}</p>
               </div>
-              ${!isAdmin ? this.ui.Button('Apply for Time Off', 'calendar-plus', 'primary', 'window.app.openModal("apply-leave-modal")') : ''}
+              ${!isAdmin ? this.ui.Button('Apply for Time Off', 'calendar-plus', 'primary', 'window.app.openApplyLeaveModal()') : ''}
             </div>
 
             ${balanceCards}
@@ -3109,7 +3252,7 @@
                 <div class="p-2.5 rounded-xl bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400"><i data-lucide="file-text" class="w-4 h-4"></i></div>
                 <span class="text-xs font-bold text-slate-700 dark:text-slate-300 truncate w-32">${doc}</span>
              </div>
-             <button onclick="window.app.notify('Downloading ${doc}...', 'info')" class="p-2 text-slate-400 hover:text-indigo-500 rounded-lg"><i data-lucide="download" class="w-4 h-4"></i></button>
+             <button onclick="window.app.downloadEmployeeDocument('${doc}')" class="p-2 text-slate-400 hover:text-indigo-500 rounded-lg" title="Download ${doc}"><i data-lucide="download" class="w-4 h-4"></i></button>
           </div>
         `).join('');
 
@@ -4141,7 +4284,7 @@
                 <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Kanban board for tracking team assignments and progress.</p>
               </div>
               <div class="flex gap-3">
-                ${this.ui.Button('New Task', 'plus', 'primary', 'window.app.openModal("new-task-modal")')}
+                ${this.ui.Button('New Task', 'plus', 'primary', 'window.app.openNewTaskModal()')}
               </div>
             </div>
             
@@ -4294,6 +4437,54 @@
 
       
       // --- AI & EMAIL HELPERS ---
+            downloadEmployeeDocument(docName) {
+        const u = this.getActiveUser();
+        this.notify(`Preparing download for ${docName}...`, 'info', 'Document Export');
+
+        if (window.jspdf && window.jspdf.jsPDF) {
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF();
+
+          doc.setFillColor(113, 75, 103); // Odoo Purple
+          doc.rect(0, 0, 210, 32, 'F');
+          
+          doc.setTextColor(255, 255, 255);
+          doc.setFontSize(20);
+          doc.setFont('helvetica', 'bold');
+          doc.text("ODOO DAYFLOW HRMS", 14, 22);
+
+          doc.setTextColor(30, 41, 59);
+          doc.setFontSize(16);
+          const titleClean = docName.replace('.pdf', '').replace(/_/g, ' ');
+          doc.text(titleClean, 14, 48);
+
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'normal');
+          doc.setTextColor(71, 85, 105);
+          
+          doc.text(`Employee Name: ${u.name}`, 14, 62);
+          doc.text(`Employee ID: ${u.employeeId || 'DF-' + u.id}`, 14, 70);
+          doc.text(`Department: ${u.department}`, 14, 78);
+          doc.text(`Designation: ${u.designation}`, 14, 86);
+          doc.text(`Document Reference: REF-${Math.floor(100000 + Math.random() * 900000)}`, 14, 94);
+          doc.text(`Generated Date: ${new Date().toLocaleDateString('en-IN')}`, 14, 102);
+
+          doc.setDrawColor(226, 232, 240);
+          doc.line(14, 110, 196, 110);
+
+          doc.setFontSize(11);
+          doc.setFont('helvetica', 'italic');
+          doc.setTextColor(100, 116, 139);
+          doc.text("This is an official system-generated placeholder document for compliance verification.", 14, 124);
+          doc.text("For binding legal copies or original physical records, please contact your HR Department.", 14, 132);
+
+          doc.save(docName);
+          this.notify(`${docName} downloaded successfully!`, 'success', 'Download Complete');
+        } else {
+          this.notify('PDF export engine (jsPDF) is unavailable.', 'error');
+        }
+      },
+
       async callGemini(promptText) {
         try {
           const res = await fetch(GEMINI_ENDPOINT, {
