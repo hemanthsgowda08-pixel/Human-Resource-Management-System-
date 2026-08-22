@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -368,6 +370,14 @@
         dashboardTargetFilter: 'ALL',
         reportSelectedDate: '2026-08-22',
         reportSelectedUser: 'ALL',
+        chatOpen: false,
+        activeChannel: 'general',
+        chatMessages: [
+          { id: 'c1', channel: 'general', userId: 'u2', senderName: 'Priya Sharma', text: 'Good morning team! Please remember to review today\'s targets checklist.', time: '09:15 AM' },
+          { id: 'c2', channel: 'general', userId: 'u3', senderName: 'Rahul Verma', text: 'Morning! Payslip PDF export and Chart.js integration are live.', time: '09:20 AM' },
+          { id: 'c3', channel: 'engineering', userId: 'u3', senderName: 'Rahul Verma', text: 'Pushing the attendance velocity canvas render engine updates.', time: '09:25 AM' },
+          { id: 'c4', channel: 'design', userId: 'u4', senderName: 'Ananya Patel', text: 'Uploaded the new Glassmorphism UI tokens for design audit.', time: '09:28 AM' }
+        ],
         
         // System Clock Simulation
         currentDate: new Date('2026-08-22T09:33:11')
@@ -1966,18 +1976,208 @@
               </div>
 
               <!-- Actions -->
-              <div class="flex justify-between items-center pt-4 border-t border-slate-200 dark:border-white/10 no-print">
-                <button onclick="window.print()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-sm font-semibold transition-all">
-                  <i data-lucide="printer" class="w-4 h-4"></i> Print Payslip / Save PDF
-                </button>
-                <button onclick="window.app.closeModal()" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-500/30 transition-all">
-                  Done
+              <div class="flex flex-wrap justify-between items-center gap-3 pt-4 border-t border-slate-200 dark:border-white/10 no-print">
+                <div class="flex gap-2">
+                  <button onclick="window.app.downloadPayslipPDF('${user.name}', '${month}')" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-500/30 transition-all">
+                    <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+                  </button>
+                  <button onclick="window.print()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-xs font-semibold transition-all">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Print
+                  </button>
+                </div>
+                <button onclick="window.app.closeModal()" class="px-6 py-2.5 rounded-xl bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 text-slate-800 dark:text-white text-xs font-semibold transition-all">
+                  Close
                 </button>
               </div>
             </div>
           </div>
         `;
         document.getElementById('modal-container').innerHTML = modalHTML;
+        lucide.createIcons();
+      },
+
+      downloadPayslipPDF(userName, month = 'August 2026') {
+        const element = document.getElementById('payslip-modal');
+        if (!element) return;
+        this.notify('Generating high-resolution official PDF payslip...', 'info', 'Rendering PDF');
+        const opt = {
+          margin: [8, 8, 8, 8],
+          filename: `Dayflow_Payslip_${userName.replace(/\s+/g, '_')}_${month.replace(/\s+/g, '_')}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        if (window.html2pdf) {
+          window.html2pdf().set(opt).from(element).save().then(() => {
+            this.notify('Payslip PDF downloaded to your device!', 'success', 'PDF Ready');
+          });
+        } else {
+          window.print();
+        }
+      },
+
+      downloadReportPDF() {
+        this.notify('Generating printable Daily Standup & Progress PDF summary...', 'info', 'Generating PDF');
+        const opt = {
+          margin: 10,
+          filename: `Dayflow_Daily_Report_${this.state.reportSelectedDate}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        const reportEl = document.getElementById('route-container');
+        if (window.html2pdf && reportEl) {
+          window.html2pdf().set(opt).from(reportEl).save().then(() => {
+            this.notify('Daily Progress Report PDF downloaded!', 'success', 'PDF Exported');
+          });
+        } else {
+          window.print();
+        }
+      },
+
+      // ==========================================
+      // LIVE TEAM CHAT ENGINE
+      // ==========================================
+      toggleChat() {
+        this.state.chatOpen = !this.state.chatOpen;
+        this.renderChatWidget();
+      },
+
+      setChatChannel(channel) {
+        this.state.activeChannel = channel;
+        this.renderChatWidget();
+      },
+
+      sendChatMessage(e) {
+        e.preventDefault();
+        const input = document.getElementById('chat-input-msg');
+        if (!input) return;
+        const text = input.value.trim();
+        if (!text) return;
+
+        const u = this.getActiveUser();
+        const newMsg = {
+          id: `c-${Date.now()}`,
+          channel: this.state.activeChannel,
+          userId: u.id,
+          senderName: u.name,
+          text,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
+        };
+
+        this.state.chatMessages.push(newMsg);
+        input.value = '';
+        this.renderChatWidget();
+
+        // Simulated Automated Colleague Response after 1.5s
+        setTimeout(() => {
+          const colleagueBots = [
+            { name: 'Rahul Verma', role: 'Engineering Lead', responses: ['Great update! Reviewing the pull request right now.', 'Nice deliverable! Targets on track for today.', 'Checking the logs on staging. Looks very stable.'] },
+            { name: 'Ananya Patel', role: 'Product Designer', responses: ['Looks fantastic! UI tokens and contrast ratios check out.', 'Design team is aligned. Good progress!', 'I will update Figma with the latest component specs.'] },
+            { name: 'Priya Sharma', role: 'HR Admin', responses: ['Got it! Standup log noted for the daily management summary.', 'Thank you for updating the targets checklist.', 'Noted! Let HR know if any further approvals are required.'] }
+          ];
+          const bot = colleagueBots[Math.floor(Math.random() * colleagueBots.length)];
+          const replyText = bot.responses[Math.floor(Math.random() * bot.responses.length)];
+
+          this.state.chatMessages.push({
+            id: `c-${Date.now()}`,
+            channel: this.state.activeChannel,
+            userId: 'bot',
+            senderName: bot.name,
+            text: replyText,
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
+          });
+
+          this.renderChatWidget();
+          this.notify(`New message from ${bot.name} in #${this.state.activeChannel}`, 'info', 'Team Chat');
+        }, 1400);
+      },
+
+      renderChatWidget() {
+        let container = document.getElementById('chat-widget-container');
+        if (!container) {
+          container = document.createElement('div');
+          container.id = 'chat-widget-container';
+          container.className = 'fixed bottom-6 right-6 z-[100]';
+          document.body.appendChild(container);
+        }
+
+        if (!this.state.currentUser) {
+          container.innerHTML = '';
+          return;
+        }
+
+        const u = this.getActiveUser();
+        const activeMessages = this.state.chatMessages.filter(m => m.channel === this.state.activeChannel);
+        const channels = [
+          { id: 'general', label: '# general' },
+          { id: 'engineering', label: '# engineering' },
+          { id: 'design', label: '# design' }
+        ];
+
+        if (!this.state.chatOpen) {
+          container.innerHTML = `
+            <button onclick="window.app.toggleChat()" class="group flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-2xl shadow-indigo-500/40 hover:scale-105 transition-all duration-300 border border-white/20">
+              <div class="relative">
+                <i data-lucide="message-square" class="w-4 h-4"></i>
+                <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-indigo-700 animate-pulse"></span>
+              </div>
+              <span>Live Team Chat</span>
+            </button>
+          `;
+        } else {
+          container.innerHTML = `
+            <div class="w-80 sm:w-96 rounded-3xl bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-2xl border border-white/60 dark:border-white/10 shadow-2xl overflow-hidden animate-fade-in-up flex flex-col h-[480px]">
+              <!-- Chat Header -->
+              <div class="p-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center"><i data-lucide="message-circle" class="w-4 h-4"></i></div>
+                  <div>
+                    <h4 class="font-bold text-xs">Team Collaboration Hub</h4>
+                    <span class="text-[10px] text-white/80 flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> 5 colleagues online</span>
+                  </div>
+                </div>
+                <button onclick="window.app.toggleChat()" class="p-1.5 rounded-lg hover:bg-white/20 text-white/80 hover:text-white transition-all"><i data-lucide="x" class="w-4 h-4"></i></button>
+              </div>
+
+              <!-- Channel Switcher -->
+              <div class="flex items-center gap-1 p-2 bg-slate-100/70 dark:bg-black/20 border-b border-slate-200 dark:border-white/10 text-xs">
+                ${channels.map(ch => `
+                  <button onclick="window.app.setChatChannel('${ch.id}')" class="px-3 py-1 rounded-lg font-bold transition-all ${this.state.activeChannel === ch.id ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}">${ch.label}</button>
+                `).join('')}
+              </div>
+
+              <!-- Message History -->
+              <div class="flex-1 p-4 overflow-y-auto space-y-3 text-xs" id="chat-messages-box">
+                ${activeMessages.map(m => {
+                  const isMe = m.userId === u.id;
+                  return `
+                    <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}">
+                      <div class="flex items-center gap-1.5 mb-0.5 text-[10px] text-slate-400 font-semibold">
+                        <span>${m.senderName}</span>
+                        <span>• ${m.time}</span>
+                      </div>
+                      <div class="px-3.5 py-2 rounded-2xl max-w-[85%] ${isMe ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-slate-200/70 dark:bg-white/10 text-slate-800 dark:text-slate-100 rounded-tl-none'} shadow-xs">
+                        ${m.text}
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+
+              <!-- Chat Input Bar -->
+              <form onsubmit="window.app.sendChatMessage(event)" class="p-3 bg-white/80 dark:bg-black/30 border-t border-slate-200 dark:border-white/10 flex gap-2">
+                <input id="chat-input-msg" type="text" placeholder="Message in #${this.state.activeChannel}..." class="flex-1 px-3 py-2 text-xs rounded-xl bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                <button type="submit" class="p-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-all shadow-md shadow-indigo-500/20"><i data-lucide="send" class="w-3.5 h-3.5"></i></button>
+              </form>
+            </div>
+          `;
+          
+          setTimeout(() => {
+            const box = document.getElementById('chat-messages-box');
+            if (box) box.scrollTop = box.scrollHeight;
+          }, 50);
+        }
         lucide.createIcons();
       },
 
@@ -2379,14 +2579,8 @@
         });
 
         const realChartHTML = `
-          <div class="w-full h-36 flex items-end gap-2 sm:gap-3 mt-4 pt-4">
-            ${trendData.map((item, idx) => `
-              <div class="flex-1 group relative flex flex-col justify-end h-full items-center">
-                <div class="text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity font-bold mb-1">${item.pct}%</div>
-                <div class="w-full bg-gradient-to-t from-indigo-500/30 to-indigo-500 rounded-xl group-hover:from-indigo-400/50 group-hover:to-indigo-400 transition-all duration-300 shadow-sm" style="height: ${item.pct}%"></div>
-                <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 mt-2">${dayLabels[idx]}</span>
-              </div>
-            `).join('')}
+          <div class="w-full h-44 mt-3 relative">
+            <canvas id="attendanceTrendsChart"></canvas>
           </div>
         `;
 
@@ -4018,6 +4212,78 @@
       },
 
       // ==========================================
+      // CHART.JS INTEGRATIONS
+      // ==========================================
+      initDashboardCharts() {
+        const canvas = document.getElementById('attendanceTrendsChart');
+        if (!canvas || !window.Chart) return;
+        
+        if (window._dashChartInstance) {
+          window._dashChartInstance.destroy();
+        }
+
+        const ctx = canvas.getContext('2d');
+        const isDark = document.documentElement.classList.contains('dark');
+        const textColor = isDark ? '#94a3b8' : '#64748b';
+        const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)';
+
+        const gradient = ctx.createLinearGradient(0, 0, 0, 150);
+        gradient.addColorStop(0, 'rgba(99, 102, 241, 0.4)');
+        gradient.addColorStop(1, 'rgba(99, 102, 241, 0.0)');
+
+        window._dashChartInstance = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['Mon 17', 'Tue 18', 'Wed 19', 'Thu 20', 'Fri 21', 'Sat 22'],
+            datasets: [{
+              label: 'Attendance Turnout (%)',
+              data: [92, 95, 88, 96, 94, 98],
+              borderColor: '#6366f1',
+              backgroundColor: gradient,
+              borderWidth: 3,
+              fill: true,
+              tension: 0.35,
+              pointBackgroundColor: '#6366f1',
+              pointBorderColor: '#fff',
+              pointRadius: 4,
+              pointHoverRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                titleColor: isDark ? '#ffffff' : '#0f172a',
+                bodyColor: isDark ? '#cbd5e1' : '#334155',
+                borderColor: 'rgba(99, 102, 241, 0.3)',
+                borderWidth: 1,
+                padding: 10,
+                displayColors: false,
+                callbacks: {
+                  label: (ctx) => `Turnout: ${ctx.parsed.y}% Active Staff`
+                }
+              }
+            },
+            scales: {
+              y: {
+                min: 60,
+                max: 100,
+                grid: { color: gridColor },
+                ticks: { color: textColor, callback: (v) => v + '%' }
+              },
+              x: {
+                grid: { display: false },
+                ticks: { color: textColor }
+              }
+            }
+          }
+        });
+      },
+
+      // ==========================================
       // ROOT RENDER FUNCTION
       // ==========================================
       render() {
@@ -4029,6 +4295,7 @@
           authView.classList.remove('hidden-view');
           appLayout.classList.add('hidden-view');
           this.renderAuth();
+          this.renderChatWidget();
         } else {
           authView.classList.add('hidden-view');
           appLayout.classList.remove('hidden-view');
@@ -4050,6 +4317,11 @@
             default: contentHTML = this.renderDashboard();
           }
           routeContainer.innerHTML = contentHTML;
+          this.renderChatWidget();
+
+          if (this.state.currentRoute === 'dashboard') {
+            setTimeout(() => this.initDashboardCharts(), 60);
+          }
         }
         lucide.createIcons();
       },
