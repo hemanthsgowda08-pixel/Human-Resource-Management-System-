@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dayflow - Advanced Human Resource Management System</title>
     
-    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <!-- Google Fonts: Outfit, Plus Jakarta Sans, Inter, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,6 +22,7 @@
             theme: {
                 extend: {
                     fontFamily: { 
+                        display: ['"Outfit"', 'sans-serif'],
                         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
                         mono: ['"JetBrains Mono"', 'monospace']
                     },
@@ -38,14 +39,24 @@
                             800: '#3730a3',
                             900: '#312e81',
                             950: '#1e1b4b',
+                        },
+                        neon: {
+                            cyan: '#00f0ff',
+                            purple: '#a855f7',
+                            emerald: '#10b981',
+                            amber: '#fbbf24',
+                            rose: '#f43f5e'
                         }
                     },
                     boxShadow: {
                         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4)',
-                        'glass-dark': '0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 1px 0 rgba(255, 255, 255, 0.08)',
-                        'glow-brand': '0 0 25px -3px rgba(99, 102, 241, 0.45)',
-                        'glow-cyan': '0 0 25px -3px rgba(6, 182, 212, 0.45)',
-                        'glow-emerald': '0 0 25px -3px rgba(16, 185, 129, 0.45)',
+                        'glass-dark': '0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 1px 0 rgba(255, 255, 255, 0.08)',
+                        'glow-brand': '0 0 30px -3px rgba(99, 102, 241, 0.5)',
+                        'glow-cyan': '0 0 30px -3px rgba(0, 240, 255, 0.45)',
+                        'glow-emerald': '0 0 30px -3px rgba(16, 185, 129, 0.45)',
+                        'glow-purple': '0 0 30px -3px rgba(168, 85, 247, 0.45)',
+                        'glow-amber': '0 0 30px -3px rgba(245, 158, 11, 0.45)',
+                        'glow-rose': '0 0 30px -3px rgba(244, 63, 94, 0.45)',
                     }
                 }
             }
@@ -60,7 +71,7 @@
         body {
             font-family: var(--font-sans);
             -webkit-font-smoothing: antialiased;
-            background: #0b0f19;
+            background: #080c16;
             color: #f1f5f9;
             overflow-x: hidden;
             margin: 0;
@@ -68,39 +79,65 @@
         }
 
         html.light body {
-            background: #f1f5f9;
+            background: #f8fafc;
             color: #0f172a;
         }
 
-        /* Liquid Glass Aesthetics */
+        /* Subtle Matrix Dot Grid */
+        .bg-grid-mesh {
+            background-size: 28px 28px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        }
+        html.light .bg-grid-mesh {
+            background-image: 
+                linear-gradient(to right, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
+        }
+
+        /* Ultra-Refined Liquid Glass Aesthetics */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(28px) saturate(190%);
             -webkit-backdrop-filter: blur(28px) saturate(190%);
-            border: 1px solid rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.8);
+            position: relative;
         }
 
         .glass-panel-subtle {
-            background: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(20px) saturate(160%);
             -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            position: relative;
         }
 
         .dark .glass-panel {
-            background: rgba(17, 24, 39, 0.6);
+            background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(28px) saturate(190%);
             -webkit-backdrop-filter: blur(28px) saturate(190%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.45), inset 0 1px 1px 0 rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow: 0 14px 40px -8px rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.07);
         }
 
         .dark .glass-panel-subtle {
-            background: rgba(23, 32, 51, 0.45);
+            background: rgba(19, 29, 49, 0.5);
             backdrop-filter: blur(20px) saturate(160%);
             -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 8%;
+            right: 8%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+            pointer-events: none;
         }
 
         .glass-card-interactive {
@@ -108,14 +145,14 @@
         }
 
         .glass-card-interactive:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.15);
-            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.18);
+            border-color: rgba(99, 102, 241, 0.35);
         }
 
         .dark .glass-card-interactive:hover {
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 20px -2px rgba(99, 102, 241, 0.25);
-            border-color: rgba(129, 140, 248, 0.25);
+            box-shadow: 0 22px 45px -10px rgba(0, 0, 0, 0.7), 0 0 25px -2px rgba(99, 102, 241, 0.28);
+            border-color: rgba(129, 140, 248, 0.3);
         }
 
         /* Glass Input */
@@ -123,6 +160,7 @@
             background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(203, 213, 225, 0.6);
+            color: #0f172a;
             transition: all 0.2s ease;
         }
         .glass-input:focus {
@@ -139,6 +177,86 @@
             background: rgba(15, 23, 42, 0.85);
             border-color: #818cf8;
             box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+        }
+
+        /* Select and Option High-Contrast Popups & Rounded Dark Borders */
+        html {
+            color-scheme: dark;
+        }
+        html.light {
+            color-scheme: light;
+        }
+
+        select, select.glass-input {
+            color-scheme: dark;
+            background-color: #0f172a !important;
+            color: #f8fafc !important;
+            border-radius: 14px !important;
+            border: 2px solid #1e293b !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+            transition: all 0.2s ease !important;
+            padding: 10px 14px !important;
+        }
+
+        select:hover, select.glass-input:hover {
+            border-color: #334155 !important;
+            box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.6) !important;
+        }
+
+        select:focus, select.glass-input:focus {
+            border-color: #6366f1 !important;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.8), 0 0 0 4px rgba(99, 102, 241, 0.4) !important;
+            outline: none !important;
+        }
+
+        html.light select, html.light select.glass-input {
+            color-scheme: light;
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border: 2px solid #0f172a !important;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15) !important;
+        }
+
+        html.light select:focus, html.light select.glass-input:focus {
+            border-color: #0f172a !important;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.3) !important;
+        }
+
+        option, optgroup {
+            background-color: #0f172a !important;
+            color: #ffffff !important;
+            font-size: 13px !important;
+            padding: 10px 14px !important;
+            border-radius: 8px !important;
+            margin: 2px 0 !important;
+        }
+
+        html.light option, html.light optgroup {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+        }
+
+        /* Selected / Active Option Highlighted with Rounded Dark Accent */
+        select option:checked, option:checked, option[selected] {
+            background-color: #020617 !important; /* Deep dark slate background */
+            color: #38bdf8 !important; /* Bright cyan text */
+            font-weight: 700 !important;
+            border: 2px solid #1e293b !important;
+            border-radius: 10px !important;
+        }
+
+        select option:hover, select option:focus {
+            background-color: #1e293b !important;
+            color: #ffffff !important;
+        }
+
+        /* Pill Badge for Dial Code and Selected Indicator */
+        .selected-pill-dark {
+            border: 2px solid #0f172a !important;
+            background-color: #020617 !important;
+            color: #38bdf8 !important;
+            border-radius: 12px !important;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
         }
 
         /* Dynamic Aurora Glow Mesh */
@@ -427,6 +545,210 @@
             { id: 'PR-2026-08', period: 'August 2026', processedDate: 'Pending', status: 'Scheduled', totalDisbursed: 4800000 }
         ];
 
+        const INITIAL_TASKS = [
+            {
+                id: 'TASK-101',
+                title: 'Migrate Payment Gateway to UPI & Razorpay',
+                description: 'Implement direct bank NEFT/IMPS and UPI autopay flows for customer subscription billing.',
+                assignedTo: 'EMP002',
+                assignedBy: 'Sarah Connor',
+                assignedDate: '2026-08-18',
+                dueDate: '2026-08-25',
+                priority: 'High',
+                category: 'Engineering',
+                status: 'In Progress',
+                progress: 65,
+                employeeNotes: 'Staging webhooks integrated and validated with mock sandbox bank APIs.',
+                submittedOn: null,
+                adminFeedback: '',
+                adminRating: 0
+            },
+            {
+                id: 'TASK-102',
+                title: 'Design System Liquid Glass Tokens & Contrast Audit',
+                description: 'Ensure all select dropdowns and modals have rounded dark borders and crisp typography across devices.',
+                assignedTo: 'EMP003',
+                assignedBy: 'Sarah Connor',
+                assignedDate: '2026-08-15',
+                dueDate: '2026-08-20', // Earlier than today (Aug 22) -> Automatically marked Delayed / Overdue!
+                priority: 'High',
+                category: 'Design',
+                status: 'In Progress',
+                progress: 85,
+                employeeNotes: 'Added dark color-scheme tokens and option styling; finalizing mobile viewports.',
+                submittedOn: null,
+                adminFeedback: '',
+                adminRating: 0
+            },
+            {
+                id: 'TASK-103',
+                title: 'Kubernetes Multi-Zone Cluster & Pod Disruption Budget',
+                description: 'Setup zero-downtime cluster rolling updates with health check probes and automated load failover.',
+                assignedTo: 'EMP004',
+                assignedBy: 'Sarah Connor',
+                assignedDate: '2026-08-10',
+                dueDate: '2026-08-19',
+                priority: 'Medium',
+                category: 'DevOps',
+                status: 'Completed',
+                progress: 100,
+                employeeNotes: 'Deployment configs deployed to prod-east and prod-west zones successfully.',
+                submittedOn: '2026-08-19',
+                adminFeedback: 'Outstanding work, Alex! Zero downtime achieved and full security audit passed with honors.',
+                adminRating: 5
+            },
+            {
+                id: 'TASK-104',
+                title: 'Interactive Employee Self-Service Onboarding Portal',
+                description: 'Create interactive document upload and emergency contact verification wizard for new hires.',
+                assignedTo: 'EMP003',
+                assignedBy: 'Sarah Connor',
+                assignedDate: '2026-08-21',
+                dueDate: '2026-08-28',
+                priority: 'Medium',
+                category: 'Product',
+                status: 'Todo',
+                progress: 0,
+                employeeNotes: '',
+                submittedOn: null,
+                adminFeedback: '',
+                adminRating: 0
+            }
+        ];
+
+        const INITIAL_NOTIFICATIONS = [
+            {
+                id: 'NOTIF-1',
+                title: 'Q3 Performance Review Cycle & Goal Alignments',
+                message: 'Team, the Q3 performance appraisal window is officially open. Please submit your self-evaluations and quarterly achievements before August 28th.',
+                type: 'policy', // 'urgent', 'policy', 'memo', 'recognition'
+                sender: 'Sarah Connor (HR Admin)',
+                senderAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=240&auto=format&fit=crop&q=80',
+                target: 'all',
+                date: '2026-08-22 09:30 AM',
+                replies: [
+                    {
+                        id: 'rep-1',
+                        user: 'EMP002',
+                        name: 'John Smith',
+                        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=240&auto=format&fit=crop&q=80',
+                        role: 'employee',
+                        message: 'Acknowledged! Completing my self-assessment draft today.',
+                        timestamp: '10:15 AM'
+                    },
+                    {
+                        id: 'rep-2',
+                        user: 'EMP003',
+                        name: 'Emma Davis',
+                        avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=240&auto=format&fit=crop&q=80',
+                        role: 'employee',
+                        message: 'Understood. Are project metrics pulled automatically from git or manually entered?',
+                        timestamp: '11:00 AM'
+                    },
+                    {
+                        id: 'rep-3',
+                        user: 'EMP001',
+                        name: 'Sarah Connor',
+                        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=240&auto=format&fit=crop&q=80',
+                        role: 'admin',
+                        message: 'Great question Emma! Both auto-synced workspace stats and personal highlights are supported.',
+                        timestamp: '11:10 AM'
+                    }
+                ]
+            },
+            {
+                id: 'NOTIF-2',
+                title: 'Scheduled Cloud & Database Maintenance Window',
+                message: 'Important: System upgrades scheduled for Sunday, August 24 between 02:00 AM - 04:00 AM IST. Workspaces will be in read-only mode during this 2-hour window.',
+                type: 'urgent',
+                sender: 'Sarah Connor (HR Admin)',
+                senderAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=240&auto=format&fit=crop&q=80',
+                target: 'all',
+                date: '2026-08-21 04:00 PM',
+                replies: [
+                    {
+                        id: 'rep-4',
+                        user: 'EMP004',
+                        name: 'Alex Rivera',
+                        avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=240&auto=format&fit=crop&q=80',
+                        role: 'employee',
+                        message: 'On standby for database snapshots and rollback testing.',
+                        timestamp: '04:25 PM'
+                    }
+                ]
+            },
+            {
+                id: 'NOTIF-3',
+                title: '🌟 Team Recognition: Outstanding Milestone Delivery!',
+                message: 'Kudos to Emma Davis and John Smith for completing the high-contrast UI component overhaul ahead of time with zero regressions! Keep up the brilliant craft!',
+                type: 'recognition',
+                sender: 'Sarah Connor (HR Admin)',
+                senderAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=240&auto=format&fit=crop&q=80',
+                target: 'all',
+                date: '2026-08-20 11:30 AM',
+                replies: [
+                    {
+                        id: 'rep-5',
+                        user: 'EMP003',
+                        name: 'Emma Davis',
+                        avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=240&auto=format&fit=crop&q=80',
+                        role: 'employee',
+                        message: 'Thank you Sarah and the team! Excited to keep building.',
+                        timestamp: '11:45 AM'
+                    }
+                ]
+            }
+        ];
+
+        // Helper: Check if task is delayed/overdue
+        function isTaskDelayed(task) {
+            if (!task || task.status === 'Completed') return false;
+            const today = new Date().toISOString().split('T')[0];
+            return today > task.dueDate;
+        }
+
+        // Helper: Dynamic Time-of-Day Greeting with Live System Clock
+        function getDynamicGreeting(name) {
+            const now = new Date();
+            const hour = now.getHours();
+            let greeting = 'Hello';
+            let icon = 'sparkles';
+            let quote = 'Ready for a productive and rewarding workday.';
+            
+            if (hour >= 5 && hour < 12) {
+                greeting = 'Good Morning';
+                icon = 'sun';
+                quote = 'Seize the morning and turn your goals into major milestones.';
+            } else if (hour >= 12 && hour < 17) {
+                greeting = 'Good Afternoon';
+                icon = 'sun-medium';
+                quote = 'Keep up the remarkable momentum as we close out today’s deliverables.';
+            } else if (hour >= 17 && hour < 22) {
+                greeting = 'Good Evening';
+                icon = 'sunset';
+                quote = 'Review today’s wins, log your shift hours, and relax with peace of mind.';
+            } else {
+                greeting = 'Working Late';
+                icon = 'moon';
+                quote = 'Exceptional dedication. Don’t forget to stay hydrated and take regular breaks.';
+            }
+
+            const hrs = now.getHours();
+            const mins = String(now.getMinutes()).padStart(2, '0');
+            const secs = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hrs >= 12 ? 'PM' : 'AM';
+            const displayHrs = String(hrs % 12 || 12).padStart(2, '0');
+            const liveTime = `${displayHrs}:${mins}:${secs} ${ampm}`;
+
+            return {
+                title: `${greeting}, ${name} 👋`,
+                icon: icon,
+                quote: quote,
+                liveTime: liveTime,
+                dateFormatted: now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
+            };
+        }
+
         // State Manager with LocalStorage Persistence
         const DayflowDB = {
             getUsers: () => {
@@ -453,11 +775,25 @@
             },
             setPayrollRuns: (runs) => localStorage.setItem('dayflow_payroll', JSON.stringify(runs)),
 
+            getTasks: () => {
+                const stored = localStorage.getItem('dayflow_tasks');
+                return stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(INITIAL_TASKS));
+            },
+            setTasks: (tasks) => localStorage.setItem('dayflow_tasks', JSON.stringify(tasks)),
+
+            getNotifications: () => {
+                const stored = localStorage.getItem('dayflow_notifications');
+                return stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(INITIAL_NOTIFICATIONS));
+            },
+            setNotifications: (notifs) => localStorage.setItem('dayflow_notifications', JSON.stringify(notifs)),
+
             resetData: () => {
                 localStorage.removeItem('dayflow_users');
                 localStorage.removeItem('dayflow_attendance');
                 localStorage.removeItem('dayflow_leaves');
                 localStorage.removeItem('dayflow_payroll');
+                localStorage.removeItem('dayflow_tasks');
+                localStorage.removeItem('dayflow_notifications');
                 localStorage.removeItem('dayflow_auth_user');
                 location.reload();
             }
@@ -497,7 +833,13 @@
                 leaveFilterStatus: 'All',
 
                 // Payroll View State
-                selectedPayrollEmployee: null
+                selectedPayrollEmployee: null,
+
+                // Work / Task Management State
+                taskFilterStatus: 'All', // 'All', 'In Progress', 'Delayed', 'Under Review', 'Completed'
+
+                // Communications & Notification Center State
+                notificationFilterType: 'All' // 'All', 'urgent', 'policy', 'memo', 'recognition'
             },
 
             init: function() {
@@ -506,6 +848,8 @@
                 if (!localStorage.getItem('dayflow_attendance')) DayflowDB.setAttendance(INITIAL_ATTENDANCE);
                 if (!localStorage.getItem('dayflow_leaves')) DayflowDB.setLeaves(INITIAL_LEAVES);
                 if (!localStorage.getItem('dayflow_payroll')) DayflowDB.setPayrollRuns(INITIAL_PAYROLL_RUNS);
+                if (!localStorage.getItem('dayflow_tasks')) DayflowDB.setTasks(INITIAL_TASKS);
+                if (!localStorage.getItem('dayflow_notifications')) DayflowDB.setNotifications(INITIAL_NOTIFICATIONS);
 
                 document.documentElement.className = this.state.theme;
                 if (this.state.user) {
@@ -519,6 +863,23 @@
                 } else {
                     this.state.route = 'landing';
                 }
+
+                // Real-time ticking clock interval for UI digital clock
+                if (!window._clockInterval) {
+                    window._clockInterval = setInterval(() => {
+                        const clockEl = document.getElementById('live-digital-clock');
+                        if (clockEl) {
+                            const now = new Date();
+                            const hrs = now.getHours();
+                            const mins = String(now.getMinutes()).padStart(2, '0');
+                            const secs = String(now.getSeconds()).padStart(2, '0');
+                            const ampm = hrs >= 12 ? 'PM' : 'AM';
+                            const displayHrs = String(hrs % 12 || 12).padStart(2, '0');
+                            clockEl.innerText = `${displayHrs}:${mins}:${secs} ${ampm}`;
+                        }
+                    }, 1000);
+                }
+
                 renderApp();
             },
 
@@ -1360,9 +1721,17 @@
                                         <span class="text-2xl font-extrabold text-white tracking-tight">${formatINR(netPayMonthly)}</span>
                                     </div>
                                     <div class="text-right text-xs text-slate-400">
-                                        <span>Bank Account (HDFC/ICICI)</span><br>
-                                        <span class="font-mono text-slate-300">•••• •••• 9842</span>
+                                        <span>Direct Bank Deposit (HDFC/ICICI)</span><br>
+                                        <span class="font-mono text-slate-200 font-bold">UTR: DFL948271039842</span>
                                     </div>
+                                </div>
+
+                                <div class="flex items-center justify-between pt-2 text-[11px] text-slate-400 border-t border-white/10">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center text-cyan-400 font-mono text-[9px] font-bold border border-white/10">QR</div>
+                                        <span>Digitally Signed & Validated &bull; Ref: DFL-2026-IN-${user.id}</span>
+                                    </div>
+                                    <span class="text-emerald-400 font-bold flex items-center gap-1"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Authorized Payroll Transfer</span>
                                 </div>
                             </div>
 
@@ -1373,6 +1742,465 @@
                     </div>
                 `;
                 lucide.createIcons();
+            },
+
+            // Work Assignment / Task Suite Methods
+            setTaskFilter: function(filter) {
+                this.state.taskFilterStatus = filter;
+                renderApp();
+            },
+
+            openAssignTaskModal: function() {
+                const users = DayflowDB.getUsers().filter(u => u.role === 'employee');
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div id="modal-assign-task" class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+                        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onclick="Dayflow.closeModal('modal-assign-task')"></div>
+                        <div class="glass-panel w-full max-w-lg rounded-3xl p-6 md:p-8 relative z-10 fade-slide-enter shadow-2xl border border-white/20 my-8">
+                            <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-cyan-400 flex items-center justify-center text-white shadow-lg">
+                                        <i data-lucide="clipboard-plus" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold">Assign Work to Employee</h3>
+                                        <p class="text-xs text-slate-400">Set task requirements, priority, and completion deadline.</p>
+                                    </div>
+                                </div>
+                                <button onclick="Dayflow.closeModal('modal-assign-task')" class="text-slate-400 hover:text-white p-1 rounded-lg">
+                                    <i data-lucide="x" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+
+                            <form onsubmit="Dayflow.handleTaskAssignSubmit(event)" class="space-y-4">
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-semibold text-slate-400 ml-1">Assignee (Employee)</label>
+                                    <select id="task-assignee" required class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-950 text-white font-medium cursor-pointer border-2 border-slate-900" style="color-scheme: dark; background-color: #020617; color: #ffffff; border: 2px solid #0f172a; border-radius: 14px;">
+                                        ${users.map(u => `<option value="${u.id}" style="background-color: #020617; color: #ffffff; padding: 8px;">${u.name} (${u.id}) &bull; ${u.department} - ${u.designation}</option>`).join('')}
+                                    </select>
+                                </div>
+
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-semibold text-slate-400 ml-1">Task Title / Deliverable Name</label>
+                                    <input id="task-title" type="text" required placeholder="e.g. Build GraphQL API endpoints for payroll batch" class="glass-input rounded-xl p-3 text-xs outline-none" />
+                                </div>
+
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-semibold text-slate-400 ml-1">Task Description & Deliverable Specs</label>
+                                    <textarea id="task-desc" rows="3" required placeholder="Describe task scope, acceptance criteria, and deliverable links..." class="glass-input rounded-xl p-3 text-xs outline-none resize-none"></textarea>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="flex flex-col gap-1">
+                                        <label class="text-xs font-semibold text-slate-400 ml-1">Priority Level</label>
+                                        <select id="task-priority" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-950 text-white font-medium cursor-pointer border-2 border-slate-900" style="color-scheme: dark; background-color: #020617; color: #ffffff; border: 2px solid #0f172a; border-radius: 14px;">
+                                            <option value="High" style="background-color: #020617; color: #ffffff;">High Priority (Critical)</option>
+                                            <option value="Medium" selected style="background-color: #020617; color: #ffffff;">Medium Priority (Normal)</option>
+                                            <option value="Low" style="background-color: #020617; color: #ffffff;">Low Priority (Minor)</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <label class="text-xs font-semibold text-slate-400 ml-1">Category / Domain</label>
+                                        <select id="task-category" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-950 text-white font-medium cursor-pointer border-2 border-slate-900" style="color-scheme: dark; background-color: #020617; color: #ffffff; border: 2px solid #0f172a; border-radius: 14px;">
+                                            <option value="Engineering" style="background-color: #020617; color: #ffffff;">Engineering</option>
+                                            <option value="Design" style="background-color: #020617; color: #ffffff;">Product & Design</option>
+                                            <option value="DevOps" style="background-color: #020617; color: #ffffff;">DevOps & Infra</option>
+                                            <option value="Product" style="background-color: #020617; color: #ffffff;">Product & Operations</option>
+                                            <option value="Marketing" style="background-color: #020617; color: #ffffff;">Marketing</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-semibold text-slate-400 ml-1">Due Date / Deadline (Auto-marks Delayed if missed)</label>
+                                    <input id="task-due-date" type="date" required value="${new Date(Date.now() + 5*86400000).toISOString().split('T')[0]}" class="glass-input rounded-xl p-3 text-xs outline-none" />
+                                </div>
+
+                                <div class="pt-4 border-t border-white/10 flex justify-end gap-3">
+                                    ${UI.Button('Cancel', 'ghost', "Dayflow.closeModal('modal-assign-task')")}
+                                    ${UI.Button('<i data-lucide="send" class="w-4 h-4"></i> Assign Work', 'primary', '', 'submit')}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            },
+
+            handleTaskAssignSubmit: function(e) {
+                e.preventDefault();
+                const assigneeId = document.getElementById('task-assignee').value;
+                const title = document.getElementById('task-title').value.trim();
+                const desc = document.getElementById('task-desc').value.trim();
+                const priority = document.getElementById('task-priority').value;
+                const category = document.getElementById('task-category').value;
+                const dueDate = document.getElementById('task-due-date').value;
+
+                let tasks = DayflowDB.getTasks();
+                const users = DayflowDB.getUsers();
+                const assignee = users.find(u => u.id === assigneeId);
+
+                const newTask = {
+                    id: 'TASK-' + (tasks.length + 101),
+                    title: title,
+                    description: desc,
+                    assignedTo: assigneeId,
+                    assignedBy: this.state.user ? this.state.user.name : 'Sarah Connor',
+                    assignedDate: new Date().toISOString().split('T')[0],
+                    dueDate: dueDate,
+                    priority: priority,
+                    category: category,
+                    status: 'Todo',
+                    progress: 0,
+                    employeeNotes: '',
+                    submittedOn: null,
+                    adminFeedback: '',
+                    adminRating: 0
+                };
+
+                tasks.unshift(newTask);
+                DayflowDB.setTasks(tasks);
+                this.closeModal('modal-assign-task');
+                this.addToast(`Work assigned to ${assignee ? assignee.name : assigneeId}! Deadline: ${dueDate}`, 'success');
+                renderApp();
+            },
+
+            openUpdateTaskProgressModal: function(taskId) {
+                const tasks = DayflowDB.getTasks();
+                const task = tasks.find(t => t.id === taskId);
+                if (!task) return;
+
+                const delayed = isTaskDelayed(task);
+
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div id="modal-update-task" class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+                        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onclick="Dayflow.closeModal('modal-update-task')"></div>
+                        <div class="glass-panel w-full max-w-lg rounded-3xl p-6 md:p-8 relative z-10 fade-slide-enter shadow-2xl border border-white/20 my-8">
+                            <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-cyan-400 flex items-center justify-center text-white shadow-lg">
+                                        <i data-lucide="activity" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold">Update Work Progress</h3>
+                                        <p class="text-xs text-slate-400">${task.id} &bull; ${task.title}</p>
+                                    </div>
+                                </div>
+                                <button onclick="Dayflow.closeModal('modal-update-task')" class="text-slate-400 hover:text-white p-1 rounded-lg">
+                                    <i data-lucide="x" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+
+                            <form onsubmit="Dayflow.handleTaskProgressSubmit(event, '${task.id}')" class="space-y-4">
+                                <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 space-y-1.5 text-xs">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-400 font-medium">Deadline / Due Date:</span>
+                                        <span class="font-mono font-bold ${delayed ? 'text-rose-400 flex items-center gap-1 animate-pulse' : 'text-slate-200'}">
+                                            ${delayed ? '<i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> DELAYED OVERDUE (' + task.dueDate + ')' : task.dueDate}
+                                        </span>
+                                    </div>
+                                    <p class="text-slate-300 text-xs mt-1 font-normal">${task.description}</p>
+                                </div>
+
+                                <div class="flex flex-col gap-1.5">
+                                    <div class="flex justify-between items-center text-xs">
+                                        <label class="font-semibold text-slate-400 ml-1">Completion Progress</label>
+                                        <span id="task-progress-val" class="font-mono font-extrabold text-brand-300 text-sm">${task.progress}%</span>
+                                    </div>
+                                    <input id="task-progress-slider" type="range" min="0" max="100" value="${task.progress}" 
+                                        oninput="document.getElementById('task-progress-val').innerText = this.value + '%'; if (this.value == 100) document.getElementById('task-status').value = 'Completed'; else if (this.value > 0) document.getElementById('task-status').value = 'In Progress';"
+                                        class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500" />
+                                </div>
+
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-semibold text-slate-400 ml-1">Work Status</label>
+                                    <select id="task-status" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-950 text-white font-medium cursor-pointer border-2 border-slate-900" style="color-scheme: dark; background-color: #020617; color: #ffffff; border: 2px solid #0f172a; border-radius: 14px;">
+                                        <option value="Todo" ${task.status === 'Todo' ? 'selected' : ''} style="background-color: #020617; color: #ffffff;">To Do (Not Started)</option>
+                                        <option value="In Progress" ${task.status === 'In Progress' ? 'selected' : ''} style="background-color: #020617; color: #ffffff;">In Progress (Working on it)</option>
+                                        <option value="Under Review" ${task.status === 'Under Review' ? 'selected' : ''} style="background-color: #020617; color: #ffffff;">Under Review (Awaiting Admin Review)</option>
+                                        <option value="Completed" ${task.status === 'Completed' ? 'selected' : ''} style="background-color: #020617; color: #ffffff;">Completed (100% Finished)</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-semibold text-slate-400 ml-1">Progress Notes / Deliverable Links</label>
+                                    <textarea id="task-notes" rows="3" placeholder="Add commit links, staging URLs, or notes on completed milestones..." class="glass-input rounded-xl p-3 text-xs outline-none resize-none">${task.employeeNotes || ''}</textarea>
+                                </div>
+
+                                <div class="pt-4 border-t border-white/10 flex justify-end gap-3">
+                                    ${UI.Button('Cancel', 'ghost', "Dayflow.closeModal('modal-update-task')")}
+                                    ${UI.Button('<i data-lucide="check" class="w-4 h-4"></i> Save Progress', 'primary', '', 'submit')}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            },
+
+            handleTaskProgressSubmit: function(e, taskId) {
+                e.preventDefault();
+                const progress = parseInt(document.getElementById('task-progress-slider').value) || 0;
+                const status = document.getElementById('task-status').value;
+                const notes = document.getElementById('task-notes').value.trim();
+
+                let tasks = DayflowDB.getTasks();
+                let task = tasks.find(t => t.id === taskId);
+                if (task) {
+                    task.progress = progress;
+                    task.status = status;
+                    task.employeeNotes = notes;
+                    if (status === 'Completed' && !task.submittedOn) {
+                        task.submittedOn = new Date().toISOString().split('T')[0];
+                    }
+                    DayflowDB.setTasks(tasks);
+                    this.closeModal('modal-update-task');
+                    this.addToast(`Work progress for ${task.title} updated to ${progress}% (${status})`, 'success');
+                    renderApp();
+                }
+            },
+
+            openAdminTaskReviewModal: function(taskId) {
+                const tasks = DayflowDB.getTasks();
+                const task = tasks.find(t => t.id === taskId);
+                if (!task) return;
+
+                const users = DayflowDB.getUsers();
+                const assignee = users.find(u => u.id === task.assignedTo) || { name: task.assignedTo, avatar: '' };
+
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div id="modal-review-task" class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+                        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onclick="Dayflow.closeModal('modal-review-task')"></div>
+                        <div class="glass-panel w-full max-w-lg rounded-3xl p-6 md:p-8 relative z-10 fade-slide-enter shadow-2xl border border-white/20 my-8">
+                            <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-emerald-400 flex items-center justify-center text-white shadow-lg">
+                                        <i data-lucide="award" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold">Admin Review & Rating</h3>
+                                        <p class="text-xs text-slate-400">Evaluate deliverable quality and award performance score.</p>
+                                    </div>
+                                </div>
+                                <button onclick="Dayflow.closeModal('modal-review-task')" class="text-slate-400 hover:text-white p-1 rounded-lg">
+                                    <i data-lucide="x" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+
+                            <form onsubmit="Dayflow.handleAdminTaskReviewSubmit(event, '${task.id}')" class="space-y-4">
+                                <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs">
+                                    <div class="flex items-center gap-3">
+                                        <img src="${assignee.avatar}" class="w-10 h-10 rounded-xl object-cover border border-white/10" />
+                                        <div>
+                                            <h4 class="font-bold text-sm text-white">${task.title}</h4>
+                                            <span class="text-slate-400">Assigned to ${assignee.name} (${task.assignedTo}) &bull; Due ${task.dueDate}</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 pt-2 border-t border-white/10">
+                                        <span class="text-slate-400 block font-semibold mb-1">Employee Deliverable Notes:</span>
+                                        <p class="text-slate-200 bg-black/30 p-2.5 rounded-xl font-mono text-[11px]">${task.employeeNotes || 'No notes provided by employee.'}</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col gap-1.5">
+                                    <label class="text-xs font-semibold text-slate-400 ml-1">Performance Rating (1 to 5 Stars ⭐)</label>
+                                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-slate-950/60 border-2 border-slate-900">
+                                        <select id="review-rating" class="glass-input rounded-xl py-2 px-3 outline-none text-xs bg-slate-900 text-amber-300 font-bold cursor-pointer" style="color-scheme: dark; background-color: #020617; color: #f59e0b; border: 2px solid #0f172a; border-radius: 12px;">
+                                            <option value="5" ${task.adminRating === 5 ? 'selected' : ''} style="background-color: #020617; color: #f59e0b;">⭐⭐⭐⭐⭐ (5/5 - Exceptional)</option>
+                                            <option value="4" ${task.adminRating === 4 || !task.adminRating ? 'selected' : ''} style="background-color: #020617; color: #f59e0b;">⭐⭐⭐⭐ (4/5 - Exceeds Expectations)</option>
+                                            <option value="3" ${task.adminRating === 3 ? 'selected' : ''} style="background-color: #020617; color: #f59e0b;">⭐⭐⭐ (3/5 - Meets Expectations)</option>
+                                            <option value="2" ${task.adminRating === 2 ? 'selected' : ''} style="background-color: #020617; color: #f59e0b;">⭐⭐ (2/5 - Needs Improvement)</option>
+                                            <option value="1" ${task.adminRating === 1 ? 'selected' : ''} style="background-color: #020617; color: #f59e0b;">⭐ (1/5 - Unsatisfactory)</option>
+                                        </select>
+                                        <span class="text-xs text-slate-400">Recorded on employee profile</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-semibold text-slate-400 ml-1">Admin Feedback & Remarks</label>
+                                    <textarea id="review-feedback" rows="3" required placeholder="Write constructive feedback, appreciation, or next action items for the employee..." class="glass-input rounded-xl p-3 text-xs outline-none resize-none">${task.adminFeedback || 'Outstanding work! The deliverables meet all design and architectural criteria.'}</textarea>
+                                </div>
+
+                                <div class="pt-4 border-t border-white/10 flex justify-end gap-3">
+                                    ${UI.Button('Cancel', 'ghost', "Dayflow.closeModal('modal-review-task')")}
+                                    ${UI.Button('<i data-lucide="star" class="w-4 h-4"></i> Submit Remarks & Rating', 'primary', '', 'submit')}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            },
+
+            handleAdminTaskReviewSubmit: function(e, taskId) {
+                e.preventDefault();
+                const rating = parseInt(document.getElementById('review-rating').value) || 5;
+                const feedback = document.getElementById('review-feedback').value.trim();
+
+                let tasks = DayflowDB.getTasks();
+                let task = tasks.find(t => t.id === taskId);
+                if (task) {
+                    task.adminRating = rating;
+                    task.adminFeedback = feedback;
+                    task.status = 'Completed';
+                    task.progress = 100;
+                    DayflowDB.setTasks(tasks);
+                    this.closeModal('modal-review-task');
+                    this.addToast(`Remarks & ${rating}-Star Rating awarded for ${task.title}!`, 'success');
+                    renderApp();
+                }
+            },
+
+            deleteTask: function(taskId) {
+                let tasks = DayflowDB.getTasks();
+                tasks = tasks.filter(t => t.id !== taskId);
+                DayflowDB.setTasks(tasks);
+                this.addToast(`Task ${taskId} removed`, 'info');
+                renderApp();
+            },
+
+            // Interactive Notifications & Notice Board Methods
+            setNotificationFilter: function(type) {
+                this.state.notificationFilterType = type;
+                renderApp();
+            },
+
+            openBroadcastNotificationModal: function() {
+                const container = document.getElementById('modal-container');
+                container.innerHTML = `
+                    <div id="modal-broadcast-notif" class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+                        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onclick="Dayflow.closeModal('modal-broadcast-notif')"></div>
+                        <div class="glass-panel w-full max-w-lg rounded-3xl p-6 md:p-8 relative z-10 fade-slide-enter shadow-2xl border border-white/20 my-8">
+                            <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-cyan-400 flex items-center justify-center text-white shadow-lg">
+                                        <i data-lucide="megaphone" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold">Broadcast Company Notice</h3>
+                                        <p class="text-xs text-slate-400">Post announcements or priority memos with two-way employee discussion.</p>
+                                    </div>
+                                </div>
+                                <button onclick="Dayflow.closeModal('modal-broadcast-notif')" class="text-slate-400 hover:text-white p-1 rounded-lg">
+                                    <i data-lucide="x" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+
+                            <form onsubmit="Dayflow.handleNotificationBroadcastSubmit(event)" class="space-y-4">
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-semibold text-slate-400 ml-1">Announcement Headline</label>
+                                    <input id="notif-title" type="text" required placeholder="e.g. Q3 Town Hall & Product Roadmap Showcase" class="glass-input rounded-xl p-3 text-xs outline-none" />
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="flex flex-col gap-1">
+                                        <label class="text-xs font-semibold text-slate-400 ml-1">Notice Category</label>
+                                        <select id="notif-type" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-950 text-white font-medium cursor-pointer border-2 border-slate-900" style="color-scheme: dark; background-color: #020617; color: #ffffff; border: 2px solid #0f172a; border-radius: 14px;">
+                                            <option value="policy" style="background-color: #020617; color: #ffffff;">Policy / HR Guidelines</option>
+                                            <option value="urgent" style="background-color: #020617; color: #ffffff;">🚨 Urgent Alert / Security</option>
+                                            <option value="memo" style="background-color: #020617; color: #ffffff;">General Company Memo</option>
+                                            <option value="recognition" style="background-color: #020617; color: #ffffff;">🌟 Employee Recognition / Kudos</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <label class="text-xs font-semibold text-slate-400 ml-1">Target Audience</label>
+                                        <select id="notif-target" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-950 text-white font-medium cursor-pointer border-2 border-slate-900" style="color-scheme: dark; background-color: #020617; color: #ffffff; border: 2px solid #0f172a; border-radius: 14px;">
+                                            <option value="all" style="background-color: #020617; color: #ffffff;">All Employees (Company-Wide)</option>
+                                            <option value="Engineering" style="background-color: #020617; color: #ffffff;">Engineering Team</option>
+                                            <option value="Product & Design" style="background-color: #020617; color: #ffffff;">Product & Design</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-xs font-semibold text-slate-400 ml-1">Detailed Message</label>
+                                    <textarea id="notif-message" rows="4" required placeholder="Write announcement details, dates, action items, or meeting links..." class="glass-input rounded-xl p-3 text-xs outline-none resize-none"></textarea>
+                                </div>
+
+                                <div class="pt-4 border-t border-white/10 flex justify-end gap-3">
+                                    ${UI.Button('Cancel', 'ghost', "Dayflow.closeModal('modal-broadcast-notif')")}
+                                    ${UI.Button('<i data-lucide="send" class="w-4 h-4"></i> Post Broadcast', 'primary', '', 'submit')}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            },
+
+            handleNotificationBroadcastSubmit: function(e) {
+                e.preventDefault();
+                const title = document.getElementById('notif-title').value.trim();
+                const type = document.getElementById('notif-type').value;
+                const target = document.getElementById('notif-target').value;
+                const message = document.getElementById('notif-message').value.trim();
+
+                let notifs = DayflowDB.getNotifications();
+                const now = new Date();
+                const dateStr = now.toISOString().split('T')[0] + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                const newNotif = {
+                    id: 'NOTIF-' + (notifs.length + 1),
+                    title: title,
+                    message: message,
+                    type: type,
+                    sender: this.state.user ? `${this.state.user.name} (${this.state.user.role.toUpperCase()})` : 'Sarah Connor (HR Admin)',
+                    senderAvatar: this.state.user ? this.state.user.avatar : 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=240&auto=format&fit=crop&q=80',
+                    target: target,
+                    date: dateStr,
+                    replies: []
+                };
+
+                notifs.unshift(newNotif);
+                DayflowDB.setNotifications(notifs);
+                this.closeModal('modal-broadcast-notif');
+                this.addToast(`Announcement "${title}" broadcasted to team!`, 'success');
+                renderApp();
+            },
+
+            handleNotificationReply: function(e, notifId) {
+                e.preventDefault();
+                const input = document.getElementById(`reply-input-${notifId}`);
+                if (!input) return;
+                const text = input.value.trim();
+                if (!text) return;
+
+                this.handleQuickReply(notifId, text);
+                input.value = '';
+            },
+
+            handleQuickReply: function(notifId, text) {
+                let notifs = DayflowDB.getNotifications();
+                let notif = notifs.find(n => n.id === notifId);
+                if (!notif) return;
+
+                const user = this.state.user || { id: 'EMP002', name: 'John Smith', role: 'employee', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=240&auto=format&fit=crop&q=80' };
+                const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                if (!notif.replies) notif.replies = [];
+                notif.replies.push({
+                    id: 'rep-' + Date.now(),
+                    user: user.id,
+                    name: user.name,
+                    avatar: user.avatar,
+                    role: user.role,
+                    message: text,
+                    timestamp: timeStr
+                });
+
+                DayflowDB.setNotifications(notifs);
+                this.addToast(`Response sent to notice: "${text.substring(0, 30)}..."`, 'info');
+                renderApp();
+            },
+
+            deleteNotification: function(notifId) {
+                let notifs = DayflowDB.getNotifications();
+                notifs = notifs.filter(n => n.id !== notifId);
+                DayflowDB.setNotifications(notifs);
+                this.addToast(`Notice removed`, 'info');
+                renderApp();
             },
 
             // Modal Controls
@@ -1435,71 +2263,144 @@
 
         // Views & Screens
         const Views = {
-            // Landing Page
+            // Landing Page (High-End Enterprise SaaS Design)
             Landing: () => `
-                <div class="min-h-screen flex flex-col justify-between relative p-6">
-                    <!-- Top Navigation Bar -->
-                    <header class="max-w-7xl w-full mx-auto flex items-center justify-between py-4 glass-panel px-6 rounded-3xl">
+                <div class="min-h-screen flex flex-col justify-between relative p-4 sm:p-6 bg-grid-mesh">
+                    <!-- Top Glass Navigation Bar -->
+                    <header class="max-w-7xl w-full mx-auto flex items-center justify-between py-3.5 glass-panel px-6 rounded-3xl border border-white/15 shadow-xl">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-cyan-400 flex items-center justify-center text-white shadow-glow-brand">
+                            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-white shadow-glow-brand">
                                 <i data-lucide="layers" class="w-5 h-5"></i>
                             </div>
-                            <span class="text-xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-cyan-300 to-white">Dayflow</span>
+                            <div>
+                                <span class="text-xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-cyan-300 to-white">Dayflow</span>
+                                <span class="hidden sm:inline-block text-[9px] uppercase font-bold tracking-widest text-cyan-400 ml-2 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/20">HRMS Enterprise v2.4</span>
+                            </div>
                         </div>
+
+                        <!-- System Status Badge -->
+                        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full glass-panel-subtle border border-emerald-500/20 text-[11px] font-medium text-emerald-400">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>All Systems Operational &bull; ₹ INR Ready</span>
+                        </div>
+
                         <div class="flex items-center gap-3">
                             <button onclick="Dayflow.toggleTheme()" class="p-2.5 rounded-2xl glass-panel-subtle hover:bg-white/20 spring-transition text-slate-300">
                                 <i data-lucide="${Dayflow.state.theme === 'light' ? 'moon' : 'sun'}" class="w-4 h-4"></i>
                             </button>
-                            ${UI.Button('<i data-lucide="sparkles" class="w-4 h-4"></i> Get Started', 'primary', "Dayflow.setAuthMode('signin'); Dayflow.navigate('auth')", 'button', 'px-6 py-2')}
+                            ${UI.Button('<i data-lucide="sparkles" class="w-4 h-4"></i> Get Started', 'primary', "Dayflow.setAuthMode('signin'); Dayflow.navigate('auth')", 'button', 'px-6 py-2.5 font-bold shadow-glow-brand')}
                         </div>
                     </header>
 
-                    <!-- Hero Section -->
-                    <div class="max-w-5xl w-full mx-auto text-center fade-slide-enter space-y-8 my-auto py-12">
-                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border border-brand-500/30 text-brand-300 text-xs font-semibold shadow-glow-brand">
+                    <!-- Main Hero Section -->
+                    <div class="max-w-6xl w-full mx-auto text-center fade-slide-enter space-y-10 my-auto py-12 px-2">
+                        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-panel border border-brand-500/30 text-brand-300 text-xs font-semibold shadow-glow-brand">
                             <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
-                            Next-Generation Human Resource Management System
-                        </div>
-                        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] text-slate-900 dark:text-white">
-                            Streamline HR operations with <br class="hidden md:block" />
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-emerald-300">Liquid Glass clarity.</span>
-                        </h1>
-                        <p class="text-base md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
-                            A unified, spatial HRMS platform for effortless onboarding, attendance punch clocks, automated leave approval workflows, and transparent payroll analytics.
-                        </p>
-                        <div class="flex justify-center pt-4">
-                            ${UI.Button('<i data-lucide="sparkles" class="w-5 h-5"></i> Get Started', 'primary', "Dayflow.setAuthMode('signin'); Dayflow.navigate('auth')", 'button', 'px-9 py-4 text-base font-bold shadow-glow-brand')}
+                            <span>Next-Generation Intelligent People Operations & HR Platform</span>
+                            <span class="text-cyan-400 font-bold">&rarr;</span>
                         </div>
 
-                        <!-- Feature highlights cards -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 text-left">
-                            <div class="glass-panel rounded-3xl p-6 glass-card-interactive">
-                                <div class="w-12 h-12 rounded-2xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 mb-4">
-                                    <i data-lucide="clock" class="w-6 h-6"></i>
-                                </div>
-                                <h3 class="font-bold text-lg mb-1">Live Punch & Attendance</h3>
-                                <p class="text-xs text-slate-400">Daily and weekly time tracking with instant check-in/out toggles and manager reports.</p>
+                        <h1 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.08] text-slate-900 dark:text-white">
+                            Autonomous HR Operations with <br class="hidden sm:block" />
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-emerald-300">Pure Spatial Elegance.</span>
+                        </h1>
+
+                        <p class="text-base sm:text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed font-normal">
+                            Unify work assignment tracking, deadline overdue radars, dynamic greetings, two-way broadcast communications, weekly timesheets, and automated <strong class="text-slate-200">₹ INR payroll</strong> in one breathtaking liquid glass interface.
+                        </p>
+
+                        <!-- Call-To-Action & Fast Persona Triggers -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+                            ${UI.Button('<i data-lucide="sparkles" class="w-5 h-5"></i> Get Started Free', 'primary', "Dayflow.setAuthMode('signin'); Dayflow.navigate('auth')", 'button', 'px-8 py-3.5 text-base font-bold shadow-glow-brand w-full sm:w-auto')}
+                            <button onclick="Dayflow.quickLogin('admin@dayflow.com', 'password')" class="px-6 py-3.5 rounded-2xl glass-panel hover:bg-white/15 text-slate-200 text-sm font-semibold border border-white/20 spring-transition flex items-center justify-center gap-2 w-full sm:w-auto shadow-sm">
+                                <span>👑</span> Launch Live Admin Demo
+                            </button>
+                        </div>
+
+                        <!-- One-Click Instant Role Sandbox Strip -->
+                        <div class="glass-panel p-5 rounded-3xl border border-white/10 max-w-4xl mx-auto text-left shadow-2xl">
+                            <div class="text-[11px] uppercase font-bold tracking-widest text-slate-400 mb-3 flex items-center justify-between">
+                                <span class="flex items-center gap-2"><i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i> Instant Sandbox Experience (1-Click Switch):</span>
+                                <span class="text-slate-500 lowercase font-mono">no credentials needed</span>
                             </div>
-                            <div class="glass-panel rounded-3xl p-6 glass-card-interactive">
-                                <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4">
-                                    <i data-lucide="calendar-check" class="w-6 h-6"></i>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <div onclick="Dayflow.quickLogin('admin@dayflow.com', 'password')" class="p-3.5 rounded-2xl bg-brand-500/10 hover:bg-brand-500/20 border border-brand-500/30 cursor-pointer spring-transition group">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-xs font-bold text-brand-300 group-hover:text-white flex items-center gap-1.5"><span>👑</span> HR Director</span>
+                                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-brand-400 group-hover:translate-x-1 spring-transition"></i>
+                                    </div>
+                                    <p class="text-[11px] text-slate-300 font-medium">Sarah Connor</p>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Work delegation, delayed tracking, leave approvals & 5-star ratings</p>
                                 </div>
-                                <h3 class="font-bold text-lg mb-1">Two-Way Leave Approval</h3>
-                                <p class="text-xs text-slate-400">Request Paid, Sick, and Unpaid leaves with interactive remarks and HR review notes.</p>
-                            </div>
-                            <div class="glass-panel rounded-3xl p-6 glass-card-interactive">
-                                <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4">
-                                    <i data-lucide="banknote" class="w-6 h-6"></i>
+
+                                <div onclick="Dayflow.quickLogin('john@dayflow.com', 'password')" class="p-3.5 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 cursor-pointer spring-transition group">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-xs font-bold text-cyan-300 group-hover:text-white flex items-center gap-1.5"><span>👨‍💻</span> Senior Engineer</span>
+                                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-cyan-400 group-hover:translate-x-1 spring-transition"></i>
+                                    </div>
+                                    <p class="text-[11px] text-slate-300 font-medium">John Doe</p>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Daily punch clocks, progress slider, task updates & reply to notices</p>
                                 </div>
-                                <h3 class="font-bold text-lg mb-1">Payroll & Salary Structures</h3>
-                                <p class="text-xs text-slate-400">Complete salary revisions in ₹ INR, automated gross-to-net calculators, and printable slips.</p>
+
+                                <div onclick="Dayflow.quickLogin('emma@dayflow.com', 'password')" class="p-3.5 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 cursor-pointer spring-transition group">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-xs font-bold text-emerald-300 group-hover:text-white flex items-center gap-1.5"><span>👩‍🎨</span> UI/UX Designer</span>
+                                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-emerald-400 group-hover:translate-x-1 spring-transition"></i>
+                                    </div>
+                                    <p class="text-[11px] text-slate-300 font-medium">Emma Watson</p>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Time-off balances, ₹ INR payslip breakdown & team announcements</p>
+                                </div>
                             </div>
+                        </div>
+
+                        <!-- Enterprise 4-Pillars Feature Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 pt-4 text-left">
+                            <div class="glass-panel rounded-3xl p-6 glass-card-interactive border border-brand-500/20">
+                                <div class="w-12 h-12 rounded-2xl bg-brand-500/15 border border-brand-500/30 flex items-center justify-center text-brand-300 mb-4 shadow-glow-brand">
+                                    <i data-lucide="check-square" class="w-6 h-6"></i>
+                                </div>
+                                <h3 class="font-bold text-base text-white mb-1.5">Work & Task Suite</h3>
+                                <p class="text-xs text-slate-400 leading-relaxed">Task assignment with last-date deadlines, automatic delayed warnings, progress sliders, and 5-star admin performance ratings.</p>
+                            </div>
+
+                            <div class="glass-panel rounded-3xl p-6 glass-card-interactive border border-cyan-500/20">
+                                <div class="w-12 h-12 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 mb-4 shadow-glow-cyan">
+                                    <i data-lucide="megaphone" class="w-6 h-6"></i>
+                                </div>
+                                <h3 class="font-bold text-base text-white mb-1.5">Two-Way Notice Board</h3>
+                                <p class="text-xs text-slate-400 leading-relaxed">Admin company-wide broadcasts with category tagging and real-time threaded employee replies with quick one-click reactions.</p>
+                            </div>
+
+                            <div class="glass-panel rounded-3xl p-6 glass-card-interactive border border-emerald-500/20">
+                                <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-300 mb-4 shadow-glow-emerald">
+                                    <i data-lucide="calendar-days" class="w-6 h-6"></i>
+                                </div>
+                                <h3 class="font-bold text-base text-white mb-1.5">Timesheet & 31-Day Heatmap</h3>
+                                <p class="text-xs text-slate-400 leading-relaxed">Deep-dive weekly timesheets and 31-day calendar heatmaps for each individual team member with punctuality rate calculations.</p>
+                            </div>
+
+                            <div class="glass-panel rounded-3xl p-6 glass-card-interactive border border-amber-500/20">
+                                <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-300 mb-4">
+                                    <i data-lucide="receipt" class="w-6 h-6"></i>
+                                </div>
+                                <h3 class="font-bold text-base text-white mb-1.5">₹ INR Payroll & Payslips</h3>
+                                <p class="text-xs text-slate-400 leading-relaxed">Indian Rupee currency standards, Lakhs salary structuring, automated tax and PF deductions, with instant printable payslips.</p>
+                            </div>
+                        </div>
+
+                        <!-- Trust Bar -->
+                        <div class="pt-6 border-t border-white/10 flex flex-wrap items-center justify-center gap-8 text-xs text-slate-400 font-medium">
+                            <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> ISO 27001 Certified Security</span>
+                            <span class="flex items-center gap-2"><i data-lucide="globe" class="w-4 h-4 text-cyan-400"></i> Multi-Country Dial-in Code Ready</span>
+                            <span class="flex items-center gap-2"><i data-lucide="award" class="w-4 h-4 text-amber-400"></i> 99.98% System Uptime SLA</span>
+                            <span class="flex items-center gap-2"><i data-lucide="database" class="w-4 h-4 text-brand-400"></i> Instant LocalStorage State Sync</span>
                         </div>
                     </div>
 
                     <!-- Footer -->
-                    <footer class="text-center text-xs text-slate-500 py-4">
-                        Dayflow HRMS &bull; Enterprise Human Resource Experience &bull; ISO-27001 Compliant Mock Architecture
+                    <footer class="text-center text-xs text-slate-500 py-4 max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-white/5">
+                        <div>Dayflow HRMS &bull; Enterprise Human Resource Management Architecture</div>
+                        <div class="text-[11px] text-slate-500">Crafted with Spatial Glassmorphism & Liquid Design Tokens</div>
                     </footer>
                 </div>
             `,
@@ -1675,9 +2576,9 @@
                                     </div>
                                     <div class="flex flex-col gap-1">
                                         <label class="text-xs font-semibold text-slate-400 ml-1">System Role</label>
-                                        <select id="signup-role" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-900 text-white">
-                                            <option value="employee">Employee (Standard User)</option>
-                                            <option value="admin">Admin / HR Officer (Administrator)</option>
+                                        <select id="signup-role" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-900 text-white cursor-pointer" style="color-scheme: dark; background-color: #0f172a; color: #ffffff;">
+                                            <option value="employee" style="background-color: #0f172a; color: #ffffff;">Employee (Standard User)</option>
+                                            <option value="admin" style="background-color: #0f172a; color: #ffffff;">Admin / HR Officer (Administrator)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1696,12 +2597,12 @@
                                 <div class="space-y-1">
                                     <label class="text-xs font-semibold text-slate-400 ml-1">Country & Contact Phone</label>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                        <select id="signup-country" onchange="const code = this.value; document.getElementById('signup-phone-badge').innerText = code;" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-900 text-white">
-                                            ${COUNTRY_LIST.map(c => `<option value="${c.code}" ${c.name === 'India' ? 'selected' : ''}>${c.flag} ${c.name} (${c.code})</option>`).join('')}
+                                        <select id="signup-country" onchange="const code = this.value; document.getElementById('signup-phone-badge').innerText = code;" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-950 text-white font-medium cursor-pointer border-2 border-slate-900 shadow-md" style="color-scheme: dark; background-color: #020617; color: #ffffff; border: 2px solid #0f172a; border-radius: 14px;">
+                                            ${COUNTRY_LIST.map(c => `<option value="${c.code}" ${c.name === 'India' ? 'selected' : ''} style="background-color: #020617; color: #ffffff; padding: 8px;">${c.flag} ${c.name} (${c.code})</option>`).join('')}
                                         </select>
-                                        <div class="flex items-center gap-1.5 glass-input rounded-2xl px-3 py-1">
-                                            <span id="signup-phone-badge" class="text-xs font-bold font-mono text-brand-300 bg-brand-500/10 px-2 py-1 rounded-lg border border-brand-500/20">+91</span>
-                                            <input id="signup-phone" type="tel" required value="98765 43210" class="bg-transparent border-none outline-none text-xs w-full font-mono text-slate-200" placeholder="98765 43210" />
+                                        <div class="flex items-center gap-1.5 glass-input rounded-2xl px-3 py-1 bg-slate-950/60 border-2 border-slate-900 shadow-md" style="border: 2px solid #0f172a; border-radius: 14px;">
+                                            <span id="signup-phone-badge" class="text-xs font-bold font-mono text-cyan-300 bg-slate-900 px-2.5 py-1 rounded-xl border border-slate-800 shadow-sm">+91</span>
+                                            <input id="signup-phone" type="tel" required value="98765 43210" class="bg-transparent border-none outline-none text-xs w-full font-mono text-slate-100 font-semibold" placeholder="98765 43210" />
                                         </div>
                                     </div>
                                 </div>
@@ -1709,12 +2610,12 @@
                                 <div class="grid grid-cols-2 gap-3">
                                     <div class="flex flex-col gap-1">
                                         <label class="text-xs font-semibold text-slate-400 ml-1">Department</label>
-                                        <select id="signup-department" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-900 text-white">
-                                            <option value="Engineering">Engineering</option>
-                                            <option value="Product & Design">Product & Design</option>
-                                            <option value="Human Resources">Human Resources</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="Finance & Legal">Finance & Legal</option>
+                                        <select id="signup-department" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-900 text-white cursor-pointer" style="color-scheme: dark; background-color: #0f172a; color: #ffffff;">
+                                            <option value="Engineering" style="background-color: #0f172a; color: #ffffff;">Engineering</option>
+                                            <option value="Product & Design" style="background-color: #0f172a; color: #ffffff;">Product & Design</option>
+                                            <option value="Human Resources" style="background-color: #0f172a; color: #ffffff;">Human Resources</option>
+                                            <option value="Marketing" style="background-color: #0f172a; color: #ffffff;">Marketing</option>
+                                            <option value="Finance & Legal" style="background-color: #0f172a; color: #ffffff;">Finance & Legal</option>
                                         </select>
                                     </div>
                                     <div class="flex flex-col gap-1">
@@ -1750,6 +2651,8 @@
 
                 const navItems = [
                     { id: 'dashboard', label: 'Dashboard', icon: 'layout-dashboard' },
+                    { id: 'tasks', label: 'Work & Tasks', icon: 'check-square' },
+                    { id: 'announcements', label: 'Notices & Comms', icon: 'megaphone' },
                     { id: 'attendance', label: 'Attendance', icon: 'clock' },
                     { id: 'leaves', label: 'Leave Requests', icon: 'calendar-days' },
                     { id: 'payroll', label: 'Payroll & Slips', icon: 'receipt' },
@@ -1872,6 +2775,11 @@
                                     <span class="hidden sm:inline">Reset Data</span>
                                 </button>
 
+                                <button onclick="Dayflow.navigate('announcements')" title="View Notices & Announcements" class="relative p-2.5 rounded-2xl glass-panel-subtle hover:bg-white/20 spring-transition text-slate-300">
+                                    <i data-lucide="bell" class="w-4 h-4"></i>
+                                    <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                                </button>
+
                                 <button onclick="Dayflow.toggleTheme()" class="p-2.5 rounded-2xl glass-panel-subtle hover:bg-white/20 spring-transition text-slate-300">
                                     <i data-lucide="${Dayflow.state.theme === 'light' ? 'moon' : 'sun'}" class="w-4 h-4"></i>
                                 </button>
@@ -1930,10 +2838,11 @@
 
                 const userLeaves = DayflowDB.getLeaves().filter(l => l.user === user.id);
                 const pendingLeavesCount = userLeaves.filter(l => l.status === 'Pending').length;
+                const greetingData = getDynamicGreeting(user.name.split(' ')[0]);
 
                 return `
                 <div class="fade-slide-enter space-y-6">
-                    <!-- Top Check-in / Punch Widget Hero Card -->
+                    <!-- Top Check-in / Punch Widget Hero Card with Dynamic Time-of-Day Greeting & Live Clock -->
                     <div class="glass-panel rounded-3xl p-6 md:p-8 relative overflow-hidden border border-brand-500/20 bg-gradient-to-br from-brand-950/40 via-slate-900/60 to-cyan-950/30 shadow-2xl">
                         <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
                             <div>
@@ -1941,8 +2850,19 @@
                                     <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                                     ${user.department} &bull; ${user.designation}
                                 </div>
-                                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Good Day, ${user.name.split(' ')[0]} 👋</h2>
-                                <p class="text-sm text-slate-400 mt-1">Saturday, August 22, 2026 &bull; Track work hours and time off seamlessly.</p>
+                                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight flex items-center gap-2.5">
+                                    <i data-lucide="${greetingData.icon}" class="w-8 h-8 text-amber-400"></i>
+                                    ${greetingData.title}
+                                </h2>
+                                <div class="flex flex-wrap items-center gap-2.5 mt-2">
+                                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/40 border border-white/10 text-xs font-mono font-bold text-cyan-300 shadow-sm">
+                                        <i data-lucide="clock" class="w-3.5 h-3.5 text-cyan-400"></i>
+                                        <span id="live-digital-clock">${greetingData.liveTime}</span>
+                                    </div>
+                                    <span class="text-xs text-slate-300 font-medium">${greetingData.dateFormatted}</span>
+                                    <span class="text-xs text-slate-500 hidden sm:inline">&bull;</span>
+                                    <span class="text-xs text-cyan-300 italic font-normal hidden sm:inline">"${greetingData.quote}"</span>
+                                </div>
                             </div>
 
                             <!-- Live Attendance Punch Card -->
@@ -1981,6 +2901,12 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Work Assignment & Deliverables Tracker Section -->
+                    ${Views.WorkAssignmentSection(user, false)}
+
+                    <!-- Notice Board & Two-Way Announcements Section -->
+                    ${Views.InteractiveNotificationCenter(user, false)}
 
                     <!-- Real-Time HR Approval / Status Notification Banner -->
                     ${userLeaves.length > 0 && userLeaves[0].status === 'Approved' ? `
@@ -2029,10 +2955,10 @@
                                 </div>
                                 <div>
                                     <h4 class="text-xs font-bold text-amber-300 uppercase tracking-wider">Leave Application Under HR Review</h4>
-                                    <p class="text-xs text-slate-300 mt-0.5">Your <strong>${userLeaves[0].type} Leave</strong> request (${userLeaves[0].from} &rarr; ${userLeaves[0].to}) has been submitted and is waiting for HR Director Sarah Connor's review.</p>
+                                    <p class="text-xs text-slate-300 mt-0.5">Your <strong>${userLeaves[0].type} Leave</strong> request (${userLeaves[0].from} &rarr; ${userLeaves[0].to}) has been submitted and is awaiting HR review.</p>
                                 </div>
                             </div>
-                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 animate-pulse">Awaiting Review</span>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 animate-pulse">Pending Review</span>
                         </div>
                     ` : ''}
 
@@ -2143,6 +3069,403 @@
                 `;
             },
 
+            // Work Assignment & Task Suite Component (Futuristic Spatial Glass Layout)
+            WorkAssignmentSection: (user, isAdmin) => {
+                const allTasks = DayflowDB.getTasks();
+                const users = DayflowDB.getUsers();
+                const filter = Dayflow.state.taskFilterStatus || 'All';
+                const searchQuery = (Dayflow.state.taskSearchQuery || '').toLowerCase();
+
+                // If not admin, show only tasks assigned to this employee
+                const relevantTasks = isAdmin ? allTasks : allTasks.filter(t => t.assignedTo === user.id);
+
+                // Filter tabs logic + search query
+                const displayedTasks = relevantTasks.filter(t => {
+                    const delayed = isTaskDelayed(t);
+                    let matchesFilter = true;
+                    if (filter === 'Delayed') matchesFilter = delayed;
+                    else if (filter === 'In Progress') matchesFilter = (t.status === 'In Progress' && !delayed);
+                    else if (filter === 'Under Review') matchesFilter = (t.status === 'Under Review');
+                    else if (filter === 'Completed') matchesFilter = (t.status === 'Completed');
+
+                    if (!matchesFilter) return false;
+                    if (!searchQuery) return true;
+                    return t.title.toLowerCase().includes(searchQuery) || 
+                           t.description.toLowerCase().includes(searchQuery) ||
+                           (t.category && t.category.toLowerCase().includes(searchQuery));
+                });
+
+                const totalTasksCount = relevantTasks.length;
+                const inProgressCount = relevantTasks.filter(t => t.status === 'In Progress' && !isTaskDelayed(t)).length;
+                const delayedCount = relevantTasks.filter(t => isTaskDelayed(t)).length;
+                const completedCount = relevantTasks.filter(t => t.status === 'Completed').length;
+
+                return `
+                <div class="glass-panel rounded-3xl p-6 md:p-8 border border-white/15 shadow-2xl relative overflow-hidden space-y-6">
+                    <div class="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-brand-500/20 via-cyan-500/15 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+
+                    <!-- Top Executive Header & Action Hub -->
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-white/10 relative z-10">
+                        <div>
+                            <div class="flex items-center gap-3 mb-1.5 flex-wrap">
+                                <span class="p-2.5 rounded-2xl bg-gradient-to-tr from-brand-600 to-cyan-500 text-white shadow-glow-brand">
+                                    <i data-lucide="check-square" class="w-5 h-5"></i>
+                                </span>
+                                <h3 class="text-xl font-black text-white tracking-tight font-display">${isAdmin ? 'Enterprise Work Assignment & Task Matrix' : 'My Assigned Deliverables & Milestones'}</h3>
+                                ${delayedCount > 0 ? `
+                                    <span class="px-3 py-1 rounded-full text-xs bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse font-extrabold flex items-center gap-1.5 shadow-glow-rose">
+                                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> ${delayedCount} Overdue Alert${delayedCount > 1 ? 's' : ''}
+                                    </span>
+                                ` : ''}
+                            </div>
+                            <p class="text-xs text-slate-400 font-normal">${isAdmin ? 'Delegate technical milestones, monitor deadline countdowns, and provide post-completion 5-star performance evaluations.' : 'Track your active project sprints, update completion percentages, and view management feedback.'}</p>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            ${isAdmin ? `
+                                <button onclick="Dayflow.openAssignTaskModal()" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-brand-600 via-indigo-500 to-cyan-500 hover:brightness-110 text-white font-bold text-xs shadow-glow-brand spring-transition flex items-center gap-2 border border-white/20">
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Assign New Work
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    <!-- Futuristic KPI Metric Tiles -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 relative z-10">
+                        <div class="glass-panel-subtle p-4 rounded-2xl border border-white/10 hover:border-brand-500/30 spring-transition">
+                            <div class="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                                <span>Total Assigned</span>
+                                <i data-lucide="layers" class="w-3.5 h-3.5 text-brand-400"></i>
+                            </div>
+                            <div class="text-2xl font-black text-white font-mono mt-0.5">${totalTasksCount} <span class="text-xs font-normal text-slate-400">Tasks</span></div>
+                        </div>
+
+                        <div class="glass-panel-subtle p-4 rounded-2xl border border-cyan-500/25 bg-cyan-950/20 hover:border-cyan-400/40 spring-transition">
+                            <div class="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-cyan-400 mb-1">
+                                <span>Active In-Flight</span>
+                                <i data-lucide="play-circle" class="w-3.5 h-3.5 text-cyan-400 animate-spin"></i>
+                            </div>
+                            <div class="text-2xl font-black text-cyan-300 font-mono mt-0.5">${inProgressCount} <span class="text-xs font-normal text-cyan-400/70">Active</span></div>
+                        </div>
+
+                        <div class="glass-panel-subtle p-4 rounded-2xl border border-rose-500/30 bg-rose-950/20 hover:border-rose-400/50 spring-transition ${delayedCount > 0 ? 'shadow-glow-rose' : ''}">
+                            <div class="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-rose-400 mb-1">
+                                <span>Delayed / Past Due</span>
+                                <i data-lucide="clock-alert" class="w-3.5 h-3.5 text-rose-400"></i>
+                            </div>
+                            <div class="text-2xl font-black text-rose-400 font-mono mt-0.5 flex items-center gap-1.5">
+                                ${delayedCount} ${delayedCount > 0 ? '⚠️' : '✓'}
+                            </div>
+                        </div>
+
+                        <div class="glass-panel-subtle p-4 rounded-2xl border border-emerald-500/25 bg-emerald-950/20 hover:border-emerald-400/40 spring-transition">
+                            <div class="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-emerald-400 mb-1">
+                                <span>Completed & Rated</span>
+                                <i data-lucide="award" class="w-3.5 h-3.5 text-emerald-400"></i>
+                            </div>
+                            <div class="text-2xl font-black text-emerald-400 font-mono mt-0.5">${completedCount} <span class="text-xs font-normal text-emerald-400/70">Finished</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Filter Tabs & Quick Search Ribbon -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10 relative z-10">
+                        <div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+                            ${[
+                                { id: 'All', label: `All Work (${relevantTasks.length})` },
+                                { id: 'In Progress', label: `In Progress (${inProgressCount})` },
+                                { id: 'Delayed', label: `Overdue (${delayedCount})` },
+                                { id: 'Under Review', label: `Under Review (${relevantTasks.filter(t => t.status === 'Under Review').length})` },
+                                { id: 'Completed', label: `Completed (${completedCount})` }
+                            ].map(tab => `
+                                <button onclick="Dayflow.setTaskFilter('${tab.id}')" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold spring-transition whitespace-nowrap ${filter === tab.id ? 'bg-gradient-to-r from-brand-600/40 to-cyan-500/30 text-cyan-300 border border-cyan-400/40 shadow-glow-cyan font-bold' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'}">
+                                    ${tab.label}
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <div class="relative w-full sm:w-64">
+                            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                            <input type="text" placeholder="Search tasks by title..." oninput="Dayflow.state.taskSearchQuery = this.value; renderApp();" value="${Dayflow.state.taskSearchQuery || ''}" class="glass-input rounded-xl pl-9 pr-3 py-1.5 text-xs w-full outline-none font-medium" />
+                        </div>
+                    </div>
+
+                    <!-- Tasks List Grid -->
+                    <div class="space-y-4 relative z-10">
+                        ${displayedTasks.length === 0 ? `
+                            <div class="p-10 text-center glass-panel-subtle rounded-3xl border border-white/10 text-slate-400 text-xs">
+                                <i data-lucide="inbox" class="w-8 h-8 mx-auto mb-2 text-slate-500 opacity-60"></i>
+                                No assigned tasks match the "${filter}" filter.
+                            </div>
+                        ` : displayedTasks.map(task => {
+                            const assignee = users.find(u => u.id === task.assignedTo) || { name: task.assignedTo, avatar: '', department: 'General' };
+                            const delayed = isTaskDelayed(task);
+                            const priorityPills = {
+                                High: 'bg-rose-500/20 text-rose-300 border-rose-500/30 shadow-sm',
+                                Medium: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
+                                Low: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30'
+                            };
+                            const statusPills = {
+                                'Todo': '<span class="px-2.5 py-0.5 rounded-full text-[10px] bg-slate-500/20 text-slate-300 border border-slate-500/30 font-bold">To Do</span>',
+                                'In Progress': '<span class="px-2.5 py-0.5 rounded-full text-[10px] bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold">In Progress</span>',
+                                'Under Review': '<span class="px-2.5 py-0.5 rounded-full text-[10px] bg-purple-500/20 text-purple-300 border border-purple-500/30 font-bold">Under Review</span>',
+                                'Completed': '<span class="px-2.5 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold">Completed ✓</span>'
+                            };
+
+                            return `
+                            <div class="glass-panel-subtle p-5 md:p-6 rounded-3xl border ${delayed ? 'border-rose-500/40 bg-rose-950/25 shadow-glow-rose' : 'border-white/10 hover:border-brand-500/30'} space-y-4 spring-transition">
+                                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                                    <div class="space-y-1.5 flex-1">
+                                        <div class="flex flex-wrap items-center gap-2">
+                                            <span class="px-2.5 py-0.5 rounded-lg text-[10px] font-bold ${priorityPills[task.priority] || priorityPills.Medium} border">
+                                                ${task.priority === 'High' ? '🔥' : task.priority === 'Medium' ? '⚡' : '🌿'} ${task.priority} Priority
+                                            </span>
+                                            <span class="px-2.5 py-0.5 rounded-lg text-[10px] font-semibold bg-white/5 text-slate-300 border border-white/10">
+                                                ${task.category || 'General'}
+                                            </span>
+                                            ${statusPills[task.status] || ''}
+                                            ${delayed ? `
+                                                <span class="px-3 py-0.5 rounded-full text-[10px] bg-gradient-to-r from-rose-600 to-rose-700 text-white font-black flex items-center gap-1.5 animate-pulse shadow-md">
+                                                    <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> DELAYED &bull; Due ${task.dueDate}
+                                                </span>
+                                            ` : ''}
+                                        </div>
+                                        <h4 class="text-base font-bold text-white tracking-tight font-display mt-1">${task.title}</h4>
+                                        <p class="text-xs text-slate-300 leading-relaxed font-normal">${task.description}</p>
+                                    </div>
+
+                                    <!-- Right Actions -->
+                                    <div class="flex items-center gap-2 flex-shrink-0">
+                                        ${!isAdmin && task.status !== 'Completed' ? `
+                                            <button onclick="Dayflow.openUpdateTaskProgressModal('${task.id}')" class="px-4 py-2 rounded-2xl bg-gradient-to-r from-cyan-600 via-indigo-600 to-brand-500 text-white text-xs font-bold shadow-glow-cyan hover:brightness-110 spring-transition flex items-center gap-1.5 border border-white/20">
+                                                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> Update Progress
+                                            </button>
+                                        ` : ''}
+
+                                        ${isAdmin ? `
+                                            <button onclick="Dayflow.openAdminTaskReviewModal('${task.id}')" class="px-4 py-2 rounded-2xl ${task.adminRating > 0 ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-gradient-to-r from-amber-600 to-emerald-500 text-white shadow-glow-amber'} text-xs font-bold hover:brightness-110 spring-transition flex items-center gap-1.5 border border-white/20">
+                                                <i data-lucide="star" class="w-3.5 h-3.5"></i> ${task.adminRating > 0 ? 'Edit Rating (' + task.adminRating + ' ⭐)' : 'Review & Rate'}
+                                            </button>
+                                            <button onclick="if(confirm('Delete this task?')) Dayflow.deleteTask('${task.id}')" class="p-2 rounded-xl text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 spring-transition">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                                </div>
+
+                                <!-- Progress Bar & Metadata Strip -->
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-3 border-t border-white/10 text-xs items-center">
+                                    <div class="flex items-center gap-3">
+                                        <img src="${assignee.avatar}" class="w-8 h-8 rounded-xl object-cover border border-white/15 shadow-sm" />
+                                        <div>
+                                            <span class="text-[10px] text-slate-400 block font-medium">Assigned To:</span>
+                                            <span class="font-bold text-slate-200">${assignee.name}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-1.5">
+                                        <div class="flex justify-between text-[11px]">
+                                            <span class="text-slate-400 font-medium">Work Completion</span>
+                                            <span class="font-mono font-bold ${task.progress === 100 ? 'text-emerald-400' : 'text-cyan-300'}">${task.progress}%</span>
+                                        </div>
+                                        <div class="w-full h-2.5 rounded-full bg-white/10 overflow-hidden">
+                                            <div class="h-full bg-gradient-to-r ${delayed ? 'from-rose-500 via-amber-500 to-rose-400' : task.progress === 100 ? 'from-emerald-500 via-teal-400 to-cyan-400' : 'from-brand-500 via-indigo-400 to-cyan-400'} rounded-full spring-transition" style="width: ${task.progress}%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-right">
+                                        <span class="text-[10px] text-slate-400 block font-medium">Deadline (Last Date)</span>
+                                        <span class="font-mono font-bold ${delayed ? 'text-rose-400' : 'text-slate-200'} text-xs">${task.dueDate}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Notes & Admin Rating Strip (If Present) -->
+                                ${(task.employeeNotes || task.adminFeedback || task.adminRating > 0) ? `
+                                    <div class="mt-2 pt-2 border-t border-white/5 space-y-2 text-xs">
+                                        ${task.employeeNotes ? `
+                                            <div class="p-3 rounded-2xl bg-black/40 border border-white/10 flex items-start gap-2.5">
+                                                <i data-lucide="file-code" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                                <div>
+                                                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Submitted Deliverable / Progress Notes:</span>
+                                                    <span class="text-slate-300 block font-mono text-[11px] mt-0.5">${task.employeeNotes}</span>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+
+                                        ${task.adminRating > 0 || task.adminFeedback ? `
+                                            <div class="p-3.5 rounded-2xl bg-amber-950/25 border border-amber-500/35 flex items-start justify-between gap-3 shadow-glow-amber">
+                                                <div>
+                                                    <div class="flex items-center gap-2">
+                                                        <span class="text-[10px] text-amber-300 font-bold uppercase tracking-wider">HR Performance Evaluation:</span>
+                                                        <span class="text-amber-400 font-bold">${'★'.repeat(task.adminRating)}${'☆'.repeat(5 - task.adminRating)} (${task.adminRating}/5 Stars)</span>
+                                                    </div>
+                                                    <p class="text-amber-100 italic text-xs mt-1">"${task.adminFeedback}"</p>
+                                                </div>
+                                                <span class="text-[10px] font-bold text-amber-400 bg-amber-500/20 px-2.5 py-0.5 rounded-lg border border-amber-500/30">Verified ✓</span>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+                `;
+            },
+
+            // Interactive Notice Board & Two-Way Announcements Component (Cyber Spatial Feed)
+            InteractiveNotificationCenter: (user, isAdmin) => {
+                const notifs = DayflowDB.getNotifications();
+                const filter = Dayflow.state.notificationFilterType || 'All';
+
+                const filteredNotifs = notifs.filter(n => {
+                    if (filter === 'All') return true;
+                    return n.type === filter;
+                });
+
+                const badgeStyles = {
+                    urgent: 'bg-rose-500/20 text-rose-300 border-rose-500/30 shadow-glow-rose',
+                    policy: 'bg-brand-500/20 text-brand-300 border-brand-500/30 shadow-glow-brand',
+                    memo: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30 shadow-glow-cyan',
+                    recognition: 'bg-amber-500/20 text-amber-300 border-amber-500/30 shadow-glow-amber'
+                };
+
+                return `
+                <div class="glass-panel rounded-3xl p-6 md:p-8 border border-white/15 shadow-2xl relative overflow-hidden space-y-6">
+                    <div class="absolute -top-24 -left-24 w-96 h-96 bg-gradient-to-br from-cyan-500/15 via-brand-500/20 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+
+                    <!-- Top Bar -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/10 relative z-10">
+                        <div>
+                            <div class="flex items-center gap-3 mb-1.5">
+                                <span class="p-2.5 rounded-2xl bg-gradient-to-tr from-cyan-600 to-indigo-500 text-white shadow-glow-cyan">
+                                    <i data-lucide="megaphone" class="w-5 h-5"></i>
+                                </span>
+                                <h3 class="text-xl font-black text-white tracking-tight font-display">Notice Board & Interactive Communications</h3>
+                            </div>
+                            <p class="text-xs text-slate-400 font-normal">Real-time company broadcasts from Administration with two-way employee discussion & instant reaction chips.</p>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            ${isAdmin ? `
+                                <button onclick="Dayflow.openBroadcastNotificationModal()" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-brand-600 via-indigo-500 to-cyan-500 hover:brightness-110 text-white font-bold text-xs shadow-glow-brand spring-transition flex items-center gap-2 border border-white/20">
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Broadcast Notice
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    <!-- Category Pills Filter -->
+                    <div class="flex items-center gap-2 pb-2 overflow-x-auto border-b border-white/10 relative z-10">
+                        ${[
+                            { id: 'All', label: `All Notices (${notifs.length})` },
+                            { id: 'urgent', label: `🚨 Urgent Alerts (${notifs.filter(n => n.type === 'urgent').length})` },
+                            { id: 'policy', label: `Policy & HR (${notifs.filter(n => n.type === 'policy').length})` },
+                            { id: 'memo', label: `Tech Memos (${notifs.filter(n => n.type === 'memo').length})` },
+                            { id: 'recognition', label: `🌟 Kudos & Recognition (${notifs.filter(n => n.type === 'recognition').length})` }
+                        ].map(tab => `
+                            <button onclick="Dayflow.setNotificationFilter('${tab.id}')" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold spring-transition whitespace-nowrap ${filter === tab.id ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-glow-cyan font-bold' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'}">
+                                ${tab.label}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <!-- Notifications Feed -->
+                    <div class="space-y-4 relative z-10">
+                        ${filteredNotifs.length === 0 ? `
+                            <div class="p-10 text-center glass-panel-subtle rounded-3xl border border-white/10 text-slate-400 text-xs">
+                                <i data-lucide="bell-off" class="w-8 h-8 mx-auto mb-2 text-slate-500 opacity-60"></i>
+                                No announcements found under "${filter}".
+                            </div>
+                        ` : filteredNotifs.map(notif => `
+                            <div class="glass-panel-subtle p-5 md:p-6 rounded-3xl border border-white/10 space-y-4 spring-transition hover:border-brand-500/30">
+                                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                                    <div class="flex items-start gap-3.5">
+                                        <img src="${notif.senderAvatar}" class="w-10 h-10 rounded-2xl object-cover border border-white/15 shadow-sm mt-0.5" />
+                                        <div class="space-y-1">
+                                            <div class="flex items-center gap-2 flex-wrap">
+                                                <span class="px-2.5 py-0.5 rounded-lg text-[10px] font-bold uppercase tracking-wider ${badgeStyles[notif.type] || badgeStyles.memo} border">
+                                                    ${notif.type}
+                                                </span>
+                                                <span class="text-xs font-bold text-white">${notif.sender}</span>
+                                                <span class="text-[10px] text-slate-400 font-mono">&bull; ${notif.date}</span>
+                                            </div>
+                                            <h4 class="text-sm font-bold text-white font-display tracking-tight">${notif.title}</h4>
+                                        </div>
+                                    </div>
+
+                                    ${isAdmin ? `
+                                        <button onclick="if(confirm('Delete this broadcast?')) Dayflow.deleteNotification('${notif.id}')" class="p-1.5 rounded-xl text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 spring-transition self-start">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    ` : ''}
+                                </div>
+
+                                <p class="text-xs text-slate-200 bg-white/5 p-4 rounded-2xl border border-white/10 leading-relaxed font-normal">
+                                    ${notif.message}
+                                </p>
+
+                                <!-- Threaded Replies Stream -->
+                                <div class="pt-3 border-t border-white/10 space-y-3">
+                                    <div class="flex items-center justify-between text-[11px] text-slate-400">
+                                        <span class="font-semibold flex items-center gap-1.5 text-cyan-300">
+                                            <i data-lucide="message-square" class="w-3.5 h-3.5 text-cyan-400"></i>
+                                            Team Responses & Discussion (${notif.replies ? notif.replies.length : 0})
+                                        </span>
+                                    </div>
+
+                                    <!-- Replies List -->
+                                    ${notif.replies && notif.replies.length > 0 ? `
+                                        <div class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                                            ${notif.replies.map(rep => `
+                                                <div class="flex items-start gap-2.5 p-3 rounded-2xl bg-black/40 border border-white/10 text-xs">
+                                                    <img src="${rep.avatar}" class="w-6 h-6 rounded-xl object-cover flex-shrink-0 mt-0.5" />
+                                                    <div class="flex-1 space-y-0.5">
+                                                        <div class="flex items-center justify-between">
+                                                            <span class="font-bold text-[11px] ${rep.role === 'admin' ? 'text-brand-300' : 'text-slate-200'}">
+                                                                ${rep.name} ${rep.role === 'admin' ? '<span class="text-[9px] bg-brand-500/20 px-1.5 py-0.2 rounded text-brand-300 font-normal">HR Admin</span>' : ''}
+                                                            </span>
+                                                            <span class="text-[10px] text-slate-500 font-mono">${rep.timestamp}</span>
+                                                        </div>
+                                                        <p class="text-slate-300 text-xs leading-normal font-normal">${rep.message}</p>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    ` : ''}
+
+                                    <!-- Quick Reaction Chips & Reply Box -->
+                                    <div class="space-y-2.5 pt-1">
+                                        <div class="flex flex-wrap items-center gap-2">
+                                            <span class="text-[10px] text-slate-400 font-semibold mr-1">Quick Reactions:</span>
+                                            ${[
+                                                'Acknowledged ✓',
+                                                'Understood, on it! 🚀',
+                                                'Reviewing the details 🔍',
+                                                'Thanks for the update! 🎉'
+                                            ].map(chip => `
+                                                <button onclick="Dayflow.handleQuickReply('${notif.id}', '${chip}')" class="px-3 py-1 rounded-xl text-[11px] bg-white/5 hover:bg-white/15 text-slate-200 border border-white/10 spring-transition hover:border-cyan-400 hover:text-cyan-300">
+                                                    ${chip}
+                                                </button>
+                                            `).join('')}
+                                        </div>
+
+                                        <!-- Custom Reply Input Form -->
+                                        <form onsubmit="Dayflow.handleNotificationReply(event, '${notif.id}')" class="flex items-center gap-2">
+                                            <input id="reply-input-${notif.id}" type="text" placeholder="Write a response or question for HR / team..." class="glass-input rounded-2xl px-4 py-2 text-xs w-full outline-none" />
+                                            <button type="submit" class="px-5 py-2 rounded-2xl bg-gradient-to-r from-cyan-600 to-brand-500 hover:brightness-110 text-white font-bold text-xs spring-transition flex items-center gap-1.5 flex-shrink-0 shadow-md">
+                                                <i data-lucide="send" class="w-3.5 h-3.5"></i> Reply
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                `;
+            },
+
             // Individual Employee Weekly & Monthly Attendance Tracker (Admin Mode)
             IndividualEmployeeAttendanceTracker: (selectedEmpId, currentMode) => {
                 const users = DayflowDB.getUsers();
@@ -2224,9 +3547,9 @@
                             <!-- Employee Selector Dropdown -->
                             <div class="flex items-center gap-2 glass-panel-subtle px-3 py-1.5 rounded-2xl border border-white/10">
                                 <label class="text-xs font-semibold text-slate-400 whitespace-nowrap">Employee:</label>
-                                <select onchange="Dayflow.setAdminAttendanceEmployee(this.value)" class="glass-input rounded-xl px-3 py-1.5 text-xs bg-slate-900 font-bold text-brand-300 outline-none cursor-pointer border border-brand-500/30">
+                                <select onchange="Dayflow.setAdminAttendanceEmployee(this.value)" class="glass-input rounded-2xl px-3.5 py-1.5 text-xs bg-slate-950 text-white font-bold outline-none cursor-pointer border-2 border-slate-900 shadow-md" style="color-scheme: dark; background-color: #020617; color: #ffffff; border: 2px solid #0f172a; border-radius: 14px;">
                                     ${users.map(u => `
-                                        <option value="${u.id}" ${u.id === empId ? 'selected' : ''}>
+                                        <option value="${u.id}" ${u.id === empId ? 'selected' : ''} style="background-color: #020617; color: #ffffff; padding: 8px;">
                                             ${u.name} (${u.id}) - ${u.designation}
                                         </option>
                                     `).join('')}
@@ -2455,9 +3778,44 @@
                 else if (leaveFilter === 'Rejected') displayedLeaves = rejectedLeaves;
 
                 const totalMonthlyPayroll = users.reduce((sum, u) => sum + (u.salary ? (u.salary.base + u.salary.hra + u.salary.allowances - u.salary.deductions - u.salary.pf - u.salary.tax) / 12 : 0), 0);
+                const greetingData = getDynamicGreeting(Dayflow.state.user ? Dayflow.state.user.name.split(' ')[0] : 'Sarah');
 
                 return `
                 <div class="fade-slide-enter space-y-6">
+                    <!-- Admin Hero Header with Dynamic Time-of-Day Greeting & Live Clock -->
+                    <div class="glass-panel rounded-3xl p-6 md:p-8 relative overflow-hidden border border-brand-500/20 bg-gradient-to-br from-brand-950/40 via-slate-900/60 to-cyan-950/30 shadow-2xl">
+                        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
+                            <div>
+                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 border border-brand-500/30 text-brand-300 text-xs font-semibold mb-3">
+                                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                                    Administration &bull; Human Resources Director
+                                </div>
+                                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight flex items-center gap-2.5">
+                                    <i data-lucide="${greetingData.icon}" class="w-8 h-8 text-amber-400"></i>
+                                    ${greetingData.title}
+                                </h2>
+                                <div class="flex flex-wrap items-center gap-2.5 mt-2">
+                                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/40 border border-white/10 text-xs font-mono font-bold text-cyan-300 shadow-sm">
+                                        <i data-lucide="clock" class="w-3.5 h-3.5 text-cyan-400"></i>
+                                        <span id="live-digital-clock">${greetingData.liveTime}</span>
+                                    </div>
+                                    <span class="text-xs text-slate-300 font-medium">${greetingData.dateFormatted}</span>
+                                    <span class="text-xs text-slate-500 hidden sm:inline">&bull;</span>
+                                    <span class="text-xs text-cyan-300 italic font-normal hidden sm:inline">"${greetingData.quote}"</span>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+                                <button onclick="Dayflow.openAssignTaskModal()" class="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-brand-600 to-cyan-500 hover:brightness-110 text-white font-bold text-xs shadow-glow-brand spring-transition flex items-center gap-2 border border-white/20">
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Assign Work
+                                </button>
+                                <button onclick="Dayflow.openBroadcastNotificationModal()" class="px-4 py-2.5 rounded-2xl glass-panel hover:bg-white/20 text-slate-200 font-bold text-xs spring-transition flex items-center gap-2 border border-white/20">
+                                    <i data-lucide="megaphone" class="w-4 h-4"></i> Broadcast Notice
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Top KPI Ribbon -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div class="glass-panel rounded-3xl p-5 glass-card-interactive">
@@ -2627,6 +3985,12 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Work Assignment & Task Management Suite (Admin Review & Ratings) -->
+                    ${Views.WorkAssignmentSection(Dayflow.state.user, true)}
+
+                    <!-- Notice Board & Broadcast Announcements (Interactive Two-Way Feed) -->
+                    ${Views.InteractiveNotificationCenter(Dayflow.state.user, true)}
 
                     <!-- Individual Employee Weekly & Monthly Attendance Deep-Dive -->
                     ${Views.IndividualEmployeeAttendanceTracker(Dayflow.state.adminAttendanceEmployeeId, Dayflow.state.adminAttendanceViewMode)}
@@ -2820,8 +4184,8 @@
                                     <!-- Country & Dial Code for Phone -->
                                     <div class="flex flex-col gap-1">
                                         <label class="text-xs font-semibold text-slate-400">Country & Dial Code</label>
-                                        <select id="prof-country" ${!isEditing ? 'disabled' : ''} class="glass-input rounded-xl p-3 text-xs bg-slate-900 disabled:opacity-60">
-                                            ${COUNTRY_LIST.map(c => `<option value="${c.code}" ${(targetUser.country === c.name || (targetUser.phone && targetUser.phone.startsWith(c.code))) ? 'selected' : ''}>${c.flag} ${c.name} (${c.code})</option>`).join('')}
+                                        <select id="prof-country" ${!isEditing ? 'disabled' : ''} class="glass-input rounded-2xl p-3 text-xs bg-slate-950 text-white font-medium disabled:opacity-60 cursor-pointer border-2 border-slate-900 shadow-md" style="color-scheme: dark; background-color: #020617; color: #ffffff; border: 2px solid #0f172a; border-radius: 14px;">
+                                            ${COUNTRY_LIST.map(c => `<option value="${c.code}" ${(targetUser.country === c.name || (targetUser.phone && targetUser.phone.startsWith(c.code))) ? 'selected' : ''} style="background-color: #020617; color: #ffffff; padding: 8px;">${c.flag} ${c.name} (${c.code})</option>`).join('')}
                                         </select>
                                     </div>
                                     <div class="flex flex-col gap-1">
@@ -2855,12 +4219,12 @@
                                     </div>
                                     <div class="flex flex-col gap-1">
                                         <label class="text-xs font-semibold text-slate-400">Department</label>
-                                        <select id="prof-department" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-3 text-xs bg-slate-900 disabled:opacity-60">
-                                            <option value="Human Resources" ${targetUser.department === 'Human Resources' ? 'selected' : ''}>Human Resources</option>
-                                            <option value="Engineering" ${targetUser.department === 'Engineering' ? 'selected' : ''}>Engineering</option>
-                                            <option value="Product & Design" ${targetUser.department === 'Product & Design' ? 'selected' : ''}>Product & Design</option>
-                                            <option value="Marketing" ${targetUser.department === 'Marketing' ? 'selected' : ''}>Marketing</option>
-                                            <option value="Finance & Legal" ${targetUser.department === 'Finance & Legal' ? 'selected' : ''}>Finance & Legal</option>
+                                        <select id="prof-department" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-3 text-xs bg-slate-900 text-white disabled:opacity-60 cursor-pointer" style="color-scheme: dark; background-color: #0f172a; color: #ffffff;">
+                                            <option value="Human Resources" ${targetUser.department === 'Human Resources' ? 'selected' : ''} style="background-color: #0f172a; color: #ffffff;">Human Resources</option>
+                                            <option value="Engineering" ${targetUser.department === 'Engineering' ? 'selected' : ''} style="background-color: #0f172a; color: #ffffff;">Engineering</option>
+                                            <option value="Product & Design" ${targetUser.department === 'Product & Design' ? 'selected' : ''} style="background-color: #0f172a; color: #ffffff;">Product & Design</option>
+                                            <option value="Marketing" ${targetUser.department === 'Marketing' ? 'selected' : ''} style="background-color: #0f172a; color: #ffffff;">Marketing</option>
+                                            <option value="Finance & Legal" ${targetUser.department === 'Finance & Legal' ? 'selected' : ''} style="background-color: #0f172a; color: #ffffff;">Finance & Legal</option>
                                         </select>
                                     </div>
                                     <div class="flex flex-col gap-1">
@@ -2869,9 +4233,9 @@
                                     </div>
                                     <div class="flex flex-col gap-1">
                                         <label class="text-xs font-semibold text-slate-400">Access Level / Role</label>
-                                        <select id="prof-role" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-3 text-xs bg-slate-900 disabled:opacity-60">
-                                            <option value="employee" ${targetUser.role === 'employee' ? 'selected' : ''}>Employee (Standard Access)</option>
-                                            <option value="admin" ${targetUser.role === 'admin' ? 'selected' : ''}>Admin / HR Officer (Full Access)</option>
+                                        <select id="prof-role" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-3 text-xs bg-slate-900 text-white disabled:opacity-60 cursor-pointer" style="color-scheme: dark; background-color: #0f172a; color: #ffffff;">
+                                            <option value="employee" ${targetUser.role === 'employee' ? 'selected' : ''} style="background-color: #0f172a; color: #ffffff;">Employee (Standard Access)</option>
+                                            <option value="admin" ${targetUser.role === 'admin' ? 'selected' : ''} style="background-color: #0f172a; color: #ffffff;">Admin / HR Officer (Full Access)</option>
                                         </select>
                                     </div>
                                     <div class="flex flex-col gap-1">
@@ -3320,10 +4684,10 @@
                         <form onsubmit="Dayflow.handleLeaveSubmit(event)" class="space-y-4">
                             <div class="flex flex-col gap-1">
                                 <label class="text-xs font-semibold text-slate-400">Leave Type</label>
-                                <select id="leave-type" class="glass-input rounded-xl p-3 text-xs bg-slate-900 text-white outline-none">
-                                    <option value="Paid">Paid Leave (Casual / Vacation)</option>
-                                    <option value="Sick">Sick & Medical Leave</option>
-                                    <option value="Unpaid">Unpaid Leave</option>
+                                <select id="leave-type" class="glass-input rounded-xl p-3 text-xs bg-slate-900 text-white outline-none cursor-pointer" style="color-scheme: dark; background-color: #0f172a; color: #ffffff;">
+                                    <option value="Paid" style="background-color: #0f172a; color: #ffffff;">Paid Leave (Casual / Vacation)</option>
+                                    <option value="Sick" style="background-color: #0f172a; color: #ffffff;">Sick & Medical Leave</option>
+                                    <option value="Unpaid" style="background-color: #0f172a; color: #ffffff;">Unpaid Leave</option>
                                 </select>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
@@ -3612,11 +4976,11 @@
 
                             <div class="flex flex-col gap-1">
                                 <label class="text-xs font-semibold text-slate-400">Attendance Status</label>
-                                <select id="att-edit-status" class="glass-input rounded-xl p-2.5 text-xs bg-slate-900">
-                                    <option value="Present" ${record.status === 'Present' ? 'selected' : ''}>Present</option>
-                                    <option value="Absent" ${record.status === 'Absent' ? 'selected' : ''}>Absent</option>
-                                    <option value="Half-day" ${record.status === 'Half-day' ? 'selected' : ''}>Half-day</option>
-                                    <option value="Leave" ${record.status === 'Leave' ? 'selected' : ''}>Leave</option>
+                                <select id="att-edit-status" class="glass-input rounded-xl p-2.5 text-xs bg-slate-900 text-white cursor-pointer" style="color-scheme: dark; background-color: #0f172a; color: #ffffff;">
+                                    <option value="Present" ${record.status === 'Present' ? 'selected' : ''} style="background-color: #0f172a; color: #ffffff;">Present</option>
+                                    <option value="Absent" ${record.status === 'Absent' ? 'selected' : ''} style="background-color: #0f172a; color: #ffffff;">Absent</option>
+                                    <option value="Half-day" ${record.status === 'Half-day' ? 'selected' : ''} style="background-color: #0f172a; color: #ffffff;">Half-day</option>
+                                    <option value="Leave" ${record.status === 'Leave' ? 'selected' : ''} style="background-color: #0f172a; color: #ffffff;">Leave</option>
                                 </select>
                             </div>
 
@@ -3666,6 +5030,12 @@
                     case 'dashboard': 
                         viewContent = Dayflow.state.user.role === 'admin' ? Views.AdminDashboard() : Views.EmployeeDashboard(); 
                         break;
+                    case 'tasks':
+                        viewContent = Views.WorkAssignmentSection(Dayflow.state.user, Dayflow.state.user.role === 'admin');
+                        break;
+                    case 'announcements':
+                        viewContent = Views.InteractiveNotificationCenter(Dayflow.state.user, Dayflow.state.user.role === 'admin');
+                        break;
                     case 'profile': 
                         viewContent = Views.Profile(); 
                         break;
@@ -3698,7 +5068,7 @@
 
         // Real-Time Cross-Tab / Multi-Window State Synchronization
         window.addEventListener('storage', (e) => {
-            if (e.key === 'dayflow_leaves' || e.key === 'dayflow_users' || e.key === 'dayflow_attendance' || e.key === 'dayflow_auth_user') {
+            if (e.key === 'dayflow_leaves' || e.key === 'dayflow_users' || e.key === 'dayflow_attendance' || e.key === 'dayflow_auth_user' || e.key === 'dayflow_tasks' || e.key === 'dayflow_notifications') {
                 if (Dayflow.state.user) {
                     const users = DayflowDB.getUsers();
                     const freshUser = users.find(u => u.id === Dayflow.state.user.id);
