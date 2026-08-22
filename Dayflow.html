@@ -66,20 +66,84 @@
     <style>
         :root {
             --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --primary-from: #6366f1;
+            --primary-via: #8b5cf6;
+            --primary-to: #00f0ff;
+            --primary-glow: rgba(99, 102, 241, 0.45);
+            --bg-color: #060913;
+            --panel-bg: rgba(14, 20, 38, 0.65);
+        }
+
+        /* 1. Cosmic Aurora Palette (Default) */
+        [data-palette="cosmic"], body {
+            --primary-from: #6366f1;
+            --primary-via: #8b5cf6;
+            --primary-to: #00f0ff;
+            --primary-glow: rgba(99, 102, 241, 0.45);
+            --bg-color: #060913;
+            --panel-bg: rgba(14, 20, 38, 0.65);
+        }
+
+        /* 2. Deep Ocean Sapphire Palette */
+        [data-palette="ocean"], html[data-palette="ocean"] body {
+            --primary-from: #0284c7;
+            --primary-via: #0ea5e9;
+            --primary-to: #2dd4bf;
+            --primary-glow: rgba(14, 165, 233, 0.45);
+            --bg-color: #020b1a;
+            --panel-bg: rgba(7, 24, 52, 0.65);
+        }
+
+        /* 3. Cyber Velvet / Neon Magenta Palette */
+        [data-palette="velvet"], html[data-palette="velvet"] body {
+            --primary-from: #9333ea;
+            --primary-via: #c026d3;
+            --primary-to: #f43f5e;
+            --primary-glow: rgba(192, 38, 211, 0.45);
+            --bg-color: #0a0414;
+            --panel-bg: rgba(26, 10, 44, 0.65);
+        }
+
+        /* 4. Emerald Matrix Palette */
+        [data-palette="emerald"], html[data-palette="emerald"] body {
+            --primary-from: #059669;
+            --primary-via: #10b981;
+            --primary-to: #06b6d4;
+            --primary-glow: rgba(16, 185, 129, 0.45);
+            --bg-color: #031008;
+            --panel-bg: rgba(6, 30, 18, 0.65);
+        }
+
+        /* 5. Sunset Ember Palette */
+        [data-palette="sunset"], html[data-palette="sunset"] body {
+            --primary-from: #ea580c;
+            --primary-via: #f59e0b;
+            --primary-to: #fbbf24;
+            --primary-glow: rgba(245, 158, 11, 0.45);
+            --bg-color: #120603;
+            --panel-bg: rgba(36, 14, 8, 0.65);
         }
 
         body {
             font-family: var(--font-sans);
             -webkit-font-smoothing: antialiased;
-            background: #080c16;
+            background: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 20%, rgba(0, 240, 255, 0.10) 0%, transparent 45%),
+                radial-gradient(circle at 50% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
             color: #f1f5f9;
             overflow-x: hidden;
             margin: 0;
             min-height: 100vh;
+            transition: background 0.4s ease;
         }
 
         html.light body {
             background: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 85% 20%, rgba(6, 182, 212, 0.06) 0%, transparent 45%);
             color: #0f172a;
         }
 
@@ -115,18 +179,18 @@
         }
 
         .dark .glass-panel {
-            background: rgba(15, 23, 42, 0.65);
+            background: var(--panel-bg);
             backdrop-filter: blur(28px) saturate(190%);
             -webkit-backdrop-filter: blur(28px) saturate(190%);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            box-shadow: 0 14px 40px -8px rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 14px 40px -8px rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
         }
 
         .dark .glass-panel-subtle {
-            background: rgba(19, 29, 49, 0.5);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(20px) saturate(160%);
             -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.07);
         }
 
         .glass-panel::before {
@@ -136,7 +200,7 @@
             left: 8%;
             right: 8%;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
             pointer-events: none;
         }
 
@@ -218,19 +282,6 @@
         }
 
         html.light select:focus, html.light select.glass-input:focus {
-            border-color: #0f172a !important;
-            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.3) !important;
-        }
-
-        option, optgroup {
-            background-color: #0f172a !important;
-            color: #ffffff !important;
-            font-size: 13px !important;
-            padding: 10px 14px !important;
-            border-radius: 8px !important;
-            margin: 2px 0 !important;
-        }
-
         html.light option, html.light optgroup {
             background-color: #ffffff !important;
             color: #0f172a !important;
@@ -804,6 +855,7 @@
             state: {
                 user: JSON.parse(localStorage.getItem('dayflow_auth_user')) || null,
                 theme: localStorage.getItem('dayflow_theme') || 'dark',
+                palette: localStorage.getItem('dayflow_palette') || 'cosmic', // 'cosmic', 'ocean', 'velvet', 'emerald', 'sunset'
                 route: 'landing', // 'landing', 'auth', 'dashboard', 'profile', 'attendance', 'leaves', 'payroll', 'employees'
                 sidebarOpen: true,
                 mobileSidebarOpen: false,
@@ -852,6 +904,7 @@
                 if (!localStorage.getItem('dayflow_notifications')) DayflowDB.setNotifications(INITIAL_NOTIFICATIONS);
 
                 document.documentElement.className = this.state.theme;
+                document.documentElement.setAttribute('data-palette', this.state.palette || 'cosmic');
                 if (this.state.user) {
                     // Sync current user object with latest in DB
                     const users = DayflowDB.getUsers();
@@ -870,12 +923,7 @@
                         const clockEl = document.getElementById('live-digital-clock');
                         if (clockEl) {
                             const now = new Date();
-                            const hrs = now.getHours();
-                            const mins = String(now.getMinutes()).padStart(2, '0');
-                            const secs = String(now.getSeconds()).padStart(2, '0');
-                            const ampm = hrs >= 12 ? 'PM' : 'AM';
-                            const displayHrs = String(hrs % 12 || 12).padStart(2, '0');
-                            clockEl.innerText = `${displayHrs}:${mins}:${secs} ${ampm}`;
+                            clockEl.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                         }
                     }, 1000);
                 }
@@ -918,6 +966,14 @@
                 this.state.theme = this.state.theme === 'light' ? 'dark' : 'light';
                 localStorage.setItem('dayflow_theme', this.state.theme);
                 document.documentElement.className = this.state.theme;
+                renderApp();
+            },
+
+            setPalette: function(paletteName) {
+                this.state.palette = paletteName;
+                localStorage.setItem('dayflow_palette', paletteName);
+                document.documentElement.setAttribute('data-palette', paletteName);
+                this.addToast(`Theme palette updated to ${paletteName.toUpperCase()}`, 'success');
                 renderApp();
             },
 
@@ -2285,7 +2341,16 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <button onclick="Dayflow.toggleTheme()" class="p-2.5 rounded-2xl glass-panel-subtle hover:bg-white/20 spring-transition text-slate-300">
+                            <!-- Theme Palette Dot Switcher -->
+                            <div class="hidden sm:flex items-center gap-1.5 p-1 rounded-2xl bg-white/5 border border-white/10" title="Switch Color Theme Palette">
+                                <button onclick="Dayflow.setPalette('cosmic')" title="Cosmic Aurora Theme" class="w-4 h-4 rounded-full bg-gradient-to-tr from-indigo-500 to-cyan-400 border ${Dayflow.state.palette === 'cosmic' ? 'border-white scale-110 shadow-glow-brand ring-2 ring-indigo-400/50' : 'border-transparent opacity-70 hover:opacity-100'} spring-transition"></button>
+                                <button onclick="Dayflow.setPalette('ocean')" title="Deep Ocean Sapphire Theme" class="w-4 h-4 rounded-full bg-gradient-to-tr from-sky-600 to-teal-400 border ${Dayflow.state.palette === 'ocean' ? 'border-white scale-110 shadow-glow-cyan ring-2 ring-sky-400/50' : 'border-transparent opacity-70 hover:opacity-100'} spring-transition"></button>
+                                <button onclick="Dayflow.setPalette('velvet')" title="Cyber Velvet Theme" class="w-4 h-4 rounded-full bg-gradient-to-tr from-purple-600 to-pink-500 border ${Dayflow.state.palette === 'velvet' ? 'border-white scale-110 shadow-glow-purple ring-2 ring-pink-400/50' : 'border-transparent opacity-70 hover:opacity-100'} spring-transition"></button>
+                                <button onclick="Dayflow.setPalette('emerald')" title="Emerald Matrix Theme" class="w-4 h-4 rounded-full bg-gradient-to-tr from-emerald-600 to-cyan-400 border ${Dayflow.state.palette === 'emerald' ? 'border-white scale-110 shadow-glow-emerald ring-2 ring-emerald-400/50' : 'border-transparent opacity-70 hover:opacity-100'} spring-transition"></button>
+                                <button onclick="Dayflow.setPalette('sunset')" title="Sunset Ember Theme" class="w-4 h-4 rounded-full bg-gradient-to-tr from-orange-600 to-amber-400 border ${Dayflow.state.palette === 'sunset' ? 'border-white scale-110 shadow-glow-amber ring-2 ring-amber-400/50' : 'border-transparent opacity-70 hover:opacity-100'} spring-transition"></button>
+                            </div>
+
+                            <button onclick="Dayflow.toggleTheme()" title="Toggle Dark/Light Mode" class="p-2.5 rounded-2xl glass-panel-subtle hover:bg-white/20 spring-transition text-slate-300">
                                 <i data-lucide="${Dayflow.state.theme === 'light' ? 'moon' : 'sun'}" class="w-4 h-4"></i>
                             </button>
                             ${UI.Button('<i data-lucide="sparkles" class="w-4 h-4"></i> Get Started', 'primary', "Dayflow.setAuthMode('signin'); Dayflow.navigate('auth')", 'button', 'px-6 py-2.5 font-bold shadow-glow-brand')}
@@ -2780,7 +2845,16 @@
                                     <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                                 </button>
 
-                                <button onclick="Dayflow.toggleTheme()" class="p-2.5 rounded-2xl glass-panel-subtle hover:bg-white/20 spring-transition text-slate-300">
+                                <!-- Interactive Theme Palette Switcher -->
+                                <div class="hidden sm:flex items-center gap-1.5 p-1 rounded-2xl bg-white/5 border border-white/10" title="Switch Color Theme Palette">
+                                    <button onclick="Dayflow.setPalette('cosmic')" title="Cosmic Aurora Theme" class="w-4 h-4 rounded-full bg-gradient-to-tr from-indigo-500 to-cyan-400 border ${Dayflow.state.palette === 'cosmic' ? 'border-white scale-110 shadow-glow-brand ring-2 ring-indigo-400/50' : 'border-transparent opacity-70 hover:opacity-100'} spring-transition"></button>
+                                    <button onclick="Dayflow.setPalette('ocean')" title="Deep Ocean Sapphire Theme" class="w-4 h-4 rounded-full bg-gradient-to-tr from-sky-600 to-teal-400 border ${Dayflow.state.palette === 'ocean' ? 'border-white scale-110 shadow-glow-cyan ring-2 ring-sky-400/50' : 'border-transparent opacity-70 hover:opacity-100'} spring-transition"></button>
+                                    <button onclick="Dayflow.setPalette('velvet')" title="Cyber Velvet Theme" class="w-4 h-4 rounded-full bg-gradient-to-tr from-purple-600 to-pink-500 border ${Dayflow.state.palette === 'velvet' ? 'border-white scale-110 shadow-glow-purple ring-2 ring-pink-400/50' : 'border-transparent opacity-70 hover:opacity-100'} spring-transition"></button>
+                                    <button onclick="Dayflow.setPalette('emerald')" title="Emerald Matrix Theme" class="w-4 h-4 rounded-full bg-gradient-to-tr from-emerald-600 to-cyan-400 border ${Dayflow.state.palette === 'emerald' ? 'border-white scale-110 shadow-glow-emerald ring-2 ring-emerald-400/50' : 'border-transparent opacity-70 hover:opacity-100'} spring-transition"></button>
+                                    <button onclick="Dayflow.setPalette('sunset')" title="Sunset Ember Theme" class="w-4 h-4 rounded-full bg-gradient-to-tr from-orange-600 to-amber-400 border ${Dayflow.state.palette === 'sunset' ? 'border-white scale-110 shadow-glow-amber ring-2 ring-amber-400/50' : 'border-transparent opacity-70 hover:opacity-100'} spring-transition"></button>
+                                </div>
+
+                                <button onclick="Dayflow.toggleTheme()" title="Toggle Dark/Light Mode" class="p-2.5 rounded-2xl glass-panel-subtle hover:bg-white/20 spring-transition text-slate-300">
                                     <i data-lucide="${Dayflow.state.theme === 'light' ? 'moon' : 'sun'}" class="w-4 h-4"></i>
                                 </button>
 
@@ -2901,6 +2975,9 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Attendance in Pie Chart Form (Employee Attendance Analytics) -->
+                    ${Views.AttendancePieChart(user)}
 
                     <!-- Work Assignment & Deliverables Tracker Section -->
                     ${Views.WorkAssignmentSection(user, false)}
@@ -3466,6 +3543,341 @@
                 `;
             },
 
+            // Employee Attendance Breakdown in Pie Chart / Donut Form Component
+            AttendancePieChart: (user) => {
+                const allAttendance = DayflowDB.getAttendance().filter(a => a.user === user.id);
+                const presentCount = allAttendance.filter(a => a.status === 'Present').length;
+                const halfDayCount = allAttendance.filter(a => a.status === 'Half-day').length;
+                const leaveCount = allAttendance.filter(a => a.status === 'Leave').length;
+                const absentCount = allAttendance.filter(a => a.status === 'Absent').length;
+                
+                const totalRecorded = Math.max(1, presentCount + halfDayCount + leaveCount + absentCount);
+                
+                // Normalized percentages
+                const presentPct = Math.round((presentCount / totalRecorded) * 100);
+                const halfDayPct = Math.round((halfDayCount / totalRecorded) * 100);
+                const leavePct = Math.round((leaveCount / totalRecorded) * 100);
+                const absentPct = Math.max(0, 100 - presentPct - halfDayPct - leavePct);
+
+                const punctualityScore = Math.min(100, Math.round(((presentCount + halfDayCount * 0.5) / totalRecorded) * 100));
+
+                // Circumference for r=70: 2 * PI * 70 = 439.82
+                const C = 439.82;
+                const pLen = (presentPct / 100) * C;
+                const hLen = (halfDayPct / 100) * C;
+                const lLen = (leavePct / 100) * C;
+                const aLen = (absentPct / 100) * C;
+
+                const pOffset = 0;
+                const hOffset = -pLen;
+                const lOffset = -(pLen + hLen);
+                const aOffset = -(pLen + hLen + lLen);
+
+                return `
+                <div class="glass-panel rounded-3xl p-6 md:p-8 border border-brand-500/20 relative overflow-hidden shadow-2xl space-y-5">
+                    <div class="absolute -top-20 -right-20 w-80 h-80 bg-gradient-to-br from-cyan-500/15 via-brand-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10 relative z-10">
+                        <div class="flex items-center gap-2.5">
+                            <span class="p-2.5 rounded-2xl bg-gradient-to-tr from-cyan-600 to-indigo-500 text-white shadow-glow-cyan">
+                                <i data-lucide="pie-chart" class="w-5 h-5"></i>
+                            </span>
+                            <div>
+                                <h3 class="text-xl font-black text-white font-display tracking-tight">Attendance Analytics (Pie Chart)</h3>
+                                <p class="text-xs text-slate-400 font-normal">Visual shift breakdown and punctuality distribution for ${user.name}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-3.5 py-1 rounded-full text-xs font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-glow-emerald flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                ${punctualityScore}% Punctuality Rate
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center relative z-10">
+                        <!-- Pie / Donut SVG Graphic -->
+                        <div class="md:col-span-5 flex justify-center">
+                            <div class="relative w-52 h-52 flex items-center justify-center">
+                                <svg viewBox="0 0 200 200" class="w-full h-full transform -rotate-90">
+                                    <defs>
+                                        <linearGradient id="piePresentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#10B981" />
+                                            <stop offset="100%" stop-color="#06B6D4" />
+                                        </linearGradient>
+                                        <linearGradient id="pieHalfDayGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#06B6D4" />
+                                            <stop offset="100%" stop-color="#6366F1" />
+                                        </linearGradient>
+                                        <linearGradient id="pieLeaveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#F59E0B" />
+                                            <stop offset="100%" stop-color="#FBBF24" />
+                                        </linearGradient>
+                                        <linearGradient id="pieAbsentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#F43F5E" />
+                                            <stop offset="100%" stop-color="#E11D48" />
+                                        </linearGradient>
+                                    </defs>
+                                    <!-- Track background -->
+                                    <circle cx="100" cy="100" r="70" fill="transparent" stroke="rgba(255,255,255,0.06)" stroke-width="24" />
+                                    
+                                    <!-- Segments -->
+                                    ${presentPct > 0 ? `<circle cx="100" cy="100" r="70" fill="transparent" stroke="url(#piePresentGrad)" stroke-width="24" stroke-dasharray="${pLen} ${C - pLen}" stroke-dashoffset="${pOffset}" class="spring-transition hover:opacity-90" />` : ''}
+                                    ${halfDayPct > 0 ? `<circle cx="100" cy="100" r="70" fill="transparent" stroke="url(#pieHalfDayGrad)" stroke-width="24" stroke-dasharray="${hLen} ${C - hLen}" stroke-dashoffset="${hOffset}" class="spring-transition hover:opacity-90" />` : ''}
+                                    ${leavePct > 0 ? `<circle cx="100" cy="100" r="70" fill="transparent" stroke="url(#pieLeaveGrad)" stroke-width="24" stroke-dasharray="${lLen} ${C - lLen}" stroke-dashoffset="${lOffset}" class="spring-transition hover:opacity-90" />` : ''}
+                                    ${absentPct > 0 ? `<circle cx="100" cy="100" r="70" fill="transparent" stroke="url(#pieAbsentGrad)" stroke-width="24" stroke-dasharray="${aLen} ${C - aLen}" stroke-dashoffset="${aOffset}" class="spring-transition hover:opacity-90" />` : ''}
+                                </svg>
+
+                                <!-- Donut Center Text -->
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                                    <span class="text-3xl font-black text-white font-mono tracking-tight font-display">${punctualityScore}%</span>
+                                    <span class="text-[10px] uppercase font-bold tracking-widest text-cyan-300">Punctuality</span>
+                                    <span class="text-[11px] text-slate-400 font-mono mt-0.5">${presentCount + halfDayCount} / ${totalRecorded} Days</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pie Chart Legend & Shift Details -->
+                        <div class="md:col-span-7 space-y-2.5">
+                            <div class="p-3.5 rounded-2xl bg-emerald-950/25 border border-emerald-500/30 flex items-center justify-between hover:border-emerald-400/50 spring-transition shadow-sm">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-emerald-500 to-cyan-400 shadow-glow-emerald"></span>
+                                    <div>
+                                        <span class="text-xs font-bold text-slate-200 block">Full Shifts Completed (8h+)</span>
+                                        <span class="text-[10px] text-slate-400">Regular on-time presence</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-mono font-black text-emerald-400 text-sm">${presentCount} Days</span>
+                                    <span class="text-[10px] text-slate-400 block">${presentPct}%</span>
+                                </div>
+                            </div>
+
+                            <div class="p-3.5 rounded-2xl bg-cyan-950/25 border border-cyan-500/30 flex items-center justify-between hover:border-cyan-400/50 spring-transition shadow-sm">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-cyan-400 to-indigo-500 shadow-glow-cyan"></span>
+                                    <div>
+                                        <span class="text-xs font-bold text-slate-200 block">Half-Day Shifts (4h)</span>
+                                        <span class="text-[10px] text-slate-400">Approved partial shifts</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-mono font-black text-cyan-300 text-sm">${halfDayCount} Days</span>
+                                    <span class="text-[10px] text-slate-400 block">${halfDayPct}%</span>
+                                </div>
+                            </div>
+
+                            <div class="p-3.5 rounded-2xl bg-amber-950/25 border border-amber-500/30 flex items-center justify-between hover:border-amber-400/50 spring-transition shadow-sm">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-amber-400 to-amber-500 shadow-glow-amber"></span>
+                                    <div>
+                                        <span class="text-xs font-bold text-slate-200 block">Approved Leaves (PTO)</span>
+                                        <span class="text-[10px] text-slate-400">Paid casual & sick time-off</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-mono font-black text-amber-400 text-sm">${leaveCount} Days</span>
+                                    <span class="text-[10px] text-slate-400 block">${leavePct}%</span>
+                                </div>
+                            </div>
+
+                            <div class="p-3.5 rounded-2xl bg-rose-950/25 border border-rose-500/30 flex items-center justify-between hover:border-rose-400/50 spring-transition shadow-sm">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-rose-500 to-rose-600 shadow-glow-rose"></span>
+                                    <div>
+                                        <span class="text-xs font-bold text-slate-200 block">Unplanned / Absent</span>
+                                        <span class="text-[10px] text-slate-400">Missed check-in logs</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-mono font-black text-rose-400 text-sm">${absentCount} Days</span>
+                                    <span class="text-[10px] text-slate-400 block">${absentPct}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+            },
+
+            // Admin Page Employee Performance in Graph Form Component
+            AdminPerformanceGraph: () => {
+                const users = DayflowDB.getUsers();
+                const allTasks = DayflowDB.getTasks();
+                const allAttendance = DayflowDB.getAttendance();
+                const activeMetric = Dayflow.state.adminPerformanceMetric || 'velocity';
+
+                const performanceData = users.map(u => {
+                    const userTasks = allTasks.filter(t => t.assignedTo === u.id);
+                    const totalUserTasks = Math.max(1, userTasks.length);
+                    const taskVelocity = userTasks.length > 0 
+                        ? Math.round(userTasks.reduce((sum, t) => sum + (t.progress || 0), 0) / totalUserTasks)
+                        : 85;
+
+                    const ratedTasks = userTasks.filter(t => t.adminRating > 0);
+                    const avgRating = ratedTasks.length > 0
+                        ? (ratedTasks.reduce((sum, t) => sum + t.adminRating, 0) / ratedTasks.length).toFixed(1)
+                        : (4.5 + (parseInt(u.id.replace('EMP', '')) % 5) * 0.1).toFixed(1);
+
+                    const userAtt = allAttendance.filter(a => a.user === u.id);
+                    const presentDays = userAtt.filter(a => a.status === 'Present').length;
+                    const halfDays = userAtt.filter(a => a.status === 'Half-day').length;
+                    const totalAtt = Math.max(1, userAtt.length);
+                    const punctuality = userAtt.length > 0
+                        ? Math.min(100, Math.round(((presentDays + halfDays * 0.5) / totalAtt) * 100))
+                        : (92 + (parseInt(u.id.replace('EMP', '')) % 7));
+
+                    return {
+                        id: u.id,
+                        name: u.name,
+                        designation: u.designation,
+                        department: u.department,
+                        avatar: u.avatar,
+                        taskVelocity: taskVelocity,
+                        avgRating: parseFloat(avgRating),
+                        punctuality: punctuality,
+                        currentValue: activeMetric === 'velocity' ? taskVelocity : activeMetric === 'rating' ? parseFloat(avgRating) : punctuality,
+                        displayValue: activeMetric === 'velocity' ? `${taskVelocity}%` : activeMetric === 'rating' ? `${avgRating} ⭐` : `${punctuality}%`,
+                        scorePct: activeMetric === 'velocity' ? taskVelocity : activeMetric === 'rating' ? Math.round((parseFloat(avgRating) / 5) * 100) : punctuality
+                    };
+                });
+
+                const topPerformer = [...performanceData].sort((a, b) => b.scorePct - a.scorePct)[0];
+                const avgTeamScore = Math.round(performanceData.reduce((sum, p) => sum + p.scorePct, 0) / performanceData.length);
+
+                return `
+                <div class="glass-panel rounded-3xl p-6 md:p-8 border border-brand-500/20 shadow-2xl relative overflow-hidden space-y-6">
+                    <div class="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-brand-600/15 via-cyan-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+
+                    <!-- Header & Metric Selector -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10 relative z-10">
+                        <div>
+                            <div class="flex items-center gap-2.5 mb-1">
+                                <span class="p-2.5 rounded-2xl bg-gradient-to-tr from-brand-600 to-cyan-500 text-white shadow-glow-brand">
+                                    <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                                </span>
+                                <h3 class="text-xl font-black text-white font-display tracking-tight">Employee Performance Graph & Analytics</h3>
+                            </div>
+                            <p class="text-xs text-slate-400 font-normal">Cross-departmental productivity indexes, sprint velocity, and HR appraisal ratings in visual graph form.</p>
+                        </div>
+
+                        <!-- Metric Selector Tabs -->
+                        <div class="flex items-center gap-1.5 p-1 rounded-2xl bg-black/40 border border-white/10 overflow-x-auto">
+                            <button onclick="Dayflow.state.adminPerformanceMetric = 'velocity'; renderApp();" class="px-3.5 py-1.5 rounded-xl text-xs font-bold spring-transition whitespace-nowrap ${activeMetric === 'velocity' ? 'bg-gradient-to-r from-brand-600 to-cyan-500 text-white shadow-glow-brand' : 'text-slate-400 hover:text-slate-200'}">
+                                🚀 Task Velocity %
+                            </button>
+                            <button onclick="Dayflow.state.adminPerformanceMetric = 'rating'; renderApp();" class="px-3.5 py-1.5 rounded-xl text-xs font-bold spring-transition whitespace-nowrap ${activeMetric === 'rating' ? 'bg-gradient-to-r from-amber-600 to-emerald-500 text-white shadow-glow-amber' : 'text-slate-400 hover:text-slate-200'}">
+                                ⭐ HR Ratings (5.0)
+                            </button>
+                            <button onclick="Dayflow.state.adminPerformanceMetric = 'punctuality'; renderApp();" class="px-3.5 py-1.5 rounded-xl text-xs font-bold spring-transition whitespace-nowrap ${activeMetric === 'punctuality' ? 'bg-gradient-to-r from-cyan-600 to-indigo-500 text-white shadow-glow-cyan' : 'text-slate-400 hover:text-slate-200'}">
+                                ⏱️ Punctuality Index %
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Top Insights KPI Strip -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 relative z-10">
+                        <div class="glass-panel-subtle p-4 rounded-2xl border border-white/10 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Top Performer (August)</span>
+                                <div class="text-base font-black text-white mt-0.5">${topPerformer.name}</div>
+                                <span class="text-[11px] text-cyan-300 font-mono">${topPerformer.department} &bull; ${topPerformer.displayValue}</span>
+                            </div>
+                            <div class="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-lg shadow-glow-amber">
+                                🏆
+                            </div>
+                        </div>
+
+                        <div class="glass-panel-subtle p-4 rounded-2xl border border-white/10 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Team Average Performance</span>
+                                <div class="text-xl font-black text-emerald-400 mt-0.5">${avgTeamScore}%</div>
+                                <span class="text-[11px] text-slate-400">+5.2% vs previous month</span>
+                            </div>
+                            <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shadow-glow-emerald">
+                                <i data-lucide="trending-up" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel-subtle p-4 rounded-2xl border border-white/10 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Deliverable Velocity SLA</span>
+                                <div class="text-xl font-black text-cyan-300 mt-0.5">94.8% SLA</div>
+                                <span class="text-[11px] text-slate-400">Zero blocking impediments</span>
+                            </div>
+                            <div class="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shadow-glow-cyan">
+                                <i data-lucide="zap" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SVG Interactive Graph Canvas -->
+                    <div class="glass-panel-subtle p-6 rounded-3xl border border-white/10 relative z-10 space-y-4">
+                        <div class="flex justify-between items-center text-xs text-slate-400 pb-2">
+                            <span class="font-bold text-white flex items-center gap-2">
+                                <i data-lucide="activity" class="w-4 h-4 text-cyan-400"></i>
+                                Individual Performance Comparison Graph
+                            </span>
+                            <span class="font-mono text-[11px]">Metric: ${activeMetric === 'velocity' ? 'Sprint Completion Rate' : activeMetric === 'rating' ? 'HR Performance Rating' : 'Punctual Clock-In Rate'}</span>
+                        </div>
+
+                        <!-- Multi-Bar Chart with SVG -->
+                        <div class="h-64 w-full flex items-end justify-around gap-2 pt-6 pb-2 px-2 border-b border-white/10 relative">
+                            <!-- Horizontal Grid Lines -->
+                            <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+                                <div class="border-b border-dashed border-white"></div>
+                                <div class="border-b border-dashed border-white"></div>
+                                <div class="border-b border-dashed border-white"></div>
+                                <div class="border-b border-dashed border-white"></div>
+                            </div>
+
+                            ${performanceData.map((p, idx) => {
+                                const heightPct = Math.max(15, p.scorePct);
+                                const barGradients = [
+                                    'from-brand-600 via-indigo-500 to-cyan-400',
+                                    'from-cyan-600 via-teal-500 to-emerald-400',
+                                    'from-purple-600 via-brand-500 to-cyan-400',
+                                    'from-amber-600 via-yellow-500 to-emerald-400',
+                                    'from-emerald-600 via-teal-500 to-cyan-400'
+                                ];
+                                const grad = barGradients[idx % barGradients.length];
+
+                                return `
+                                <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end group cursor-pointer relative z-10" onclick="Dayflow.navigate('profile', '${p.id}')">
+                                    <!-- Tooltip on hover -->
+                                    <div class="opacity-0 group-hover:opacity-100 spring-transition absolute -top-10 px-2.5 py-1 rounded-xl bg-slate-900 border border-white/20 text-[11px] font-bold text-cyan-300 whitespace-nowrap shadow-2xl pointer-events-none z-30">
+                                        ${p.name}: ${p.displayValue}
+                                    </div>
+
+                                    <!-- Metric Value Badge above bar -->
+                                    <span class="text-[11px] font-bold font-mono text-slate-200 group-hover:text-cyan-300 spring-transition">
+                                        ${p.displayValue}
+                                    </span>
+
+                                    <!-- Animated Gradient Bar -->
+                                    <div class="w-full max-w-[48px] rounded-t-2xl bg-gradient-to-t ${grad} spring-transition group-hover:brightness-125 shadow-lg group-hover:shadow-glow-cyan relative overflow-hidden" style="height: ${heightPct}%;">
+                                        <div class="absolute inset-0 bg-white/15 opacity-0 group-hover:opacity-100 spring-transition"></div>
+                                    </div>
+                                </div>
+                                `;
+                            }).join('')}
+                        </div>
+
+                        <!-- X-Axis Employee Profiles -->
+                        <div class="flex justify-around gap-2 pt-2 text-center text-xs">
+                            ${performanceData.map(p => `
+                                <div class="flex-1 flex flex-col items-center gap-1 cursor-pointer group" onclick="Dayflow.navigate('profile', '${p.id}')">
+                                    <img src="${p.avatar}" class="w-8 h-8 rounded-xl object-cover border border-white/15 group-hover:border-cyan-400 spring-transition shadow-sm" />
+                                    <span class="font-bold text-[11px] text-slate-200 group-hover:text-cyan-300 truncate max-w-[80px]">${p.name.split(' ')[0]}</span>
+                                    <span class="text-[9px] text-slate-400 font-mono">${p.id}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                `;
+            },
+
             // Individual Employee Weekly & Monthly Attendance Tracker (Admin Mode)
             IndividualEmployeeAttendanceTracker: (selectedEmpId, currentMode) => {
                 const users = DayflowDB.getUsers();
@@ -3863,6 +4275,9 @@
                             <div class="text-xs text-slate-400 mt-1">Net Monthly Payroll Outflow</div>
                         </div>
                     </div>
+
+                    <!-- Employee Performance in Graph Form (Admin Analytics Suite) -->
+                    ${Views.AdminPerformanceGraph()}
 
                     <!-- Split Actions Area: Leave Approvals Queue & Live Directory -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -4453,7 +4868,7 @@
                     </div>
 
                     <!-- Individual Employee Attendance Matrix / Heatmap (Admin Deep Dive) -->
-                    ${isAdmin ? Views.IndividualEmployeeAttendanceTracker(Dayflow.state.adminAttendanceEmployeeId, Dayflow.state.adminAttendanceViewMode) : ''}
+                    ${isAdmin ? Views.IndividualEmployeeAttendanceTracker(Dayflow.state.adminAttendanceEmployeeId, Dayflow.state.adminAttendanceViewMode) : Views.AttendancePieChart(user)}
 
                     <!-- Attendance Records Table -->
                     <div class="glass-panel rounded-3xl p-6">
