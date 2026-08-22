@@ -246,6 +246,29 @@
          * responsive Liquid Glass UI, and persistence via localStorage.
          */
 
+        // Global International Country Codes for Phone Numbers
+        const COUNTRY_LIST = [
+            { code: '+91', name: 'India', flag: '🇮🇳' },
+            { code: '+1', name: 'United States', flag: '🇺🇸' },
+            { code: '+44', name: 'United Kingdom', flag: '🇬🇧' },
+            { code: '+971', name: 'United Arab Emirates', flag: '🇦🇪' },
+            { code: '+65', name: 'Singapore', flag: '🇸🇬' },
+            { code: '+1', name: 'Canada', flag: '🇨🇦' },
+            { code: '+61', name: 'Australia', flag: '🇦🇺' },
+            { code: '+49', name: 'Germany', flag: '🇩🇪' },
+            { code: '+33', name: 'France', flag: '🇫🇷' },
+            { code: '+81', name: 'Japan', flag: '🇯🇵' },
+            { code: '+966', name: 'Saudi Arabia', flag: '🇸🇦' },
+            { code: '+60', name: 'Malaysia', flag: '🇲🇾' },
+            { code: '+27', name: 'South Africa', flag: '🇿🇦' }
+        ];
+
+        // Currency Formatter for Indian Rupees (₹ INR)
+        const formatINR = (val) => {
+            if (val === undefined || val === null || isNaN(val)) return '₹0';
+            return '₹' + Math.round(val).toLocaleString('en-IN');
+        };
+
         // Initial Seed Mock Dataset
         const INITIAL_USERS = [
             {
@@ -258,12 +281,13 @@
                 department: 'Human Resources',
                 joiningDate: '2022-01-15',
                 avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=240&auto=format&fit=crop&q=80',
-                phone: '+1 (555) 234-5678',
+                country: 'India',
+                phone: '+91 98765 43210',
                 address: '742 Evergreen Terrace, San Francisco, CA 94107',
-                emergencyContact: 'John Connor (+1 555-987-6543)',
+                emergencyContact: 'John Connor (+91 98765 11223)',
                 dob: '1988-05-14',
                 bloodGroup: 'O+',
-                salary: { base: 135000, hra: 28000, allowances: 12000, deductions: 6500, pf: 4800, tax: 11000 },
+                salary: { base: 1800000, hra: 360000, allowances: 120000, deductions: 60000, pf: 72000, tax: 144000 },
                 documents: [
                     { id: 'doc-1', title: 'Executive Offer Letter', type: 'PDF', size: '2.4 MB', date: '2022-01-10', category: 'Contract' },
                     { id: 'doc-2', title: 'Identity & Passport Verification', type: 'PDF', size: '1.8 MB', date: '2022-01-12', category: 'KYC' },
@@ -280,12 +304,13 @@
                 department: 'Engineering',
                 joiningDate: '2023-03-01',
                 avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=240&auto=format&fit=crop&q=80',
-                phone: '+1 (555) 345-6789',
+                country: 'India',
+                phone: '+91 98450 12345',
                 address: '1048 Market St, Apt 402, San Francisco, CA',
-                emergencyContact: 'Mary Smith (+1 555-876-5432)',
+                emergencyContact: 'Mary Smith (+91 98450 67890)',
                 dob: '1993-11-20',
                 bloodGroup: 'A+',
-                salary: { base: 110000, hra: 22000, allowances: 8000, deductions: 5000, pf: 3900, tax: 8500 },
+                salary: { base: 1440000, hra: 288000, allowances: 96000, deductions: 48000, pf: 57600, tax: 115200 },
                 documents: [
                     { id: 'doc-4', title: 'Senior Engineer Offer Letter', type: 'PDF', size: '1.9 MB', date: '2023-02-25', category: 'Contract' },
                     { id: 'doc-5', title: 'Academic Degree & Certifications', type: 'PDF', size: '3.1 MB', date: '2023-03-01', category: 'Education' }
@@ -301,12 +326,13 @@
                 department: 'Product & Design',
                 joiningDate: '2023-06-15',
                 avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=240&auto=format&fit=crop&q=80',
-                phone: '+1 (555) 456-7890',
+                country: 'India',
+                phone: '+91 97112 34567',
                 address: '88 King Street, Austin, TX 78701',
-                emergencyContact: 'David Davis (+1 555-765-4321)',
+                emergencyContact: 'David Davis (+91 97112 89012)',
                 dob: '1995-07-08',
                 bloodGroup: 'B+',
-                salary: { base: 95000, hra: 18000, allowances: 6000, deductions: 4200, pf: 3200, tax: 7100 },
+                salary: { base: 1200000, hra: 240000, allowances: 80000, deductions: 40000, pf: 48000, tax: 96000 },
                 documents: [
                     { id: 'doc-6', title: 'Product Design Agreement', type: 'PDF', size: '1.5 MB', date: '2023-06-10', category: 'Contract' }
                 ]
@@ -321,12 +347,13 @@
                 department: 'Engineering',
                 joiningDate: '2023-09-01',
                 avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=240&auto=format&fit=crop&q=80',
-                phone: '+1 (555) 567-8901',
+                country: 'India',
+                phone: '+91 99201 87654',
                 address: '220 Broadway, Seattle, WA 98102',
-                emergencyContact: 'Elena Rivera (+1 555-654-3210)',
+                emergencyContact: 'Elena Rivera (+91 99201 43210)',
                 dob: '1991-03-24',
                 bloodGroup: 'AB+',
-                salary: { base: 105000, hra: 20000, allowances: 7500, deductions: 4800, pf: 3700, tax: 8000 },
+                salary: { base: 1320000, hra: 264000, allowances: 88000, deductions: 44000, pf: 52800, tax: 105600 },
                 documents: [
                     { id: 'doc-7', title: 'Cloud Architect Agreement', type: 'PDF', size: '2.1 MB', date: '2023-08-28', category: 'Contract' }
                 ]
@@ -334,25 +361,58 @@
         ];
 
         const INITIAL_ATTENDANCE = [
+            // Current Week - Saturday Aug 22, 2026
             { id: 'att-1', date: '2026-08-22', status: 'Present', checkIn: '08:52 AM', checkOut: null, user: 'EMP001', workHours: 'In Progress' },
             { id: 'att-2', date: '2026-08-22', status: 'Present', checkIn: '09:05 AM', checkOut: null, user: 'EMP002', workHours: 'In Progress' },
             { id: 'att-3', date: '2026-08-22', status: 'Present', checkIn: '08:45 AM', checkOut: '05:15 PM', user: 'EMP003', workHours: '8h 30m' },
             { id: 'att-4', date: '2026-08-22', status: 'Leave', checkIn: '--', checkOut: '--', user: 'EMP004', workHours: '0h 0m' },
             
+            // Current Week - Friday Aug 21, 2026
             { id: 'att-5', date: '2026-08-21', status: 'Present', checkIn: '08:58 AM', checkOut: '05:30 PM', user: 'EMP001', workHours: '8h 32m' },
             { id: 'att-6', date: '2026-08-21', status: 'Present', checkIn: '09:00 AM', checkOut: '05:10 PM', user: 'EMP002', workHours: '8h 10m' },
             { id: 'att-7', date: '2026-08-21', status: 'Present', checkIn: '08:50 AM', checkOut: '05:00 PM', user: 'EMP003', workHours: '8h 10m' },
             { id: 'att-8', date: '2026-08-21', status: 'Present', checkIn: '09:15 AM', checkOut: '05:45 PM', user: 'EMP004', workHours: '8h 30m' },
 
+            // Current Week - Thursday Aug 20, 2026
             { id: 'att-9', date: '2026-08-20', status: 'Present', checkIn: '09:02 AM', checkOut: '05:20 PM', user: 'EMP001', workHours: '8h 18m' },
             { id: 'att-10', date: '2026-08-20', status: 'Half-day', checkIn: '09:00 AM', checkOut: '01:05 PM', user: 'EMP002', workHours: '4h 05m' },
             { id: 'att-11', date: '2026-08-20', status: 'Present', checkIn: '08:55 AM', checkOut: '05:05 PM', user: 'EMP003', workHours: '8h 10m' },
             { id: 'att-12', date: '2026-08-20', status: 'Absent', checkIn: '--', checkOut: '--', user: 'EMP004', workHours: '0h 0m' },
 
+            // Current Week - Wednesday Aug 19, 2026
             { id: 'att-13', date: '2026-08-19', status: 'Present', checkIn: '08:50 AM', checkOut: '05:00 PM', user: 'EMP001', workHours: '8h 10m' },
             { id: 'att-14', date: '2026-08-19', status: 'Leave', checkIn: '--', checkOut: '--', user: 'EMP002', workHours: '0h 0m' },
             { id: 'att-15', date: '2026-08-19', status: 'Present', checkIn: '08:45 AM', checkOut: '05:15 PM', user: 'EMP003', workHours: '8h 30m' },
-            { id: 'att-16', date: '2026-08-19', status: 'Present', checkIn: '09:10 AM', checkOut: '05:30 PM', user: 'EMP004', workHours: '8h 20m' }
+            { id: 'att-16', date: '2026-08-19', status: 'Present', checkIn: '09:10 AM', checkOut: '05:30 PM', user: 'EMP004', workHours: '8h 20m' },
+
+            // Current Week - Tuesday Aug 18, 2026
+            { id: 'att-17', date: '2026-08-18', status: 'Present', checkIn: '08:55 AM', checkOut: '05:25 PM', user: 'EMP001', workHours: '8h 30m' },
+            { id: 'att-18', date: '2026-08-18', status: 'Present', checkIn: '09:05 AM', checkOut: '05:15 PM', user: 'EMP002', workHours: '8h 10m' },
+            { id: 'att-19', date: '2026-08-18', status: 'Present', checkIn: '08:40 AM', checkOut: '05:00 PM', user: 'EMP003', workHours: '8h 20m' },
+            { id: 'att-20', date: '2026-08-18', status: 'Present', checkIn: '09:00 AM', checkOut: '05:00 PM', user: 'EMP004', workHours: '8h 00m' },
+
+            // Current Week - Monday Aug 17, 2026
+            { id: 'att-21', date: '2026-08-17', status: 'Present', checkIn: '08:48 AM', checkOut: '05:10 PM', user: 'EMP001', workHours: '8h 22m' },
+            { id: 'att-22', date: '2026-08-17', status: 'Present', checkIn: '08:55 AM', checkOut: '05:30 PM', user: 'EMP002', workHours: '8h 35m' },
+            { id: 'att-23', date: '2026-08-17', status: 'Present', checkIn: '08:50 AM', checkOut: '05:20 PM', user: 'EMP003', workHours: '8h 30m' },
+            { id: 'att-24', date: '2026-08-17', status: 'Present', checkIn: '09:05 AM', checkOut: '05:15 PM', user: 'EMP004', workHours: '8h 10m' },
+
+            // Past Monthly Records for August 2026 (Aug 14, Aug 13, Aug 12, Aug 11, Aug 10, Aug 07, Aug 06, Aug 05, Aug 04, Aug 03)
+            { id: 'att-25', date: '2026-08-14', status: 'Present', checkIn: '08:50 AM', checkOut: '05:10 PM', user: 'EMP002', workHours: '8h 20m' },
+            { id: 'att-26', date: '2026-08-14', status: 'Present', checkIn: '08:45 AM', checkOut: '05:15 PM', user: 'EMP003', workHours: '8h 30m' },
+            { id: 'att-27', date: '2026-08-13', status: 'Present', checkIn: '09:00 AM', checkOut: '05:30 PM', user: 'EMP002', workHours: '8h 30m' },
+            { id: 'att-28', date: '2026-08-13', status: 'Present', checkIn: '08:50 AM', checkOut: '05:00 PM', user: 'EMP003', workHours: '8h 10m' },
+            { id: 'att-29', date: '2026-08-12', status: 'Present', checkIn: '08:55 AM', checkOut: '05:20 PM', user: 'EMP002', workHours: '8h 25m' },
+            { id: 'att-30', date: '2026-08-12', status: 'Leave', checkIn: '--', checkOut: '--', user: 'EMP003', workHours: '0h 0m' },
+            { id: 'att-31', date: '2026-08-11', status: 'Present', checkIn: '09:10 AM', checkOut: '05:40 PM', user: 'EMP002', workHours: '8h 30m' },
+            { id: 'att-32', date: '2026-08-11', status: 'Present', checkIn: '08:40 AM', checkOut: '05:10 PM', user: 'EMP003', workHours: '8h 30m' },
+            { id: 'att-33', date: '2026-08-10', status: 'Present', checkIn: '08:50 AM', checkOut: '05:15 PM', user: 'EMP002', workHours: '8h 25m' },
+            { id: 'att-34', date: '2026-08-10', status: 'Present', checkIn: '08:55 AM', checkOut: '05:20 PM', user: 'EMP003', workHours: '8h 25m' },
+            { id: 'att-35', date: '2026-08-07', status: 'Present', checkIn: '09:00 AM', checkOut: '05:00 PM', user: 'EMP002', workHours: '8h 00m' },
+            { id: 'att-36', date: '2026-08-06', status: 'Present', checkIn: '08:55 AM', checkOut: '05:30 PM', user: 'EMP002', workHours: '8h 35m' },
+            { id: 'att-37', date: '2026-08-05', status: 'Present', checkIn: '08:45 AM', checkOut: '05:15 PM', user: 'EMP002', workHours: '8h 30m' },
+            { id: 'att-38', date: '2026-08-04', status: 'Present', checkIn: '09:05 AM', checkOut: '05:25 PM', user: 'EMP002', workHours: '8h 20m' },
+            { id: 'att-39', date: '2026-08-03', status: 'Present', checkIn: '08:50 AM', checkOut: '05:10 PM', user: 'EMP002', workHours: '8h 20m' }
         ];
 
         const INITIAL_LEAVES = [
@@ -363,22 +423,34 @@
         ];
 
         const INITIAL_PAYROLL_RUNS = [
-            { id: 'PR-2026-07', period: 'July 2026', processedDate: '2026-07-31', status: 'Completed', totalDisbursed: 445000 },
-            { id: 'PR-2026-08', period: 'August 2026', processedDate: 'Pending', status: 'Scheduled', totalDisbursed: 445000 }
+            { id: 'PR-2026-07', period: 'July 2026', processedDate: '2026-07-31', status: 'Completed', totalDisbursed: 4800000 },
+            { id: 'PR-2026-08', period: 'August 2026', processedDate: 'Pending', status: 'Scheduled', totalDisbursed: 4800000 }
         ];
 
         // State Manager with LocalStorage Persistence
         const DayflowDB = {
-            getUsers: () => JSON.parse(localStorage.getItem('dayflow_users')) || INITIAL_USERS,
+            getUsers: () => {
+                const stored = localStorage.getItem('dayflow_users');
+                return stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(INITIAL_USERS));
+            },
             setUsers: (users) => localStorage.setItem('dayflow_users', JSON.stringify(users)),
             
-            getAttendance: () => JSON.parse(localStorage.getItem('dayflow_attendance')) || INITIAL_ATTENDANCE,
+            getAttendance: () => {
+                const stored = localStorage.getItem('dayflow_attendance');
+                return stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(INITIAL_ATTENDANCE));
+            },
             setAttendance: (att) => localStorage.setItem('dayflow_attendance', JSON.stringify(att)),
 
-            getLeaves: () => JSON.parse(localStorage.getItem('dayflow_leaves')) || INITIAL_LEAVES,
+            getLeaves: () => {
+                const stored = localStorage.getItem('dayflow_leaves');
+                return stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(INITIAL_LEAVES));
+            },
             setLeaves: (leaves) => localStorage.setItem('dayflow_leaves', JSON.stringify(leaves)),
 
-            getPayrollRuns: () => JSON.parse(localStorage.getItem('dayflow_payroll')) || INITIAL_PAYROLL_RUNS,
+            getPayrollRuns: () => {
+                const stored = localStorage.getItem('dayflow_payroll');
+                return stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(INITIAL_PAYROLL_RUNS));
+            },
             setPayrollRuns: (runs) => localStorage.setItem('dayflow_payroll', JSON.stringify(runs)),
 
             resetData: () => {
@@ -399,10 +471,18 @@
                 route: 'landing', // 'landing', 'auth', 'dashboard', 'profile', 'attendance', 'leaves', 'payroll', 'employees'
                 sidebarOpen: true,
                 mobileSidebarOpen: false,
-                authMode: 'signin', // 'signin', 'signup', 'verify_email'
-                pendingSignup: null, // holds user object pending OTP verification
+                authMode: 'signin', // 'signin', 'signup', 'verify_login_otp', 'verify_signup_otp'
+                pendingLoginUser: null, // holds user object pending login OTP verification
+                pendingSignup: null, // holds user object pending signup OTP verification
                 mockVerificationCode: '482910', // static demo verification code
                 
+                // Admin Dashboard State
+                adminDashboardLeaveFilter: 'Pending', // 'Pending', 'Approved', 'Rejected', 'All'
+
+                // Admin Individual Employee Attendance Tracker (Weekly / Monthly)
+                adminAttendanceEmployeeId: 'EMP002', // 'EMP001', 'EMP002', 'EMP003', 'EMP004'
+                adminAttendanceViewMode: 'weekly', // 'weekly' or 'monthly'
+
                 // Profile View State
                 selectedProfileUserId: null, // when admin inspects another employee
                 isEditingProfile: false,
@@ -421,6 +501,12 @@
             },
 
             init: function() {
+                // Ensure initial seed data exists in localStorage
+                if (!localStorage.getItem('dayflow_users')) DayflowDB.setUsers(INITIAL_USERS);
+                if (!localStorage.getItem('dayflow_attendance')) DayflowDB.setAttendance(INITIAL_ATTENDANCE);
+                if (!localStorage.getItem('dayflow_leaves')) DayflowDB.setLeaves(INITIAL_LEAVES);
+                if (!localStorage.getItem('dayflow_payroll')) DayflowDB.setPayrollRuns(INITIAL_PAYROLL_RUNS);
+
                 document.documentElement.className = this.state.theme;
                 if (this.state.user) {
                     // Sync current user object with latest in DB
@@ -433,6 +519,21 @@
                 } else {
                     this.state.route = 'landing';
                 }
+                renderApp();
+            },
+
+            setAdminDashboardLeaveFilter: function(filter) {
+                this.state.adminDashboardLeaveFilter = filter;
+                renderApp();
+            },
+
+            setAdminAttendanceEmployee: function(empId) {
+                this.state.adminAttendanceEmployeeId = empId;
+                renderApp();
+            },
+
+            setAdminAttendanceViewMode: function(mode) {
+                this.state.adminAttendanceViewMode = mode;
                 renderApp();
             },
 
@@ -527,17 +628,45 @@
                 const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
 
                 if (user) {
-                    this.state.user = user;
-                    this.state.selectedProfileUserId = user.id;
-                    localStorage.setItem('dayflow_auth_user', JSON.stringify(user));
-                    this.addToast(`Welcome back, ${user.name}! Authenticated as ${user.role.toUpperCase()}.`, 'success');
-                    this.navigate('dashboard');
+                    // Trigger OTP verification for login (including Admin)
+                    const generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+                    this.state.mockVerificationCode = generatedOTP;
+                    this.state.pendingLoginUser = user;
+                    this.state.authMode = 'verify_login_otp';
+                    this.addToast(`Security OTP sent to ${user.email} (${user.role.toUpperCase()}). Verification Code: [ ${generatedOTP} ]`, 'info');
+                    renderApp();
                 } else {
                     if (errorEl) {
                         errorEl.innerHTML = `
                             <div class="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center gap-2 fade-slide-enter">
                                 <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0 text-rose-500"></i>
                                 <span>Invalid email or password. Please verify credentials or use demo quick logins below.</span>
+                            </div>
+                        `;
+                        lucide.createIcons();
+                    }
+                }
+            },
+
+            handleVerifyLoginOTP: function(e) {
+                e.preventDefault();
+                const enteredCode = Array.from(document.querySelectorAll('.otp-digit-input')).map(i => i.value).join('');
+                const errorEl = document.getElementById('otp-error');
+                const user = this.state.pendingLoginUser;
+
+                if (enteredCode === this.state.mockVerificationCode || enteredCode === '482910' || enteredCode === '123456') {
+                    this.state.user = user;
+                    this.state.selectedProfileUserId = user.id;
+                    localStorage.setItem('dayflow_auth_user', JSON.stringify(user));
+                    this.state.pendingLoginUser = null;
+
+                    this.addToast(`Identity verified! Welcome to workspace, ${user.name} (${user.role.toUpperCase()}).`, 'success');
+                    this.navigate('dashboard');
+                } else {
+                    if (errorEl) {
+                        errorEl.innerHTML = `
+                            <div class="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center gap-2">
+                                <i data-lucide="alert-circle" class="w-4 h-4"></i> Incorrect verification code. Check notification or click 'Auto-fill'.
                             </div>
                         `;
                         lucide.createIcons();
@@ -577,6 +706,13 @@
                     return;
                 }
 
+                const countryEl = document.getElementById('signup-country');
+                const phoneEl = document.getElementById('signup-phone');
+                const countryCode = countryEl ? countryEl.value : '+91';
+                const countryName = countryEl ? countryEl.options[countryEl.selectedIndex].text.split('(')[0].trim() : 'India';
+                const rawPhone = phoneEl ? phoneEl.value.trim() : '98765 43210';
+                const formattedPhone = `${countryCode} ${rawPhone}`;
+
                 // Stage user data and generate 6-digit mock OTP
                 const generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
                 this.state.mockVerificationCode = generatedOTP;
@@ -590,23 +726,31 @@
                     designation: designation || (role === 'admin' ? 'HR Administrator' : 'Associate Specialist'),
                     joiningDate: new Date().toISOString().split('T')[0],
                     avatar: `https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=240&auto=format&fit=crop&q=80`,
-                    phone: '+1 (555) 000-0000',
-                    address: 'Dayflow HQ, Campus 4, Tech Park',
-                    emergencyContact: 'Not Provided',
+                    country: countryName,
+                    phone: formattedPhone,
+                    address: 'Dayflow Innovation Park, Bengaluru, India',
+                    emergencyContact: 'Family Contact (+91 98765 00000)',
                     dob: '1996-01-01',
                     bloodGroup: 'O+',
-                    salary: { base: role === 'admin' ? 120000 : 80000, hra: 16000, allowances: 6000, deductions: 3500, pf: 2800, tax: 5000 },
+                    salary: { 
+                        base: role === 'admin' ? 1800000 : 1200000, 
+                        hra: role === 'admin' ? 360000 : 240000, 
+                        allowances: role === 'admin' ? 120000 : 80000, 
+                        deductions: role === 'admin' ? 60000 : 40000, 
+                        pf: role === 'admin' ? 72000 : 48000, 
+                        tax: role === 'admin' ? 144000 : 96000 
+                    },
                     documents: [
                         { id: 'doc-welcome', title: 'Onboarding Welcome Kit.pdf', type: 'PDF', size: '1.2 MB', date: new Date().toISOString().split('T')[0], category: 'General' }
                     ]
                 };
 
-                this.state.authMode = 'verify_email';
-                this.addToast(`Verification code sent to ${email}. Mock Code: [ ${generatedOTP} ]`, 'info');
+                this.state.authMode = 'verify_signup_otp';
+                this.addToast(`Registration verification code sent to ${email}. Mock Code: [ ${generatedOTP} ]`, 'info');
                 renderApp();
             },
 
-            handleVerifyEmail: function(e) {
+            handleVerifySignUpOTP: function(e) {
                 e.preventDefault();
                 const enteredCode = Array.from(document.querySelectorAll('.otp-digit-input')).map(i => i.value).join('');
                 const errorEl = document.getElementById('otp-error');
@@ -622,16 +766,36 @@
                     localStorage.setItem('dayflow_auth_user', JSON.stringify(this.state.user));
                     this.state.pendingSignup = null;
 
-                    this.addToast('Email verified successfully! Welcome to Dayflow.', 'success');
+                    this.addToast('Account created and verified successfully! Welcome to Dayflow.', 'success');
                     this.navigate('dashboard');
                 } else {
                     if (errorEl) {
                         errorEl.innerHTML = `
                             <div class="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center gap-2">
-                                <i data-lucide="alert-circle" class="w-4 h-4"></i> Incorrect verification code. Check notification or use 'Auto-fill Demo Code'.
+                                <i data-lucide="alert-circle" class="w-4 h-4"></i> Incorrect verification code. Check notification or click 'Auto-fill'.
                             </div>
                         `;
                         lucide.createIcons();
+                    }
+                }
+            },
+
+            // Modal Dialog Orchestration
+            openModal: function(modalId) {
+                const el = document.getElementById(modalId);
+                if (el) {
+                    el.classList.remove('hidden');
+                    el.classList.add('flex');
+                }
+            },
+
+            closeModal: function(modalId) {
+                const el = document.getElementById(modalId);
+                if (el) {
+                    el.classList.add('hidden');
+                    el.classList.remove('flex');
+                    if (modalId === 'modal-leave-decision' || modalId === 'modal-payslip-preview' || modalId === 'modal-edit-salary' || modalId === 'modal-edit-attendance') {
+                        el.remove();
                     }
                 }
             },
@@ -651,8 +815,10 @@
                 if (target) {
                     this.state.user = target;
                     this.state.selectedProfileUserId = target.id;
+                    this.state.route = 'dashboard';
+                    this.state.adminDashboardLeaveFilter = 'Pending';
                     localStorage.setItem('dayflow_auth_user', JSON.stringify(target));
-                    this.addToast(`Switched active session to ${target.name} (${target.role.toUpperCase()})`, 'info');
+                    this.addToast(`Active session: ${target.name} (${target.role.toUpperCase()}) &bull; Dashboard Loaded`, 'info');
                     renderApp();
                 }
             },
@@ -739,13 +905,28 @@
                 this.addToast('Attendance report exported to CSV', 'success');
             },
 
+            setLeaveFilterStatus: function(status) {
+                this.state.leaveFilterStatus = status;
+                renderApp();
+            },
+
             // Leave Management Operations
             handleLeaveSubmit: function(e) {
                 e.preventDefault();
-                const type = document.getElementById('leave-type').value;
-                const from = document.getElementById('leave-from').value;
-                const to = document.getElementById('leave-to').value;
-                const reason = document.getElementById('leave-reason').value.trim();
+                const typeEl = document.getElementById('leave-type');
+                const fromEl = document.getElementById('leave-from');
+                const toEl = document.getElementById('leave-to');
+                const reasonEl = document.getElementById('leave-reason');
+
+                const type = typeEl ? typeEl.value : 'Paid';
+                const from = fromEl ? fromEl.value : '';
+                const to = toEl ? toEl.value : '';
+                const reason = reasonEl ? reasonEl.value.trim() : '';
+
+                if (!from || !to) {
+                    this.addToast('Please select valid start and end dates', 'error');
+                    return;
+                }
 
                 if (new Date(to) < new Date(from)) {
                     this.addToast('End date cannot be prior to start date', 'error');
@@ -758,17 +939,18 @@
                 const diffTime = Math.abs(d2 - d1);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
+                const currentUser = this.state.user || DayflowDB.getUsers().find(u => u.id === 'EMP002');
                 const leaves = DayflowDB.getLeaves();
                 const newLeave = {
                     id: 'L-' + (Math.floor(100 + Math.random() * 900)),
-                    user: this.state.user.id,
-                    name: this.state.user.name,
-                    type,
-                    from,
-                    to,
+                    user: currentUser.id,
+                    name: currentUser.name,
+                    type: type,
+                    from: from,
+                    to: to,
                     days: diffDays,
                     status: 'Pending',
-                    reason,
+                    reason: reason || 'Personal time-off request',
                     adminComment: '',
                     appliedOn: new Date().toISOString().split('T')[0]
                 };
@@ -776,7 +958,8 @@
                 leaves.unshift(newLeave);
                 DayflowDB.setLeaves(leaves);
                 this.closeModal('leave-modal');
-                this.addToast(`Submitted ${type} leave request for ${diffDays} day(s)`, 'success');
+                if (reasonEl) reasonEl.value = '';
+                this.addToast(`Submitted ${type} leave for ${currentUser.name} (${currentUser.id}). Waiting for Admin approval!`, 'success');
                 renderApp();
             },
 
@@ -833,15 +1016,18 @@
 
             submitLeaveDecision: function(e, leaveId, status) {
                 e.preventDefault();
-                const comment = document.getElementById('admin-leave-comment').value.trim();
+                const commentEl = document.getElementById('admin-leave-comment');
+                const comment = commentEl ? commentEl.value.trim() : '';
                 let leaves = DayflowDB.getLeaves();
                 let leave = leaves.find(l => l.id === leaveId);
                 if (leave) {
                     leave.status = status;
                     leave.adminComment = comment || (status === 'Approved' ? 'Approved by HR Administrator.' : 'Rejected by HR Administrator.');
+                    leave.reviewedOn = new Date().toISOString().split('T')[0];
+                    leave.reviewedBy = this.state.user ? this.state.user.name : 'Sarah Connor (HR Admin)';
                     DayflowDB.setLeaves(leaves);
                     this.closeModal('modal-leave-decision');
-                    this.addToast(`Leave request ${leave.id} marked as ${status}`, status === 'Approved' ? 'success' : 'info');
+                    this.addToast(`Decision saved: Leave request for ${leave.name} (${leave.user}) marked as ${status}. Visible on employee's dashboard!`, status === 'Approved' ? 'success' : 'info');
                     renderApp();
                 }
             },
@@ -873,6 +1059,11 @@
                 if (!userToUpdate) return;
 
                 // Fields editable by all (Personal)
+                const countryEl = document.getElementById('prof-country');
+                if (countryEl) {
+                    const selectedCountry = COUNTRY_LIST.find(c => c.code === countryEl.value);
+                    if (selectedCountry) userToUpdate.country = selectedCountry.name;
+                }
                 userToUpdate.phone = document.getElementById('prof-phone').value.trim();
                 userToUpdate.address = document.getElementById('prof-address').value.trim();
                 userToUpdate.emergencyContact = document.getElementById('prof-emergency').value.trim();
@@ -999,33 +1190,33 @@
                             <form onsubmit="Dayflow.saveSalaryStructure(event, '${employee.id}')" class="space-y-4">
                                 <div class="p-4 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-xs text-brand-300 flex items-center gap-2 mb-2">
                                     <i data-lucide="info" class="w-4 h-4 flex-shrink-0 text-brand-400"></i>
-                                    <span>Salary revisions automatically recalculate gross compensation, statutory deductions, and monthly net pay slip.</span>
+                                    <span>Salary revisions in ₹ INR automatically recalculate annual gross compensation, statutory withholdings (PF & TDS), and monthly net take-home slips.</span>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="flex flex-col gap-1">
-                                        <label class="text-xs font-semibold text-slate-400 ml-1">Base Salary ($ / yr)</label>
-                                        <input id="sal-base" type="number" required value="${s.base}" class="glass-input rounded-xl p-2.5 text-sm outline-none" />
+                                        <label class="text-xs font-semibold text-slate-400 ml-1">Base Salary (₹ / yr)</label>
+                                        <input id="sal-base" type="number" required value="${s.base}" class="glass-input rounded-xl p-2.5 text-sm outline-none font-mono" />
                                     </div>
                                     <div class="flex flex-col gap-1">
-                                        <label class="text-xs font-semibold text-slate-400 ml-1">House Rent Allowance ($ / yr)</label>
-                                        <input id="sal-hra" type="number" required value="${s.hra}" class="glass-input rounded-xl p-2.5 text-sm outline-none" />
+                                        <label class="text-xs font-semibold text-slate-400 ml-1">House Rent Allowance (HRA) (₹ / yr)</label>
+                                        <input id="sal-hra" type="number" required value="${s.hra}" class="glass-input rounded-xl p-2.5 text-sm outline-none font-mono" />
                                     </div>
                                     <div class="flex flex-col gap-1">
-                                        <label class="text-xs font-semibold text-slate-400 ml-1">Special Allowances ($ / yr)</label>
-                                        <input id="sal-allowances" type="number" required value="${s.allowances}" class="glass-input rounded-xl p-2.5 text-sm outline-none" />
+                                        <label class="text-xs font-semibold text-slate-400 ml-1">Special Allowances (₹ / yr)</label>
+                                        <input id="sal-allowances" type="number" required value="${s.allowances}" class="glass-input rounded-xl p-2.5 text-sm outline-none font-mono" />
                                     </div>
                                     <div class="flex flex-col gap-1">
-                                        <label class="text-xs font-semibold text-slate-400 ml-1">Provident Fund (PF) ($ / yr)</label>
-                                        <input id="sal-pf" type="number" required value="${s.pf}" class="glass-input rounded-xl p-2.5 text-sm outline-none" />
+                                        <label class="text-xs font-semibold text-slate-400 ml-1">Provident Fund (PF) (₹ / yr)</label>
+                                        <input id="sal-pf" type="number" required value="${s.pf}" class="glass-input rounded-xl p-2.5 text-sm outline-none font-mono" />
                                     </div>
                                     <div class="flex flex-col gap-1">
-                                        <label class="text-xs font-semibold text-slate-400 ml-1">TDS & Income Tax ($ / yr)</label>
-                                        <input id="sal-tax" type="number" required value="${s.tax}" class="glass-input rounded-xl p-2.5 text-sm outline-none" />
+                                        <label class="text-xs font-semibold text-slate-400 ml-1">TDS & Income Tax (₹ / yr)</label>
+                                        <input id="sal-tax" type="number" required value="${s.tax}" class="glass-input rounded-xl p-2.5 text-sm outline-none font-mono" />
                                     </div>
                                     <div class="flex flex-col gap-1">
-                                        <label class="text-xs font-semibold text-slate-400 ml-1">Other Deductions ($ / yr)</label>
-                                        <input id="sal-deductions" type="number" required value="${s.deductions}" class="glass-input rounded-xl p-2.5 text-sm outline-none" />
+                                        <label class="text-xs font-semibold text-slate-400 ml-1">Other Deductions (₹ / yr)</label>
+                                        <input id="sal-deductions" type="number" required value="${s.deductions}" class="glass-input rounded-xl p-2.5 text-sm outline-none font-mono" />
                                     </div>
                                 </div>
 
@@ -1059,7 +1250,7 @@
                         localStorage.setItem('dayflow_auth_user', JSON.stringify(employee));
                     }
                     this.closeModal('modal-salary-edit');
-                    this.addToast(`Salary structure updated for ${employee.name}`, 'success');
+                    this.addToast(`Salary structure in ₹ INR updated for ${employee.name}`, 'success');
                     renderApp();
                 }
             },
@@ -1078,7 +1269,7 @@
                 };
                 runs.unshift(newRun);
                 DayflowDB.setPayrollRuns(runs);
-                this.addToast(`August 2026 Payroll Batch Disbursed! Total: $${total.toLocaleString()}`, 'success');
+                this.addToast(`August 2026 Payroll Batch Disbursed! Total: ${formatINR(total)}`, 'success');
                 renderApp();
             },
 
@@ -1086,7 +1277,7 @@
             viewPayslipPreview: function(userId) {
                 const users = DayflowDB.getUsers();
                 const user = users.find(u => u.id === userId) || this.state.user;
-                const s = user.salary || { base: 90000, hra: 18000, allowances: 6000, pf: 3000, tax: 6000, deductions: 2000 };
+                const s = user.salary || { base: 1440000, hra: 288000, allowances: 96000, pf: 57600, tax: 115200, deductions: 48000 };
                 
                 const grossEarnings = (s.base + s.hra + s.allowances) / 12;
                 const totalDeductions = (s.pf + s.tax + s.deductions) / 12;
@@ -1103,7 +1294,7 @@
                                         <i data-lucide="file-check" class="w-5 h-5"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-xl font-bold">Monthly Payslip</h3>
+                                        <h3 class="text-xl font-bold">Monthly Payslip (INR)</h3>
                                         <p class="text-xs text-slate-400">Pay Period: August 2026 &bull; Reference: PAY-${user.id}-0826</p>
                                     </div>
                                 </div>
@@ -1120,17 +1311,17 @@
                             <div id="printable-payslip" class="bg-white/5 dark:bg-black/30 p-6 rounded-2xl border border-white/10 space-y-6">
                                 <div class="flex justify-between items-start border-b border-white/10 pb-4">
                                     <div>
-                                        <h4 class="text-xl font-extrabold tracking-tight text-brand-400">DAYFLOW HRMS INC.</h4>
-                                        <p class="text-xs text-slate-400 mt-0.5">500 Howard Street, Suite 400, San Francisco, CA</p>
+                                        <h4 class="text-xl font-extrabold tracking-tight text-brand-400">DAYFLOW HRMS INDIA PVT. LTD.</h4>
+                                        <p class="text-xs text-slate-400 mt-0.5">Embassy Tech Village, Outer Ring Road, Bengaluru, KA 560103</p>
                                     </div>
                                     <div class="text-right">
-                                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">PAID &bull; DIRECT DEPOSIT</span>
+                                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">PAID &bull; NEFT / IMPS</span>
                                     </div>
                                 </div>
 
                                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
                                     <div><span class="text-slate-400 block">Employee Name:</span><span class="font-bold text-slate-200 text-sm">${user.name}</span></div>
-                                    <div><span class="text-slate-400 block">Employee ID:</span><span class="font-bold text-slate-200 text-sm">${user.id}</span></div>
+                                    <div><span class="text-slate-400 block">Employee ID:</span><span class="font-bold text-slate-200 text-sm font-mono">${user.id}</span></div>
                                     <div><span class="text-slate-400 block">Designation:</span><span class="font-bold text-slate-200 text-sm">${user.designation}</span></div>
                                     <div><span class="text-slate-400 block">Department:</span><span class="font-bold text-slate-200 text-sm">${user.department}</span></div>
                                 </div>
@@ -1141,11 +1332,11 @@
                                         <h5 class="text-xs font-bold uppercase tracking-wider text-emerald-400 pb-1 border-b border-emerald-500/20 flex justify-between">
                                             <span>Earnings (Monthly)</span><span>Amount</span>
                                         </h5>
-                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">Basic Salary</span><span>$${(s.base / 12).toFixed(2)}</span></div>
-                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">House Rent Allowance (HRA)</span><span>$${(s.hra / 12).toFixed(2)}</span></div>
-                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">Special & Commute Allowances</span><span>$${(s.allowances / 12).toFixed(2)}</span></div>
+                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">Basic Salary</span><span class="font-mono">${formatINR(s.base / 12)}</span></div>
+                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">House Rent Allowance (HRA)</span><span class="font-mono">${formatINR(s.hra / 12)}</span></div>
+                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">Special & Travel Allowances</span><span class="font-mono">${formatINR(s.allowances / 12)}</span></div>
                                         <div class="flex justify-between text-xs font-semibold pt-2 border-t border-white/10 text-emerald-300">
-                                            <span>Gross Earnings</span><span>$${grossEarnings.toFixed(2)}</span>
+                                            <span>Gross Earnings</span><span class="font-mono font-bold">${formatINR(grossEarnings)}</span>
                                         </div>
                                     </div>
 
@@ -1154,22 +1345,22 @@
                                         <h5 class="text-xs font-bold uppercase tracking-wider text-rose-400 pb-1 border-b border-rose-500/20 flex justify-between">
                                             <span>Deductions</span><span>Amount</span>
                                         </h5>
-                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">Provident Fund (PF 401k)</span><span>$${(s.pf / 12).toFixed(2)}</span></div>
-                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">Income Tax & TDS</span><span>$${(s.tax / 12).toFixed(2)}</span></div>
-                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">Health & Insurance Deductions</span><span>$${(s.deductions / 12).toFixed(2)}</span></div>
+                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">Employees' PF (EPF)</span><span class="font-mono">${formatINR(s.pf / 12)}</span></div>
+                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">Income Tax (TDS)</span><span class="font-mono">${formatINR(s.tax / 12)}</span></div>
+                                        <div class="flex justify-between text-xs py-1"><span class="text-slate-400">Insurance & Professional Tax</span><span class="font-mono">${formatINR(s.deductions / 12)}</span></div>
                                         <div class="flex justify-between text-xs font-semibold pt-2 border-t border-white/10 text-rose-300">
-                                            <span>Total Deductions</span><span>$${totalDeductions.toFixed(2)}</span>
+                                            <span>Total Deductions</span><span class="font-mono font-bold">${formatINR(totalDeductions)}</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="p-4 rounded-2xl bg-gradient-to-r from-brand-900/50 to-cyan-950/50 border border-brand-500/30 flex justify-between items-center">
                                     <div>
-                                        <span class="text-xs text-brand-300 block font-semibold">Net Take-Home Pay</span>
-                                        <span class="text-2xl font-extrabold text-white tracking-tight">$${netPayMonthly.toFixed(2)}</span>
+                                        <span class="text-xs text-brand-300 block font-semibold">Net Take-Home Monthly Pay</span>
+                                        <span class="text-2xl font-extrabold text-white tracking-tight">${formatINR(netPayMonthly)}</span>
                                     </div>
                                     <div class="text-right text-xs text-slate-400">
-                                        <span>Disbursement Account</span><br>
+                                        <span>Bank Account (HDFC/ICICI)</span><br>
                                         <span class="font-mono text-slate-300">•••• •••• 9842</span>
                                     </div>
                                 </div>
@@ -1259,8 +1450,7 @@
                             <button onclick="Dayflow.toggleTheme()" class="p-2.5 rounded-2xl glass-panel-subtle hover:bg-white/20 spring-transition text-slate-300">
                                 <i data-lucide="${Dayflow.state.theme === 'light' ? 'moon' : 'sun'}" class="w-4 h-4"></i>
                             </button>
-                            ${UI.Button('Sign In', 'secondary', "Dayflow.setAuthMode('signin'); Dayflow.navigate('auth')", 'button', 'px-5 py-2')}
-                            ${UI.Button('Get Started', 'primary', "Dayflow.setAuthMode('signup'); Dayflow.navigate('auth')", 'button', 'px-5 py-2')}
+                            ${UI.Button('<i data-lucide="sparkles" class="w-4 h-4"></i> Get Started', 'primary', "Dayflow.setAuthMode('signin'); Dayflow.navigate('auth')", 'button', 'px-6 py-2')}
                         </div>
                     </header>
 
@@ -1277,9 +1467,8 @@
                         <p class="text-base md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
                             A unified, spatial HRMS platform for effortless onboarding, attendance punch clocks, automated leave approval workflows, and transparent payroll analytics.
                         </p>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                            ${UI.Button('<i data-lucide="log-in" class="w-5 h-5"></i> Enter Workspace', 'primary', "Dayflow.setAuthMode('signin'); Dayflow.navigate('auth')", 'button', 'px-8 py-3.5 text-base')}
-                            ${UI.Button('<i data-lucide="user-plus" class="w-5 h-5"></i> Sign Up as Employee', 'secondary', "Dayflow.setAuthMode('signup'); Dayflow.navigate('auth')", 'button', 'px-8 py-3.5 text-base')}
+                        <div class="flex justify-center pt-4">
+                            ${UI.Button('<i data-lucide="sparkles" class="w-5 h-5"></i> Get Started', 'primary', "Dayflow.setAuthMode('signin'); Dayflow.navigate('auth')", 'button', 'px-9 py-4 text-base font-bold shadow-glow-brand')}
                         </div>
 
                         <!-- Feature highlights cards -->
@@ -1303,7 +1492,7 @@
                                     <i data-lucide="banknote" class="w-6 h-6"></i>
                                 </div>
                                 <h3 class="font-bold text-lg mb-1">Payroll & Salary Structures</h3>
-                                <p class="text-xs text-slate-400">Complete salary revisions, automated gross-to-net calculators, and printable slips.</p>
+                                <p class="text-xs text-slate-400">Complete salary revisions in ₹ INR, automated gross-to-net calculators, and printable slips.</p>
                             </div>
                         </div>
                     </div>
@@ -1315,11 +1504,62 @@
                 </div>
             `,
 
-            // Auth View (Sign In, Sign Up, and OTP Verification)
+            // Auth View (Sign In with Login OTP, Sign Up with Details & Role, and Signup OTP)
             Auth: () => {
                 const mode = Dayflow.state.authMode;
 
-                if (mode === 'verify_email') {
+                // Login OTP Verification Screen (for Admin & Employee Logins)
+                if (mode === 'verify_login_otp') {
+                    const user = Dayflow.state.pendingLoginUser || { email: 'admin@dayflow.com', name: 'User', role: 'admin' };
+                    const isAdmin = user.role === 'admin';
+                    return `
+                    <div class="min-h-screen flex items-center justify-center p-4">
+                        <div class="glass-panel w-full max-w-md p-8 rounded-3xl fade-slide-enter shadow-2xl relative overflow-hidden">
+                            <div class="text-center mb-6">
+                                <div class="w-16 h-16 bg-gradient-to-tr ${isAdmin ? 'from-brand-600 to-cyan-400' : 'from-cyan-500 to-emerald-500'} rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-glow-brand text-white">
+                                    <i data-lucide="${isAdmin ? 'shield-check' : 'lock'}" class="w-8 h-8"></i>
+                                </div>
+                                <h2 class="text-2xl font-bold tracking-tight">${isAdmin ? 'Admin Security Verification' : 'Two-Factor Login Verification'}</h2>
+                                <p class="text-xs text-slate-400 mt-2">
+                                    A 6-digit security code was sent to <br><span class="font-semibold text-slate-200">${user.email}</span>
+                                </p>
+                            </div>
+
+                            <div class="p-3 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-xs text-brand-300 flex items-center justify-between mb-6">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="key" class="w-4 h-4 text-brand-400"></i>
+                                    <span>OTP Code: <strong>${Dayflow.state.mockVerificationCode}</strong></span>
+                                </div>
+                                <button type="button" onclick="document.querySelectorAll('.otp-digit-input').forEach((inp, i) => inp.value = '${Dayflow.state.mockVerificationCode}'[i])" class="text-[11px] font-bold text-cyan-400 hover:underline">
+                                    Auto-fill
+                                </button>
+                            </div>
+
+                            <form onsubmit="Dayflow.handleVerifyLoginOTP(event)" class="space-y-6">
+                                <div id="otp-error"></div>
+                                <div class="flex justify-between gap-2">
+                                    ${[0,1,2,3,4,5].map(idx => `
+                                        <input type="text" maxlength="1" required 
+                                             class="otp-digit-input w-12 h-14 text-center text-xl font-bold font-mono glass-input rounded-2xl outline-none focus:ring-2 focus:ring-brand-500"
+                                            oninput="if(this.value.length === 1 && this.nextElementSibling) this.nextElementSibling.focus()"
+                                            onkeydown="if(event.key === 'Backspace' && !this.value && this.previousElementSibling) this.previousElementSibling.focus()" />
+                                    `).join('')}
+                                </div>
+
+                                ${UI.Button('Verify Code & Get Started', 'primary', '', 'submit', 'w-full py-3.5 text-base')}
+                            </form>
+
+                            <div class="mt-6 flex items-center justify-between text-xs text-slate-400">
+                                <button onclick="Dayflow.addToast('New login OTP sent: ${Dayflow.state.mockVerificationCode}', 'info')" class="hover:text-cyan-400 font-medium">Resend Code</button>
+                                <button onclick="Dayflow.setAuthMode('signin')" class="hover:text-slate-200">Back to Sign In</button>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                }
+
+                // Signup OTP Verification Screen (for New Users)
+                if (mode === 'verify_signup_otp') {
                     const pending = Dayflow.state.pendingSignup || { email: 'user@dayflow.com', name: 'User' };
                     return `
                     <div class="min-h-screen flex items-center justify-center p-4">
@@ -1328,7 +1568,7 @@
                                 <div class="w-16 h-16 bg-gradient-to-tr from-cyan-500 to-brand-500 rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-glow-cyan text-white">
                                     <i data-lucide="mail-check" class="w-8 h-8"></i>
                                 </div>
-                                <h2 class="text-2xl font-bold tracking-tight">Verify Your Email</h2>
+                                <h2 class="text-2xl font-bold tracking-tight">Verify New Account</h2>
                                 <p class="text-xs text-slate-400 mt-2">
                                     We sent a 6-digit verification code to <br><span class="font-semibold text-slate-200">${pending.email}</span>
                                 </p>
@@ -1344,7 +1584,7 @@
                                 </button>
                             </div>
 
-                            <form onsubmit="Dayflow.handleVerifyEmail(event)" class="space-y-6">
+                            <form onsubmit="Dayflow.handleVerifySignUpOTP(event)" class="space-y-6">
                                 <div id="otp-error"></div>
                                 <div class="flex justify-between gap-2">
                                     ${[0,1,2,3,4,5].map(idx => `
@@ -1360,7 +1600,7 @@
 
                             <div class="mt-6 flex items-center justify-between text-xs text-slate-400">
                                 <button onclick="Dayflow.addToast('New verification code sent: ${Dayflow.state.mockVerificationCode}', 'info')" class="hover:text-cyan-400 font-medium">Resend Code</button>
-                                <button onclick="Dayflow.setAuthMode('signin')" class="hover:text-slate-200">Back to Sign In</button>
+                                <button onclick="Dayflow.setAuthMode('signup')" class="hover:text-slate-200">Back to Details</button>
                             </div>
                         </div>
                     </div>
@@ -1373,10 +1613,10 @@
                     <div class="glass-panel w-full max-w-lg p-8 rounded-3xl fade-slide-enter shadow-2xl relative overflow-hidden">
                         <div class="text-center mb-6">
                             <div class="w-14 h-14 bg-gradient-to-tr from-brand-600 to-cyan-400 rounded-3xl mx-auto mb-3 flex items-center justify-center shadow-glow-brand text-white">
-                                <i data-lucide="${isSignIn ? 'lock' : 'user-plus'}" class="w-7 h-7"></i>
+                                <i data-lucide="${isSignIn ? 'sparkles' : 'user-plus'}" class="w-7 h-7"></i>
                             </div>
-                            <h2 class="text-2xl font-bold tracking-tight">${isSignIn ? 'Welcome Back to Dayflow' : 'Create Employee Account'}</h2>
-                            <p class="text-xs text-slate-400 mt-1">${isSignIn ? 'Sign in to access your HR workspace.' : 'Register with your organizational details and verify email.'}</p>
+                            <h2 class="text-2xl font-bold tracking-tight">${isSignIn ? 'Get Started with Dayflow' : 'New User Registration'}</h2>
+                            <p class="text-xs text-slate-400 mt-1">${isSignIn ? 'Sign in with your credentials. Email OTP verification will be required.' : 'Enter your details, select country & role below to generate an account and verification code.'}</p>
                         </div>
 
                         <div id="auth-error" class="mb-4"></div>
@@ -1403,7 +1643,7 @@
                                             class="glass-input w-full rounded-2xl py-3 px-4 pl-11 outline-none text-sm" placeholder="••••••••" />
                                     </div>
                                 </div>
-                                ${UI.Button('Sign In to Dashboard', 'primary', '', 'submit', 'w-full py-3.5 text-base mt-2')}
+                                ${UI.Button('Proceed to OTP Verification', 'primary', '', 'submit', 'w-full py-3.5 text-base mt-2')}
                             </form>
 
                             <!-- Quick Preset Logins -->
@@ -1425,7 +1665,7 @@
                                 </div>
                             </div>
                         ` : `
-                            <!-- Sign Up Form -->
+                            <!-- Sign Up Form for New Users -->
                             <form onsubmit="Dayflow.handleSignUpInitiate(event)" class="space-y-3.5">
                                 <div class="grid grid-cols-2 gap-3">
                                     <div class="flex flex-col gap-1">
@@ -1436,8 +1676,8 @@
                                     <div class="flex flex-col gap-1">
                                         <label class="text-xs font-semibold text-slate-400 ml-1">System Role</label>
                                         <select id="signup-role" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-900 text-white">
-                                            <option value="employee">Employee (Regular)</option>
-                                            <option value="admin">Admin / HR Officer</option>
+                                            <option value="employee">Employee (Standard User)</option>
+                                            <option value="admin">Admin / HR Officer (Administrator)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1451,6 +1691,21 @@
                                     <input id="signup-email" type="email" required value="marcus@dayflow.com" 
                                         class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs" placeholder="marcus@dayflow.com" />
                                 </div>
+                                
+                                <!-- Country & Phone Selector with Dial-in Code -->
+                                <div class="space-y-1">
+                                    <label class="text-xs font-semibold text-slate-400 ml-1">Country & Contact Phone</label>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                        <select id="signup-country" onchange="const code = this.value; document.getElementById('signup-phone-badge').innerText = code;" class="glass-input rounded-2xl py-2.5 px-3 outline-none text-xs bg-slate-900 text-white">
+                                            ${COUNTRY_LIST.map(c => `<option value="${c.code}" ${c.name === 'India' ? 'selected' : ''}>${c.flag} ${c.name} (${c.code})</option>`).join('')}
+                                        </select>
+                                        <div class="flex items-center gap-1.5 glass-input rounded-2xl px-3 py-1">
+                                            <span id="signup-phone-badge" class="text-xs font-bold font-mono text-brand-300 bg-brand-500/10 px-2 py-1 rounded-lg border border-brand-500/20">+91</span>
+                                            <input id="signup-phone" type="tel" required value="98765 43210" class="bg-transparent border-none outline-none text-xs w-full font-mono text-slate-200" placeholder="98765 43210" />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="grid grid-cols-2 gap-3">
                                     <div class="flex flex-col gap-1">
                                         <label class="text-xs font-semibold text-slate-400 ml-1">Department</label>
@@ -1479,7 +1734,7 @@
 
                         <div class="mt-5 text-center text-xs">
                             <button onclick="Dayflow.setAuthMode('${isSignIn ? 'signup' : 'signin'}')" class="text-brand-400 hover:text-cyan-300 font-semibold spring-transition">
-                                ${isSignIn ? "Don't have an account yet? Register Here" : "Already registered? Sign In to Workspace"}
+                                ${isSignIn ? "New User? Create an Account / Sign Up" : "Already have an account? Sign In & Get Started"}
                             </button>
                         </div>
                     </div>
@@ -1591,9 +1846,23 @@
                                 <div>
                                     <h1 class="text-lg font-bold text-slate-900 dark:text-white capitalize flex items-center gap-2">
                                         ${currentRoute === 'dashboard' ? 'Overview' : currentRoute.replace('-', ' ')}
-                                        ${isAdmin ? '<span class="px-2 py-0.5 rounded-full text-[10px] bg-brand-500/20 text-brand-300 border border-brand-500/30">ADMIN MODE</span>' : ''}
+                                        ${isAdmin ? '<span class="px-2 py-0.5 rounded-full text-[10px] bg-brand-500/20 text-brand-300 border border-brand-500/30 font-bold">ADMIN MODE</span>' : '<span class="px-2 py-0.5 rounded-full text-[10px] bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold">EMPLOYEE MODE</span>'}
                                     </h1>
                                 </div>
+                            </div>
+
+                            <!-- Live Quick Persona Switcher for Immediate Interactive Testing -->
+                            <div class="hidden md:flex items-center gap-1.5 p-1 rounded-2xl bg-white/5 border border-white/10 text-xs">
+                                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider pl-2 pr-1">Switch:</span>
+                                <button onclick="Dayflow.switchUserRoleForDemo('EMP001')" class="px-3 py-1.5 rounded-xl text-xs font-bold spring-transition flex items-center gap-1.5 ${isAdmin ? 'bg-brand-500/30 text-brand-300 border border-brand-500/40 shadow-glow-brand' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'}">
+                                    <span>👑</span> Admin (Sarah)
+                                </button>
+                                <button onclick="Dayflow.switchUserRoleForDemo('EMP002')" class="px-3 py-1.5 rounded-xl text-xs font-bold spring-transition flex items-center gap-1.5 ${user.id === 'EMP002' ? 'bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 shadow-glow-cyan' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'}">
+                                    <span>👨‍💻</span> Employee (John)
+                                </button>
+                                <button onclick="Dayflow.switchUserRoleForDemo('EMP003')" class="px-3 py-1.5 rounded-xl text-xs font-bold spring-transition flex items-center gap-1.5 ${user.id === 'EMP003' ? 'bg-emerald-500/30 text-emerald-300 border border-emerald-500/40' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'}">
+                                    <span>👩‍🎨</span> Employee (Emma)
+                                </button>
                             </div>
 
                             <div class="flex items-center gap-3">
@@ -1713,6 +1982,60 @@
                         </div>
                     </div>
 
+                    <!-- Real-Time HR Approval / Status Notification Banner -->
+                    ${userLeaves.length > 0 && userLeaves[0].status === 'Approved' ? `
+                        <div class="glass-panel p-4 rounded-2xl border border-emerald-500/30 bg-emerald-950/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 fade-slide-enter shadow-glow-emerald">
+                            <div class="flex items-center gap-3">
+                                <div class="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-2">
+                                        <span>Leave Application Approved</span>
+                                        <span class="text-[10px] font-normal lowercase bg-emerald-500/20 px-2 py-0.5 rounded-full text-emerald-300">by HR Admin</span>
+                                    </h4>
+                                    <p class="text-xs text-slate-200 mt-0.5">
+                                        Your <strong>${userLeaves[0].type} Leave</strong> (${userLeaves[0].from} &rarr; ${userLeaves[0].to}, ${userLeaves[0].days} day${userLeaves[0].days > 1 ? 's' : ''}) has been approved. 
+                                        ${userLeaves[0].adminComment ? `<span class="block text-emerald-200 italic mt-0.5">HR Remarks: "${userLeaves[0].adminComment}"</span>` : ''}
+                                    </p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Approved ✓</span>
+                        </div>
+                    ` : userLeaves.length > 0 && userLeaves[0].status === 'Rejected' ? `
+                        <div class="glass-panel p-4 rounded-2xl border border-rose-500/30 bg-rose-950/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 fade-slide-enter shadow-glow-rose">
+                            <div class="flex items-center gap-3">
+                                <div class="p-2.5 rounded-xl bg-rose-500/20 text-rose-400">
+                                    <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-rose-300 uppercase tracking-wider flex items-center gap-2">
+                                        <span>Leave Application Rejected</span>
+                                        <span class="text-[10px] font-normal lowercase bg-rose-500/20 px-2 py-0.5 rounded-full text-rose-300">by HR Admin</span>
+                                    </h4>
+                                    <p class="text-xs text-slate-200 mt-0.5">
+                                        Your <strong>${userLeaves[0].type} Leave</strong> (${userLeaves[0].from} &rarr; ${userLeaves[0].to}) was not approved.
+                                        ${userLeaves[0].adminComment ? `<span class="block text-rose-200 italic mt-0.5">HR Remarks: "${userLeaves[0].adminComment}"</span>` : ''}
+                                    </p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">Rejected ✕</span>
+                        </div>
+                    ` : userLeaves.length > 0 && userLeaves[0].status === 'Pending' ? `
+                        <div class="glass-panel p-4 rounded-2xl border border-amber-500/30 bg-amber-950/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 fade-slide-enter">
+                            <div class="flex items-center gap-3">
+                                <div class="p-2.5 rounded-xl bg-amber-500/20 text-amber-400">
+                                    <i data-lucide="clock" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-amber-300 uppercase tracking-wider">Leave Application Under HR Review</h4>
+                                    <p class="text-xs text-slate-300 mt-0.5">Your <strong>${userLeaves[0].type} Leave</strong> request (${userLeaves[0].from} &rarr; ${userLeaves[0].to}) has been submitted and is waiting for HR Director Sarah Connor's review.</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 animate-pulse">Awaiting Review</span>
+                        </div>
+                    ` : ''}
+
                     <!-- Metrics Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Leave Balances -->
@@ -1728,7 +2051,7 @@
                                 <p class="text-xs text-slate-400">12 Paid Vacation &bull; 4 Sick Leaves Remaining</p>
                             </div>
                             <div class="pt-6">
-                                ${UI.Button('<i data-lucide="plus" class="w-4 h-4"></i> Apply for Time Off', 'secondary', "Dayflow.openModal('leave-modal')", 'button', 'w-full')}
+                                ${UI.Button('<i data-lucide="plus" class="w-4 h-4"></i> Apply for Time Off', 'primary', "Dayflow.openModal('leave-modal')", 'button', 'w-full')}
                             </div>
                         </div>
 
@@ -1760,7 +2083,7 @@
                                 </div>
                                 <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Estimated Take-Home</div>
                                 <h3 class="text-3xl font-black text-white mt-1">
-                                    $${((user.salary.base + user.salary.hra + user.salary.allowances - user.salary.deductions - user.salary.pf - user.salary.tax) / 12).toFixed(0)} <span class="text-xs font-normal text-slate-400">/ mo</span>
+                                    ${formatINR((user.salary.base + user.salary.hra + user.salary.allowances - user.salary.deductions - user.salary.pf - user.salary.tax) / 12)} <span class="text-xs font-normal text-slate-400">/ mo</span>
                                 </h3>
                             </div>
                             <div class="pt-6">
@@ -1773,10 +2096,10 @@
                     <div class="glass-panel rounded-3xl p-6">
                         <div class="flex justify-between items-center mb-6">
                             <div>
-                                <h3 class="text-lg font-bold">My Recent Leave Requests</h3>
-                                <p class="text-xs text-slate-400">Track current review status and manager feedback.</p>
+                                <h3 class="text-lg font-bold">My Time-Off Requests & Decisions</h3>
+                                <p class="text-xs text-slate-400">Real-time status updates, approval timestamps, and HR manager comments.</p>
                             </div>
-                            ${UI.Button('View All Requests', 'ghost', "Dayflow.navigate('leaves')", 'button', 'text-xs')}
+                            ${UI.Button('Time-Off Center', 'ghost', "Dayflow.navigate('leaves')", 'button', 'text-xs')}
                         </div>
 
                         <div class="overflow-x-auto">
@@ -1784,23 +2107,28 @@
                                 <thead>
                                     <tr class="border-b border-white/10 text-slate-400 font-semibold uppercase tracking-wider">
                                         <th class="py-3 px-4">Leave Type</th>
-                                        <th class="py-3 px-4">Duration</th>
+                                        <th class="py-3 px-4">Duration & Applied Date</th>
                                         <th class="py-3 px-4">Days</th>
-                                        <th class="py-3 px-4">Reason</th>
-                                        <th class="py-3 px-4">Admin Remarks</th>
+                                        <th class="py-3 px-4">My Reason</th>
+                                        <th class="py-3 px-4">HR Admin Decision & Remarks</th>
                                         <th class="py-3 px-4">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     ${userLeaves.length === 0 ? `
-                                        <tr><td colspan="6" class="p-6 text-center text-slate-400">No time-off requests submitted yet.</td></tr>
-                                    ` : userLeaves.slice(0, 4).map(l => `
+                                        <tr><td colspan="6" class="p-8 text-center text-slate-400">No time-off requests submitted yet. Click 'Apply for Time Off' above to submit.</td></tr>
+                                    ` : userLeaves.map(l => `
                                         <tr class="border-b border-white/5 hover:bg-white/5 spring-transition">
                                             <td class="py-3.5 px-4 font-bold text-slate-200">${l.type} Leave</td>
-                                            <td class="py-3.5 px-4 text-slate-300">${l.from} &rarr; ${l.to}</td>
+                                            <td class="py-3.5 px-4">
+                                                <div class="text-slate-200 font-medium">${l.from} &rarr; ${l.to}</div>
+                                                <div class="text-[10px] text-slate-400">Applied: ${l.appliedOn || 'Recent'}</div>
+                                            </td>
                                             <td class="py-3.5 px-4 font-mono font-bold">${l.days}d</td>
-                                            <td class="py-3.5 px-4 text-slate-400 max-w-xs truncate">${l.reason}</td>
-                                            <td class="py-3.5 px-4 text-slate-300 italic">${l.adminComment || '<span class="text-slate-500">Pending review</span>'}</td>
+                                            <td class="py-3.5 px-4 text-slate-300 max-w-xs">${l.reason}</td>
+                                            <td class="py-3.5 px-4 text-slate-300">
+                                                ${l.adminComment ? `<span class="bg-brand-500/10 text-brand-300 px-2.5 py-1 rounded-xl block border border-brand-500/20 italic font-medium">"${l.adminComment}"</span>` : '<span class="text-amber-400/80 italic flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> Awaiting Admin Decision</span>'}
+                                            </td>
                                             <td class="py-3.5 px-4">${UI.StatusBadge(l.status)}</td>
                                         </tr>
                                     `).join('')}
@@ -1815,17 +2143,316 @@
                 `;
             },
 
+            // Individual Employee Weekly & Monthly Attendance Tracker (Admin Mode)
+            IndividualEmployeeAttendanceTracker: (selectedEmpId, currentMode) => {
+                const users = DayflowDB.getUsers();
+                const allAttendance = DayflowDB.getAttendance();
+                const empId = selectedEmpId || Dayflow.state.adminAttendanceEmployeeId || (users[1] ? users[1].id : 'EMP002');
+                const mode = currentMode || Dayflow.state.adminAttendanceViewMode || 'weekly';
+                const currentEmp = users.find(u => u.id === empId) || users[0];
+
+                // Filter attendance records for this specific employee
+                const empRecords = allAttendance.filter(a => a.user === empId);
+
+                // Stats calculation for August 2026
+                const presentDays = empRecords.filter(r => r.status === 'Present').length;
+                const halfDays = empRecords.filter(r => r.status === 'Half-day').length;
+                const leaveDays = empRecords.filter(r => r.status === 'Leave').length;
+                const absentDays = empRecords.filter(r => r.status === 'Absent').length;
+
+                // Total hours calculation
+                let totalMinutes = 0;
+                empRecords.forEach(r => {
+                    if (r.workHours && r.workHours.includes('h')) {
+                        const parts = r.workHours.split(' ');
+                        const h = parseInt(parts[0]) || 0;
+                        const m = parts[1] ? parseInt(parts[1]) : 0;
+                        totalMinutes += (h * 60) + m;
+                    }
+                });
+                const totalHoursDisplay = `${Math.floor(totalMinutes / 60)}h ${totalMinutes % 60}m`;
+                const avgHoursPerDay = presentDays > 0 ? (totalMinutes / 60 / (presentDays + halfDays * 0.5)).toFixed(1) + 'h' : '0.0h';
+                const punctualityRate = Math.min(100, Math.round(((presentDays + halfDays * 0.5) / Math.max(1, (presentDays + halfDays + leaveDays + absentDays))) * 100));
+
+                // Weekly Data: August 17 to August 23, 2026
+                const weekDays = [
+                    { date: '2026-08-17', day: 'Monday', short: 'Mon 17', isWeekend: false },
+                    { date: '2026-08-18', day: 'Tuesday', short: 'Tue 18', isWeekend: false },
+                    { date: '2026-08-19', day: 'Wednesday', short: 'Wed 19', isWeekend: false },
+                    { date: '2026-08-20', day: 'Thursday', short: 'Thu 20', isWeekend: false },
+                    { date: '2026-08-21', day: 'Friday', short: 'Fri 21', isWeekend: false },
+                    { date: '2026-08-22', day: 'Saturday', short: 'Sat 22', isWeekend: true },
+                    { date: '2026-08-23', day: 'Sunday', short: 'Sun 23', isWeekend: true }
+                ];
+
+                // Monthly Data: 31 days of August 2026
+                const monthDays = [];
+                for (let d = 1; d <= 31; d++) {
+                    const dStr = d < 10 ? `0${d}` : `${d}`;
+                    const dateStr = `2026-08-${dStr}`;
+                    const dt = new Date(`2026-08-${dStr}T00:00:00`);
+                    const dayOfWeek = dt.getDay(); // 0 = Sun, 6 = Sat
+                    const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+                    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    const rec = empRecords.find(r => r.date === dateStr);
+                    monthDays.push({
+                        dayNum: d,
+                        dateStr: dateStr,
+                        dayName: dayNames[dayOfWeek],
+                        isWeekend: isWeekend,
+                        record: rec
+                    });
+                }
+
+                return `
+                <div class="glass-panel rounded-3xl p-6 border border-brand-500/30 shadow-2xl relative overflow-hidden space-y-6">
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <!-- Header & Selector Ribbon -->
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative z-10 pb-4 border-b border-white/10">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="p-2 rounded-xl bg-brand-500/20 text-brand-300 border border-brand-500/30">
+                                    <i data-lucide="user-check" class="w-5 h-5"></i>
+                                </span>
+                                <h3 class="text-lg font-bold text-white">Individual Employee Attendance Tracking</h3>
+                            </div>
+                            <p class="text-xs text-slate-400">Deep-dive weekly timesheets and monthly calendar heatmaps for any team member.</p>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-3">
+                            <!-- Employee Selector Dropdown -->
+                            <div class="flex items-center gap-2 glass-panel-subtle px-3 py-1.5 rounded-2xl border border-white/10">
+                                <label class="text-xs font-semibold text-slate-400 whitespace-nowrap">Employee:</label>
+                                <select onchange="Dayflow.setAdminAttendanceEmployee(this.value)" class="glass-input rounded-xl px-3 py-1.5 text-xs bg-slate-900 font-bold text-brand-300 outline-none cursor-pointer border border-brand-500/30">
+                                    ${users.map(u => `
+                                        <option value="${u.id}" ${u.id === empId ? 'selected' : ''}>
+                                            ${u.name} (${u.id}) - ${u.designation}
+                                        </option>
+                                    `).join('')}
+                                </select>
+                            </div>
+
+                            <!-- View Mode Switcher (Weekly vs Monthly) -->
+                            <div class="flex items-center p-1 rounded-2xl bg-black/40 border border-white/10">
+                                <button onclick="Dayflow.setAdminAttendanceViewMode('weekly')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold spring-transition flex items-center gap-1.5 ${mode === 'weekly' ? 'bg-gradient-to-r from-brand-600 to-cyan-500 text-white shadow-glow-brand' : 'text-slate-400 hover:text-slate-200'}">
+                                    <i data-lucide="calendar-range" class="w-3.5 h-3.5"></i> Weekly Matrix
+                                </button>
+                                <button onclick="Dayflow.setAdminAttendanceViewMode('monthly')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold spring-transition flex items-center gap-1.5 ${mode === 'monthly' ? 'bg-gradient-to-r from-brand-600 to-cyan-500 text-white shadow-glow-brand' : 'text-slate-400 hover:text-slate-200'}">
+                                    <i data-lucide="calendar-days" class="w-3.5 h-3.5"></i> Monthly Calendar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Individual Employee Badge & Metrics Strip -->
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-4 relative z-10">
+                        <!-- Employee Info Card -->
+                        <div class="md:col-span-2 glass-panel-subtle p-4 rounded-2xl border border-white/10 flex items-center gap-3">
+                            <img src="${currentEmp.avatar}" class="w-12 h-12 rounded-2xl object-cover border-2 border-brand-500/40 flex-shrink-0" />
+                            <div class="min-w-0">
+                                <div class="font-bold text-sm text-slate-100 truncate">${currentEmp.name}</div>
+                                <div class="text-xs text-brand-300 truncate">${currentEmp.designation}</div>
+                                <div class="text-[10px] text-slate-400 font-mono mt-0.5">${currentEmp.department} &bull; ${currentEmp.id}</div>
+                            </div>
+                        </div>
+
+                        <!-- KPI 1: Present / Effective Days -->
+                        <div class="glass-panel-subtle p-4 rounded-2xl border border-white/10">
+                            <span class="text-[11px] text-emerald-400 font-semibold uppercase tracking-wider block">Present Days</span>
+                            <div class="text-2xl font-black text-emerald-400 mt-1">${presentDays} <span class="text-xs font-normal text-slate-400">/ 22 work days</span></div>
+                            <span class="text-[10px] text-slate-400">+ ${halfDays} Half-day</span>
+                        </div>
+
+                        <!-- KPI 2: Leaves / Off -->
+                        <div class="glass-panel-subtle p-4 rounded-2xl border border-white/10">
+                            <span class="text-[11px] text-amber-400 font-semibold uppercase tracking-wider block">Leaves Taken</span>
+                            <div class="text-2xl font-black text-amber-400 mt-1">${leaveDays} <span class="text-xs font-normal text-slate-400">days</span></div>
+                            <span class="text-[10px] text-slate-400">${absentDays} Unplanned</span>
+                        </div>
+
+                        <!-- KPI 3: Total August Work Hours -->
+                        <div class="glass-panel-subtle p-4 rounded-2xl border border-white/10">
+                            <span class="text-[11px] text-cyan-400 font-semibold uppercase tracking-wider block">Total Logged</span>
+                            <div class="text-2xl font-black text-white mt-1">${totalHoursDisplay}</div>
+                            <span class="text-[10px] text-slate-400">Avg: ${avgHoursPerDay} / day</span>
+                        </div>
+
+                        <!-- KPI 4: Punctuality Score -->
+                        <div class="glass-panel-subtle p-4 rounded-2xl border border-white/10">
+                            <span class="text-[11px] text-purple-400 font-semibold uppercase tracking-wider block">Punctuality</span>
+                            <div class="text-2xl font-black text-purple-300 mt-1">${punctualityRate}%</div>
+                            <div class="w-full bg-white/10 h-1.5 rounded-full mt-1.5 overflow-hidden">
+                                <div class="bg-gradient-to-r from-brand-500 to-emerald-400 h-full rounded-full" style="width: ${punctualityRate}%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VIEW 1: WEEKLY MATRIX (Aug 17–23, 2026) -->
+                    ${mode === 'weekly' ? `
+                        <div class="space-y-3 relative z-10 fade-slide-enter">
+                            <div class="flex justify-between items-center">
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                                    <i data-lucide="calendar" class="w-4 h-4 text-cyan-400"></i> Weekly Matrix: August 17 – August 23, 2026
+                                </h4>
+                                <span class="text-[11px] text-slate-400">Shift Target: 8.0 hrs/day &bull; 40 hrs/week</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 gap-3">
+                                ${weekDays.map(wd => {
+                                    const rec = empRecords.find(r => r.date === wd.date);
+                                    const isPresent = rec && rec.status === 'Present';
+                                    const isHalfDay = rec && rec.status === 'Half-day';
+                                    const isLeave = rec && rec.status === 'Leave';
+                                    const isAbsent = rec && rec.status === 'Absent';
+                                    
+                                    let cardBg = 'glass-panel-subtle border-white/10';
+                                    let badgeColor = 'bg-white/10 text-slate-400';
+                                    let statusText = wd.isWeekend ? 'Weekend Off' : 'No Log';
+                                    
+                                    if (isPresent) {
+                                        cardBg = 'bg-emerald-950/30 border-emerald-500/30 shadow-sm';
+                                        badgeColor = 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+                                        statusText = 'Present';
+                                    } else if (isHalfDay) {
+                                        cardBg = 'bg-cyan-950/30 border-cyan-500/30';
+                                        badgeColor = 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30';
+                                        statusText = 'Half-day';
+                                    } else if (isLeave) {
+                                        cardBg = 'bg-amber-950/30 border-amber-500/30';
+                                        badgeColor = 'bg-amber-500/20 text-amber-300 border border-amber-500/30';
+                                        statusText = 'Leave (PTO)';
+                                    } else if (isAbsent) {
+                                        cardBg = 'bg-rose-950/30 border-rose-500/30';
+                                        badgeColor = 'bg-rose-500/20 text-rose-300 border border-rose-500/30';
+                                        statusText = 'Absent';
+                                    } else if (wd.isWeekend) {
+                                        cardBg = 'bg-black/20 border-white/5 opacity-70';
+                                        badgeColor = 'bg-white/5 text-slate-400 border border-white/10';
+                                    }
+
+                                    return `
+                                    <div class="p-3.5 rounded-2xl border ${cardBg} flex flex-col justify-between min-h-[160px] spring-transition hover:border-brand-500/40">
+                                        <div>
+                                            <div class="flex justify-between items-start mb-2">
+                                                <span class="font-bold text-xs ${wd.isWeekend ? 'text-slate-400' : 'text-slate-200'}">${wd.short}</span>
+                                                <span class="text-[9px] px-1.5 py-0.5 rounded-md font-semibold ${badgeColor}">${statusText}</span>
+                                            </div>
+                                            <div class="text-[10px] text-slate-400 font-medium">${wd.day}</div>
+                                        </div>
+
+                                        ${rec ? `
+                                            <div class="my-2 pt-2 border-t border-white/10 space-y-1 text-[11px]">
+                                                <div class="flex justify-between text-slate-400"><span>In:</span><span class="font-mono text-slate-200 font-medium">${rec.checkIn}</span></div>
+                                                <div class="flex justify-between text-slate-400"><span>Out:</span><span class="font-mono text-slate-200 font-medium">${rec.checkOut || 'In progress'}</span></div>
+                                                <div class="flex justify-between text-slate-300 font-bold pt-1 border-t border-white/5">
+                                                    <span>Hours:</span><span class="${isPresent ? 'text-emerald-400' : isHalfDay ? 'text-cyan-400' : 'text-slate-300'} font-mono">${rec.workHours}</span>
+                                                </div>
+                                            </div>
+                                            <button onclick="Dayflow.openEditAttendanceModal('${rec.id}')" class="w-full py-1 text-[10px] rounded-lg bg-white/5 hover:bg-white/15 text-slate-300 font-semibold spring-transition">
+                                                Edit Log
+                                            </button>
+                                        ` : `
+                                            <div class="my-2 pt-2 border-t border-white/5 text-center text-slate-500 text-[11px] italic">
+                                                ${wd.isWeekend ? 'Standard Weekend' : 'No Check-In Recorded'}
+                                            </div>
+                                        `}
+                                    </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    ` : `
+                        <!-- VIEW 2: MONTHLY HEATMAP CALENDAR (August 2026, 31 Days) -->
+                        <div class="space-y-4 relative z-10 fade-slide-enter">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                <div>
+                                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                                        <i data-lucide="calendar-check" class="w-4 h-4 text-emerald-400"></i> Monthly Heatmap Calendar: August 2026
+                                    </h4>
+                                    <p class="text-[11px] text-slate-400">31-Day visual shift breakdown with color-coded daily attendance logs for ${currentEmp.name}.</p>
+                                </div>
+                                <!-- Legend -->
+                                <div class="flex items-center gap-3 text-[10px] text-slate-400 flex-wrap">
+                                    <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Present (8h+)</span>
+                                    <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span> Half-day</span>
+                                    <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Leave</span>
+                                    <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span> Weekend Off</span>
+                                </div>
+                            </div>
+
+                            <!-- 31-Day Grid Matrix -->
+                            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5">
+                                ${monthDays.map(md => {
+                                    const rec = md.record;
+                                    const isPresent = rec && rec.status === 'Present';
+                                    const isHalfDay = rec && rec.status === 'Half-day';
+                                    const isLeave = rec && rec.status === 'Leave';
+                                    const isAbsent = rec && rec.status === 'Absent';
+
+                                    let cellBorder = 'border-white/10 bg-white/5';
+                                    let badgeColor = 'text-slate-400';
+                                    let durationText = md.isWeekend ? 'Weekend' : 'No Log';
+
+                                    if (isPresent) {
+                                        cellBorder = 'border-emerald-500/40 bg-emerald-950/25 hover:bg-emerald-950/40';
+                                        badgeColor = 'text-emerald-400 font-bold';
+                                        durationText = rec.workHours;
+                                    } else if (isHalfDay) {
+                                        cellBorder = 'border-cyan-500/40 bg-cyan-950/25 hover:bg-cyan-950/40';
+                                        badgeColor = 'text-cyan-400 font-bold';
+                                        durationText = rec.workHours;
+                                    } else if (isLeave) {
+                                        cellBorder = 'border-amber-500/40 bg-amber-950/25 hover:bg-amber-950/40';
+                                        badgeColor = 'text-amber-400 font-bold';
+                                        durationText = 'Leave';
+                                    } else if (isAbsent) {
+                                        cellBorder = 'border-rose-500/40 bg-rose-950/25 hover:bg-rose-950/40';
+                                        badgeColor = 'text-rose-400 font-bold';
+                                        durationText = 'Absent';
+                                    } else if (md.isWeekend) {
+                                        cellBorder = 'border-white/5 bg-black/20 opacity-60';
+                                    }
+
+                                    return `
+                                    <div class="p-2.5 rounded-2xl border ${cellBorder} flex flex-col justify-between min-h-[90px] spring-transition hover:scale-[1.02] cursor-pointer" ${rec ? `onclick="Dayflow.openEditAttendanceModal('${rec.id}')"` : ''} title="${rec ? `Date: ${rec.date} | In: ${rec.checkIn} | Out: ${rec.checkOut} | Status: ${rec.status}` : `${md.dateStr} - ${md.isWeekend ? 'Weekend' : 'No log'}`}">
+                                        <div class="flex justify-between items-start">
+                                            <span class="text-xs font-black text-slate-200">Aug ${md.dayNum}</span>
+                                            <span class="text-[9px] text-slate-400 uppercase font-mono">${md.dayName}</span>
+                                        </div>
+                                        <div>
+                                            <div class="text-[11px] font-mono ${badgeColor} truncate">${durationText}</div>
+                                            ${rec ? `<div class="text-[9px] text-slate-400 truncate">${rec.checkIn} - ${rec.checkOut || 'active'}</div>` : ''}
+                                        </div>
+                                    </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `}
+                </div>
+                `;
+            },
+
             // Admin Dashboard View
             AdminDashboard: () => {
                 const users = DayflowDB.getUsers();
                 const attendance = DayflowDB.getAttendance();
                 const leaves = DayflowDB.getLeaves();
+                const leaveFilter = Dayflow.state.adminDashboardLeaveFilter || 'Pending';
 
                 const todayStr = '2026-08-22';
                 const todayAttendance = attendance.filter(a => a.date === todayStr);
                 const presentCount = todayAttendance.filter(a => a.status === 'Present').length;
-                const absentCount = todayAttendance.filter(a => a.status === 'Absent').length;
                 const pendingLeaves = leaves.filter(l => l.status === 'Pending');
+                const approvedLeaves = leaves.filter(l => l.status === 'Approved');
+                const rejectedLeaves = leaves.filter(l => l.status === 'Rejected');
+
+                // Filtered leaves according to selected tab
+                let displayedLeaves = leaves;
+                if (leaveFilter === 'Pending') displayedLeaves = pendingLeaves;
+                else if (leaveFilter === 'Approved') displayedLeaves = approvedLeaves;
+                else if (leaveFilter === 'Rejected') displayedLeaves = rejectedLeaves;
 
                 const totalMonthlyPayroll = users.reduce((sum, u) => sum + (u.salary ? (u.salary.base + u.salary.hra + u.salary.allowances - u.salary.deductions - u.salary.pf - u.salary.tax) / 12 : 0), 0);
 
@@ -1861,7 +2488,7 @@
                                 <div class="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
                                     <i data-lucide="calendar-alert" class="w-5 h-5"></i>
                                 </div>
-                                <span class="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">${pendingLeaves.length} Action(s)</span>
+                                <span class="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">${pendingLeaves.length} Pending</span>
                             </div>
                             <div class="text-3xl font-extrabold text-amber-400">${pendingLeaves.length}</div>
                             <div class="text-xs text-slate-400 mt-1">Pending Leave Approvals</div>
@@ -1874,59 +2501,101 @@
                                 </div>
                                 <span class="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-full">Monthly</span>
                             </div>
-                            <div class="text-3xl font-extrabold">$${Math.round(totalMonthlyPayroll).toLocaleString()}</div>
+                            <div class="text-3xl font-extrabold">${formatINR(totalMonthlyPayroll)}</div>
                             <div class="text-xs text-slate-400 mt-1">Net Monthly Payroll Outflow</div>
                         </div>
                     </div>
 
-                    <!-- Split Actions Area: Pending Approvals & Employee Switcher/Directory -->
+                    <!-- Split Actions Area: Leave Approvals Queue & Live Directory -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <!-- Pending Leave Approvals with direct comment actions -->
+                        <!-- Leave Action Queue Block -->
                         <div class="glass-panel rounded-3xl p-6 lg:col-span-2 flex flex-col justify-between">
                             <div>
-                                <div class="flex justify-between items-center mb-4">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                                     <div>
                                         <h3 class="text-lg font-bold flex items-center gap-2">
                                             <i data-lucide="inbox" class="w-5 h-5 text-amber-400"></i>
-                                            Leave Approval Action Queue
+                                            Employee Time-Off Applications
+                                            ${pendingLeaves.length > 0 ? `<span class="px-2.5 py-0.5 rounded-full text-xs bg-amber-500/20 text-amber-300 border border-amber-500/30 animate-pulse font-bold">${pendingLeaves.length} Awaiting Review</span>` : ''}
                                         </h3>
-                                        <p class="text-xs text-slate-400">Approve or reject requests with custom administrative remarks.</p>
+                                        <p class="text-xs text-slate-400">Review incoming employee requests (Emma, John, etc.), make approval decisions, and provide remarks in real-time.</p>
                                     </div>
-                                    ${UI.Button('All Requests', 'ghost', "Dayflow.navigate('leaves')", 'button', 'text-xs')}
+                                    <div class="flex items-center gap-1.5">
+                                        ${UI.Button('All Records', 'ghost', "Dayflow.navigate('leaves')", 'button', 'text-xs px-3 py-1.5')}
+                                    </div>
                                 </div>
 
-                                <div class="space-y-3">
-                                    ${pendingLeaves.length === 0 ? `
+                                <!-- Filter Tabs for Leave Queue -->
+                                <div class="flex items-center gap-2 mb-4 pb-3 border-b border-white/10 overflow-x-auto">
+                                    ${[
+                                        { id: 'Pending', label: `Pending (${pendingLeaves.length})`, color: 'amber' },
+                                        { id: 'Approved', label: `Approved (${approvedLeaves.length})`, color: 'emerald' },
+                                        { id: 'Rejected', label: `Rejected (${rejectedLeaves.length})`, color: 'rose' },
+                                        { id: 'All', label: `All Requests (${leaves.length})`, color: 'slate' }
+                                    ].map(tab => `
+                                        <button onclick="Dayflow.setAdminDashboardLeaveFilter('${tab.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold spring-transition flex-shrink-0 ${leaveFilter === tab.id ? 'bg-brand-500/20 text-brand-300 border border-brand-500/40 shadow-glow-brand' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'}">
+                                            ${tab.label}
+                                        </button>
+                                    `).join('')}
+                                </div>
+
+                                <div class="space-y-3 max-h-[420px] overflow-y-auto pr-1">
+                                    ${displayedLeaves.length === 0 ? `
                                         <div class="p-8 text-center glass-panel-subtle rounded-2xl text-slate-400 text-xs">
                                             <i data-lucide="check-circle" class="w-8 h-8 text-emerald-400 mx-auto mb-2 opacity-60"></i>
-                                            All leave applications have been reviewed. No pending tasks in queue!
+                                            No ${leaveFilter.toLowerCase()} leave requests found in this queue.
                                         </div>
-                                    ` : pendingLeaves.map(leave => `
+                                    ` : displayedLeaves.map(leave => {
+                                        const emp = users.find(u => u.id === leave.user) || { 
+                                            name: leave.name || 'Employee', 
+                                            department: 'Operations', 
+                                            avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=240&auto=format&fit=crop&q=80' 
+                                        };
+                                        return `
                                         <div class="glass-panel-subtle p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-white/10 hover:border-brand-500/30 spring-transition">
                                             <div class="flex items-start gap-3">
-                                                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-cyan-500 flex items-center justify-center font-bold text-white flex-shrink-0">
-                                                    ${leave.name.charAt(0)}
-                                                </div>
+                                                <img src="${emp.avatar}" class="w-11 h-11 rounded-2xl object-cover border border-white/20 flex-shrink-0" />
                                                 <div>
-                                                    <div class="flex items-center gap-2">
-                                                        <span class="font-bold text-sm text-slate-100">${leave.name}</span>
-                                                        <span class="text-[11px] px-2 py-0.5 rounded-full bg-brand-500/15 text-brand-300 font-semibold">${leave.type}</span>
+                                                    <div class="flex items-center gap-2 flex-wrap">
+                                                        <span class="font-bold text-sm text-slate-100">${leave.name || emp.name}</span>
+                                                        <span class="text-[10px] font-mono text-slate-400 px-2 py-0.5 rounded-full bg-white/5 border border-white/10">${leave.user || emp.id}</span>
+                                                        <span class="text-[11px] px-2 py-0.5 rounded-full bg-brand-500/15 text-brand-300 font-semibold">${leave.type} Leave</span>
+                                                        ${UI.StatusBadge(leave.status)}
                                                     </div>
-                                                    <div class="text-xs text-slate-400 mt-0.5">${leave.from} &rarr; ${leave.to} (${leave.days} day(s))</div>
-                                                    <p class="text-xs text-slate-300 italic mt-1 bg-black/20 px-2.5 py-1 rounded-xl">"${leave.reason}"</p>
+                                                    <div class="text-xs text-slate-400 mt-1 flex items-center gap-2">
+                                                        <span><i data-lucide="calendar" class="w-3.5 h-3.5 inline mr-1 text-cyan-400"></i>${leave.from} &rarr; ${leave.to}</span>
+                                                        <span class="font-bold text-slate-300">(${leave.days} day${leave.days > 1 ? 's' : ''})</span>
+                                                        <span class="text-[10px] text-slate-500">&bull; Applied: ${leave.appliedOn || 'Recent'}</span>
+                                                    </div>
+                                                    <p class="text-xs text-slate-300 italic mt-1.5 bg-black/20 px-3 py-1.5 rounded-xl border border-white/5">
+                                                        "${leave.reason}"
+                                                    </p>
+                                                    ${leave.adminComment ? `
+                                                        <div class="text-[11px] text-brand-300 mt-1.5 flex items-center gap-1.5">
+                                                            <i data-lucide="message-square" class="w-3 h-3 text-brand-400"></i>
+                                                            <span>HR Remark: <em>${leave.adminComment}</em></span>
+                                                        </div>
+                                                    ` : ''}
                                                 </div>
                                             </div>
 
-                                            <div class="flex items-center gap-2 self-end sm:self-center">
-                                                <button onclick="Dayflow.openAdminLeaveActionModal('${leave.id}', 'Approved')" class="px-3.5 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 text-xs font-bold border border-emerald-500/30 spring-transition flex items-center gap-1.5">
-                                                    <i data-lucide="check" class="w-4 h-4"></i> Approve
-                                                </button>
-                                                <button onclick="Dayflow.openAdminLeaveActionModal('${leave.id}', 'Rejected')" class="px-3.5 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 text-xs font-bold border border-rose-500/30 spring-transition flex items-center gap-1.5">
-                                                    <i data-lucide="x" class="w-4 h-4"></i> Reject
-                                                </button>
+                                            <div class="flex items-center gap-2 self-end sm:self-center flex-shrink-0">
+                                                ${leave.status === 'Pending' ? `
+                                                    <button onclick="Dayflow.openAdminLeaveActionModal('${leave.id}', 'Approved')" class="px-3.5 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 text-xs font-bold border border-emerald-500/30 spring-transition flex items-center gap-1.5 shadow-sm">
+                                                        <i data-lucide="check" class="w-4 h-4"></i> Approve
+                                                    </button>
+                                                    <button onclick="Dayflow.openAdminLeaveActionModal('${leave.id}', 'Rejected')" class="px-3.5 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 text-xs font-bold border border-rose-500/30 spring-transition flex items-center gap-1.5 shadow-sm">
+                                                        <i data-lucide="x" class="w-4 h-4"></i> Reject
+                                                    </button>
+                                                ` : `
+                                                    <button onclick="Dayflow.openAdminLeaveActionModal('${leave.id}', '${leave.status === 'Approved' ? 'Rejected' : 'Approved'}')" class="px-3 py-1.5 rounded-xl glass-panel-subtle hover:bg-white/10 text-slate-400 hover:text-slate-200 text-xs border border-white/10 spring-transition">
+                                                        Change Decision
+                                                    </button>
+                                                `}
                                             </div>
                                         </div>
-                                    `).join('')}
+                                        `;
+                                    }).join('')}
                                 </div>
                             </div>
                         </div>
@@ -1958,6 +2627,9 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Individual Employee Weekly & Monthly Attendance Deep-Dive -->
+                    ${Views.IndividualEmployeeAttendanceTracker(Dayflow.state.adminAttendanceEmployeeId, Dayflow.state.adminAttendanceViewMode)}
 
                     <!-- Company-Wide Attendance Records Overview Table -->
                     <div class="glass-panel rounded-3xl p-6">
@@ -2017,6 +2689,9 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Leave Apply Modal for Admin direct application -->
+                ${Views.LeaveApplyModal()}
                 `;
             },
 
@@ -2141,13 +2816,21 @@
                                     <h4 class="text-sm font-bold uppercase tracking-wider text-brand-400 flex items-center gap-2 pb-2 border-b border-white/10">
                                         <i data-lucide="phone" class="w-4 h-4"></i> Contact & Residential
                                     </h4>
+                                    
+                                    <!-- Country & Dial Code for Phone -->
                                     <div class="flex flex-col gap-1">
-                                        <label class="text-xs font-semibold text-slate-400">Primary Phone Number</label>
-                                        <input id="prof-phone" type="text" value="${targetUser.phone}" ${!isEditing ? 'disabled' : ''} class="glass-input rounded-xl p-3 text-xs font-medium disabled:opacity-60 disabled:cursor-not-allowed" />
+                                        <label class="text-xs font-semibold text-slate-400">Country & Dial Code</label>
+                                        <select id="prof-country" ${!isEditing ? 'disabled' : ''} class="glass-input rounded-xl p-3 text-xs bg-slate-900 disabled:opacity-60">
+                                            ${COUNTRY_LIST.map(c => `<option value="${c.code}" ${(targetUser.country === c.name || (targetUser.phone && targetUser.phone.startsWith(c.code))) ? 'selected' : ''}>${c.flag} ${c.name} (${c.code})</option>`).join('')}
+                                        </select>
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <label class="text-xs font-semibold text-slate-400">Primary Contact Phone</label>
+                                        <input id="prof-phone" type="text" value="${targetUser.phone}" ${!isEditing ? 'disabled' : ''} class="glass-input rounded-xl p-3 text-xs font-mono disabled:opacity-60 disabled:cursor-not-allowed" />
                                     </div>
                                     <div class="flex flex-col gap-1">
                                         <label class="text-xs font-semibold text-slate-400">Emergency Contact (Name & Phone)</label>
-                                        <input id="prof-emergency" type="text" value="${targetUser.emergencyContact || 'Family (+1 555-000-0000)'}" ${!isEditing ? 'disabled' : ''} class="glass-input rounded-xl p-3 text-xs font-medium disabled:opacity-60 disabled:cursor-not-allowed" />
+                                        <input id="prof-emergency" type="text" value="${targetUser.emergencyContact || 'Family (+91 98765 00000)'}" ${!isEditing ? 'disabled' : ''} class="glass-input rounded-xl p-3 text-xs font-medium disabled:opacity-60 disabled:cursor-not-allowed" />
                                     </div>
                                     <div class="flex flex-col gap-1">
                                         <label class="text-xs font-semibold text-slate-400">Residential Address</label>
@@ -2201,13 +2884,13 @@
                             <div class="glass-panel rounded-3xl p-6 space-y-6 fade-slide-enter">
                                 <div class="flex justify-between items-center pb-2 border-b border-white/10">
                                     <h4 class="text-sm font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-2">
-                                        <i data-lucide="badge-dollar-sign" class="w-4 h-4"></i> Compensation & Salary Breakdown
+                                        <i data-lucide="badge-dollar-sign" class="w-4 h-4"></i> Compensation & Salary Breakdown (INR)
                                     </h4>
-                                    ${isAdmin && !isEditing ? UI.Button('<i data-lucide="edit-2" class="w-3.5 h-3.5"></i> Update Salary', 'primary', `Dayflow.openEditSalaryModal('${targetUser.id}')`, 'button', 'text-xs py-1.5 px-3') : ''}
+                                    ${isAdmin && !isEditing ? UI.Button('<i data-lucide="edit-2" class="w-3.5 h-3.5"></i> Update Salary Structure', 'primary', `Dayflow.openEditSalaryModal('${targetUser.id}')`, 'button', 'text-xs py-1.5 px-3') : ''}
                                 </div>
 
                                 ${(() => {
-                                    const s = targetUser.salary || { base: 90000, hra: 18000, allowances: 6000, deductions: 4000, pf: 3000, tax: 6000 };
+                                    const s = targetUser.salary || { base: 1440000, hra: 288000, allowances: 96000, deductions: 48000, pf: 57600, tax: 115200 };
                                     const gross = s.base + s.hra + s.allowances;
                                     const totalDeductions = s.deductions + s.pf + s.tax;
                                     const net = gross - totalDeductions;
@@ -2215,15 +2898,15 @@
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                                         <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
                                             <span class="text-xs text-slate-400">Annual Gross CTC</span>
-                                            <div class="text-2xl font-black text-white mt-1">$${gross.toLocaleString()}</div>
+                                            <div class="text-2xl font-black text-white mt-1">${formatINR(gross)}</div>
                                         </div>
                                         <div class="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20">
                                             <span class="text-xs text-rose-300">Total Deductions & Taxes</span>
-                                            <div class="text-2xl font-black text-rose-400 mt-1">-$${totalDeductions.toLocaleString()}</div>
+                                            <div class="text-2xl font-black text-rose-400 mt-1">-${formatINR(totalDeductions)}</div>
                                         </div>
                                         <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
                                             <span class="text-xs text-emerald-300">Net Annual Take-Home</span>
-                                            <div class="text-2xl font-black text-emerald-400 mt-1">$${net.toLocaleString()}</div>
+                                            <div class="text-2xl font-black text-emerald-400 mt-1">${formatINR(net)}</div>
                                         </div>
                                     </div>
 
@@ -2231,32 +2914,32 @@
                                         <div class="space-y-3">
                                             <h5 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Earnings Breakdown</h5>
                                             <div class="flex flex-col gap-1">
-                                                <label class="text-xs text-slate-400">Base Salary ($)</label>
-                                                <input id="prof-sal-base" type="number" value="${s.base}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs disabled:opacity-60" />
+                                                <label class="text-xs text-slate-400">Base Salary (₹ / yr)</label>
+                                                <input id="prof-sal-base" type="number" value="${s.base}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs font-mono disabled:opacity-60" />
                                             </div>
                                             <div class="flex flex-col gap-1">
-                                                <label class="text-xs text-slate-400">House Rent Allowance (HRA) ($)</label>
-                                                <input id="prof-sal-hra" type="number" value="${s.hra}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs disabled:opacity-60" />
+                                                <label class="text-xs text-slate-400">House Rent Allowance (HRA) (₹ / yr)</label>
+                                                <input id="prof-sal-hra" type="number" value="${s.hra}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs font-mono disabled:opacity-60" />
                                             </div>
                                             <div class="flex flex-col gap-1">
-                                                <label class="text-xs text-slate-400">Special Allowances ($)</label>
-                                                <input id="prof-sal-allowances" type="number" value="${s.allowances}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs disabled:opacity-60" />
+                                                <label class="text-xs text-slate-400">Special Allowances (₹ / yr)</label>
+                                                <input id="prof-sal-allowances" type="number" value="${s.allowances}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs font-mono disabled:opacity-60" />
                                             </div>
                                         </div>
 
                                         <div class="space-y-3">
                                             <h5 class="text-xs font-bold text-rose-400 uppercase tracking-wider">Deductions & Statutory</h5>
                                             <div class="flex flex-col gap-1">
-                                                <label class="text-xs text-slate-400">Provident Fund (PF) ($)</label>
-                                                <input id="prof-sal-pf" type="number" value="${s.pf}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs disabled:opacity-60" />
+                                                <label class="text-xs text-slate-400">Provident Fund (PF) (₹ / yr)</label>
+                                                <input id="prof-sal-pf" type="number" value="${s.pf}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs font-mono disabled:opacity-60" />
                                             </div>
                                             <div class="flex flex-col gap-1">
-                                                <label class="text-xs text-slate-400">Income Tax & TDS ($)</label>
-                                                <input id="prof-sal-tax" type="number" value="${s.tax}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs disabled:opacity-60" />
+                                                <label class="text-xs text-slate-400">Income Tax & TDS (₹ / yr)</label>
+                                                <input id="prof-sal-tax" type="number" value="${s.tax}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs font-mono disabled:opacity-60" />
                                             </div>
                                             <div class="flex flex-col gap-1">
-                                                <label class="text-xs text-slate-400">Insurance & Other ($)</label>
-                                                <input id="prof-sal-deductions" type="number" value="${s.deductions}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs disabled:opacity-60" />
+                                                <label class="text-xs text-slate-400">Insurance & Professional Tax (₹ / yr)</label>
+                                                <input id="prof-sal-deductions" type="number" value="${s.deductions}" ${!isEditing || !isAdmin ? 'disabled' : ''} class="glass-input rounded-xl p-2.5 text-xs font-mono disabled:opacity-60" />
                                             </div>
                                         </div>
                                     </div>
@@ -2405,6 +3088,9 @@
                         </div>
                     </div>
 
+                    <!-- Individual Employee Attendance Matrix / Heatmap (Admin Deep Dive) -->
+                    ${isAdmin ? Views.IndividualEmployeeAttendanceTracker(Dayflow.state.adminAttendanceEmployeeId, Dayflow.state.adminAttendanceViewMode) : ''}
+
                     <!-- Attendance Records Table -->
                     <div class="glass-panel rounded-3xl p-6">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
@@ -2469,8 +3155,21 @@
             Leaves: () => {
                 const user = Dayflow.state.user;
                 const isAdmin = user.role === 'admin';
+                const users = DayflowDB.getUsers();
                 const leaves = DayflowDB.getLeaves();
-                const displayLeaves = isAdmin ? leaves : leaves.filter(l => l.user === user.id);
+                const filter = Dayflow.state.leaveFilterStatus || 'All';
+
+                // Initial scope (Admin sees all, Employee sees own)
+                let baseLeaves = isAdmin ? leaves : leaves.filter(l => l.user === user.id);
+
+                // Apply status filter
+                const displayLeaves = filter === 'All' 
+                    ? baseLeaves 
+                    : baseLeaves.filter(l => l.status === filter);
+
+                const pendingCount = baseLeaves.filter(l => l.status === 'Pending').length;
+                const approvedCount = baseLeaves.filter(l => l.status === 'Approved').length;
+                const rejectedCount = baseLeaves.filter(l => l.status === 'Rejected').length;
 
                 return `
                 <div class="fade-slide-enter space-y-6">
@@ -2498,11 +3197,27 @@
                         </div>
                     </div>
 
-                    <!-- Leaves Table -->
+                    <!-- Leaves Table Block -->
                     <div class="glass-panel rounded-3xl p-6">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-base font-bold">${isAdmin ? 'All Company Leave Requests' : 'My Leave Request History'}</h3>
-                            <span class="text-xs text-slate-400">Total: <strong>${displayLeaves.length}</strong></span>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+                            <div>
+                                <h3 class="text-base font-bold">${isAdmin ? 'Company Leave Records' : 'My Leave Request History'}</h3>
+                                <p class="text-xs text-slate-400">Showing <strong>${displayLeaves.length}</strong> of ${baseLeaves.length} total request(s)</p>
+                            </div>
+
+                            <!-- Filter Pills -->
+                            <div class="flex items-center gap-1.5 overflow-x-auto">
+                                ${[
+                                    { id: 'All', label: `All (${baseLeaves.length})` },
+                                    { id: 'Pending', label: `Pending (${pendingCount})` },
+                                    { id: 'Approved', label: `Approved (${approvedCount})` },
+                                    { id: 'Rejected', label: `Rejected (${rejectedCount})` }
+                                ].map(t => `
+                                    <button onclick="Dayflow.setLeaveFilterStatus('${t.id}')" class="px-3 py-1 rounded-xl text-xs font-semibold spring-transition flex-shrink-0 ${filter === t.id ? 'bg-brand-500/20 text-brand-300 border border-brand-500/40 shadow-glow-brand' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'}">
+                                        ${t.label}
+                                    </button>
+                                `).join('')}
+                            </div>
                         </div>
 
                         <div class="overflow-x-auto">
@@ -2512,7 +3227,7 @@
                                         ${isAdmin ? '<th class="py-3 px-4">Employee</th>' : ''}
                                         <th class="py-3 px-4">Leave Type</th>
                                         <th class="py-3 px-4">Dates & Duration</th>
-                                        <th class="py-3 px-4">Employee Reason</th>
+                                        <th class="py-3 px-4">Reason / Notes</th>
                                         <th class="py-3 px-4">HR Admin Comments</th>
                                         <th class="py-3 px-4">Status</th>
                                         ${isAdmin ? '<th class="py-3 px-4 text-right">Actions</th>' : ''}
@@ -2520,13 +3235,24 @@
                                 </thead>
                                 <tbody>
                                     ${displayLeaves.length === 0 ? `
-                                        <tr><td colspan="7" class="p-8 text-center text-slate-400">No leave requests found.</td></tr>
-                                    ` : displayLeaves.map(leave => `
+                                        <tr><td colspan="7" class="p-8 text-center text-slate-400">No ${filter === 'All' ? '' : filter.toLowerCase()} leave requests found.</td></tr>
+                                    ` : displayLeaves.map(leave => {
+                                        const emp = users.find(u => u.id === leave.user) || { 
+                                            name: leave.name || 'Employee', 
+                                            department: 'General', 
+                                            avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=240&auto=format&fit=crop&q=80' 
+                                        };
+                                        return `
                                         <tr class="border-b border-white/5 hover:bg-white/5 spring-transition">
                                             ${isAdmin ? `
                                                 <td class="py-3.5 px-4">
-                                                    <span class="font-bold text-slate-200 block">${leave.name}</span>
-                                                    <span class="text-[10px] text-slate-400 font-mono">${leave.user}</span>
+                                                    <div class="flex items-center gap-2.5">
+                                                        <img src="${emp.avatar}" class="w-8 h-8 rounded-xl object-cover border border-white/20" />
+                                                        <div>
+                                                            <span class="font-bold text-slate-200 block">${leave.name || emp.name}</span>
+                                                            <span class="text-[10px] text-slate-400 font-mono">${leave.user || emp.id} &bull; ${emp.department}</span>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             ` : ''}
                                             <td class="py-3.5 px-4">
@@ -2538,27 +3264,30 @@
                                             </td>
                                             <td class="py-3.5 px-4 text-slate-300 max-w-xs">${leave.reason}</td>
                                             <td class="py-3.5 px-4 text-slate-300 italic">
-                                                ${leave.adminComment ? `<span class="bg-brand-500/10 text-brand-300 px-2 py-1 rounded-lg block">${leave.adminComment}</span>` : '<span class="text-slate-500">No remarks</span>'}
+                                                ${leave.adminComment ? `<span class="bg-brand-500/10 text-brand-300 px-2 py-1 rounded-lg block border border-brand-500/20">${leave.adminComment}</span>` : '<span class="text-slate-500">Pending review</span>'}
                                             </td>
                                             <td class="py-3.5 px-4">${UI.StatusBadge(leave.status)}</td>
                                             ${isAdmin ? `
                                                 <td class="py-3.5 px-4 text-right">
                                                     ${leave.status === 'Pending' ? `
                                                         <div class="flex items-center justify-end gap-1.5">
-                                                            <button onclick="Dayflow.openAdminLeaveActionModal('${leave.id}', 'Approved')" class="p-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-bold">
-                                                                <i data-lucide="check" class="w-4 h-4"></i>
+                                                            <button onclick="Dayflow.openAdminLeaveActionModal('${leave.id}', 'Approved')" class="px-2.5 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 font-bold border border-emerald-500/30 text-xs flex items-center gap-1">
+                                                                <i data-lucide="check" class="w-3.5 h-3.5"></i> Approve
                                                             </button>
-                                                            <button onclick="Dayflow.openAdminLeaveActionModal('${leave.id}', 'Rejected')" class="p-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-bold">
-                                                                <i data-lucide="x" class="w-4 h-4"></i>
+                                                            <button onclick="Dayflow.openAdminLeaveActionModal('${leave.id}', 'Rejected')" class="px-2.5 py-1.5 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 font-bold border border-rose-500/30 text-xs flex items-center gap-1">
+                                                                <i data-lucide="x" class="w-3.5 h-3.5"></i> Reject
                                                             </button>
                                                         </div>
                                                     ` : `
-                                                        <span class="text-[11px] text-slate-500">Processed</span>
+                                                        <button onclick="Dayflow.openAdminLeaveActionModal('${leave.id}', '${leave.status === 'Approved' ? 'Rejected' : 'Approved'}')" class="px-2 py-1 rounded-lg glass-panel-subtle hover:bg-white/10 text-slate-400 hover:text-slate-200 text-[11px] border border-white/10">
+                                                            Re-evaluate
+                                                        </button>
                                                     `}
                                                 </td>
                                             ` : ''}
                                         </tr>
-                                    `).join('')}
+                                        `;
+                                    }).join('')}
                                 </tbody>
                             </table>
                         </div>
@@ -2633,8 +3362,8 @@
                         <!-- Admin Payroll Management Suite -->
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div>
-                                <h2 class="text-2xl font-extrabold tracking-tight">Payroll & Salary Administration</h2>
-                                <p class="text-xs text-slate-400">Manage employee compensation structures, process monthly disbursement batches, and review reports.</p>
+                                <h2 class="text-2xl font-extrabold tracking-tight">Payroll & Salary Administration (INR)</h2>
+                                <p class="text-xs text-slate-400">Manage employee compensation structures, process monthly disbursement batches, and review reports in ₹ Indian Rupees.</p>
                             </div>
                             <div class="flex items-center gap-2">
                                 ${UI.Button('<i data-lucide="send" class="w-4 h-4"></i> Disburse August 2026 Payroll', 'primary', 'Dayflow.processPayrollBatch()', 'button', 'text-xs')}
@@ -2646,19 +3375,19 @@
                             <div class="glass-panel rounded-2xl p-5 border border-brand-500/30">
                                 <span class="text-xs text-brand-300 font-semibold">Total Company Monthly Base</span>
                                 <div class="text-2xl font-black text-white mt-1">
-                                    $${users.reduce((sum, u) => sum + (u.salary ? u.salary.base / 12 : 0), 0).toFixed(0)} <span class="text-xs font-normal text-slate-400">/ mo</span>
+                                    ${formatINR(users.reduce((sum, u) => sum + (u.salary ? u.salary.base / 12 : 0), 0))} <span class="text-xs font-normal text-slate-400">/ mo</span>
                                 </div>
                             </div>
                             <div class="glass-panel rounded-2xl p-5 border border-cyan-500/30">
                                 <span class="text-xs text-cyan-300 font-semibold">Total Statutory Taxes & PF Withheld</span>
                                 <div class="text-2xl font-black text-cyan-400 mt-1">
-                                    $${users.reduce((sum, u) => sum + (u.salary ? (u.salary.tax + u.salary.pf) / 12 : 0), 0).toFixed(0)} <span class="text-xs font-normal text-slate-400">/ mo</span>
+                                    ${formatINR(users.reduce((sum, u) => sum + (u.salary ? (u.salary.tax + u.salary.pf) / 12 : 0), 0))} <span class="text-xs font-normal text-slate-400">/ mo</span>
                                 </div>
                             </div>
                             <div class="glass-panel rounded-2xl p-5 border border-emerald-500/30">
                                 <span class="text-xs text-emerald-300 font-semibold">Net Disbursed Take-Home</span>
                                 <div class="text-2xl font-black text-emerald-400 mt-1">
-                                    $${users.reduce((sum, u) => sum + (u.salary ? (u.salary.base + u.salary.hra + u.salary.allowances - u.salary.deductions - u.salary.pf - u.salary.tax) / 12 : 0), 0).toFixed(0)} <span class="text-xs font-normal text-slate-400">/ mo</span>
+                                    ${formatINR(users.reduce((sum, u) => sum + (u.salary ? (u.salary.base + u.salary.hra + u.salary.allowances - u.salary.deductions - u.salary.pf - u.salary.tax) / 12 : 0), 0))} <span class="text-xs font-normal text-slate-400">/ mo</span>
                                 </div>
                             </div>
                         </div>
@@ -2688,7 +3417,7 @@
                                     </thead>
                                     <tbody>
                                         ${users.map(u => {
-                                            const s = u.salary || { base: 80000, hra: 16000, allowances: 5000, deductions: 3500, pf: 2500, tax: 5000 };
+                                            const s = u.salary || { base: 1200000, hra: 240000, allowances: 80000, deductions: 40000, pf: 48000, tax: 96000 };
                                             const netMonthly = (s.base + s.hra + s.allowances - s.deductions - s.pf - s.tax) / 12;
                                             return `
                                             <tr class="border-b border-white/5 hover:bg-white/5 spring-transition">
@@ -2702,10 +3431,10 @@
                                                     </div>
                                                 </td>
                                                 <td class="py-3.5 px-4 text-slate-300">${u.department}</td>
-                                                <td class="py-3.5 px-4 font-mono font-bold">$${(s.base / 12).toFixed(0)} <span class="text-slate-500 font-normal">/mo</span></td>
-                                                <td class="py-3.5 px-4 font-mono text-emerald-400">+$${((s.hra + s.allowances) / 12).toFixed(0)}</td>
-                                                <td class="py-3.5 px-4 font-mono text-rose-400">-$${((s.deductions + s.pf + s.tax) / 12).toFixed(0)}</td>
-                                                <td class="py-3.5 px-4 font-mono font-black text-slate-100 text-sm">$${netMonthly.toFixed(0)}</td>
+                                                <td class="py-3.5 px-4 font-mono font-bold">${formatINR(s.base / 12)} <span class="text-slate-500 font-normal">/mo</span></td>
+                                                <td class="py-3.5 px-4 font-mono text-emerald-400">+${formatINR((s.hra + s.allowances) / 12)}</td>
+                                                <td class="py-3.5 px-4 font-mono text-rose-400">-${formatINR((s.deductions + s.pf + s.tax) / 12)}</td>
+                                                <td class="py-3.5 px-4 font-mono font-black text-slate-100 text-sm">${formatINR(netMonthly)}</td>
                                                 <td class="py-3.5 px-4 text-right">
                                                     <div class="flex items-center justify-end gap-2">
                                                         <button onclick="Dayflow.viewPayslipPreview('${u.id}')" class="px-2.5 py-1 rounded-xl bg-white/5 hover:bg-white/15 text-slate-300 font-semibold text-xs spring-transition">
@@ -2738,7 +3467,7 @@
                                             </div>
                                         </div>
                                         <div class="flex items-center gap-4">
-                                            <span class="font-mono font-bold text-emerald-400 text-sm">$${run.totalDisbursed.toLocaleString()}</span>
+                                            <span class="font-mono font-bold text-emerald-400 text-sm">${formatINR(run.totalDisbursed)}</span>
                                             ${UI.StatusBadge(run.status)}
                                         </div>
                                     </div>
@@ -2750,7 +3479,7 @@
                 }
 
                 // Employee Payroll View (Payslip Card & Breakdown)
-                const s = user.salary || { base: 90000, hra: 18000, allowances: 6000, deductions: 3500, pf: 3000, tax: 6000 };
+                const s = user.salary || { base: 1440000, hra: 288000, allowances: 96000, deductions: 48000, pf: 57600, tax: 115200 };
                 const grossMonthly = (s.base + s.hra + s.allowances) / 12;
                 const deductionsMonthly = (s.deductions + s.pf + s.tax) / 12;
                 const netMonthly = grossMonthly - deductionsMonthly;
@@ -2759,8 +3488,8 @@
                 <div class="fade-slide-enter max-w-4xl mx-auto space-y-6">
                     <div class="flex justify-between items-center">
                         <div>
-                            <h2 class="text-2xl font-extrabold tracking-tight">My Salary & Monthly Payslips</h2>
-                            <p class="text-xs text-slate-400">Transparent salary overview, earnings, statutory withholdings, and printable PDF slips.</p>
+                            <h2 class="text-2xl font-extrabold tracking-tight">My Salary & Monthly Payslips (INR)</h2>
+                            <p class="text-xs text-slate-400">Transparent salary overview in ₹ Indian Rupees, earnings, statutory withholdings, and printable PDF slips.</p>
                         </div>
                         ${UI.Button('<i data-lucide="printer" class="w-4 h-4"></i> Download August Payslip', 'primary', `Dayflow.viewPayslipPreview('${user.id}')`, 'button', 'text-xs')}
                     </div>
@@ -2771,37 +3500,37 @@
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative z-10">
                             <div>
                                 <span class="text-xs text-brand-300 font-bold uppercase tracking-wider">August 2026 Estimated Net Pay</span>
-                                <div class="text-5xl font-extrabold text-white tracking-tight mt-1">$${netMonthly.toFixed(2)}</div>
+                                <div class="text-5xl font-extrabold text-white tracking-tight mt-1">${formatINR(netMonthly)}</div>
                                 <p class="text-xs text-slate-400 mt-2 flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Direct deposit scheduled for August 31, 2026
                                 </p>
                             </div>
                             <div class="text-right">
-                                <span class="text-xs text-slate-400">Annual Base Package</span>
-                                <div class="text-2xl font-bold font-mono text-slate-200">$${s.base.toLocaleString()}</div>
+                                <span class="text-xs text-slate-400">Annual Base CTC</span>
+                                <div class="text-2xl font-bold font-mono text-slate-200">${formatINR(s.base)}</div>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 pt-8 border-t border-white/10 relative z-10">
                             <div>
                                 <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-3 flex items-center gap-1.5">
-                                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Monthly Gross Earnings ($${grossMonthly.toFixed(2)})
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Monthly Gross Earnings (${formatINR(grossMonthly)})
                                 </h4>
                                 <div class="space-y-2 text-xs">
-                                    <div class="flex justify-between py-1 border-b border-white/5"><span class="text-slate-400">Basic Pay</span><span class="font-mono text-slate-200">$${(s.base / 12).toFixed(2)}</span></div>
-                                    <div class="flex justify-between py-1 border-b border-white/5"><span class="text-slate-400">House Rent Allowance (HRA)</span><span class="font-mono text-slate-200">$${(s.hra / 12).toFixed(2)}</span></div>
-                                    <div class="flex justify-between py-1"><span class="text-slate-400">Special Allowances</span><span class="font-mono text-slate-200">$${(s.allowances / 12).toFixed(2)}</span></div>
+                                    <div class="flex justify-between py-1 border-b border-white/5"><span class="text-slate-400">Basic Pay</span><span class="font-mono text-slate-200">${formatINR(s.base / 12)}</span></div>
+                                    <div class="flex justify-between py-1 border-b border-white/5"><span class="text-slate-400">House Rent Allowance (HRA)</span><span class="font-mono text-slate-200">${formatINR(s.hra / 12)}</span></div>
+                                    <div class="flex justify-between py-1"><span class="text-slate-400">Special Allowances</span><span class="font-mono text-slate-200">${formatINR(s.allowances / 12)}</span></div>
                                 </div>
                             </div>
 
                             <div>
                                 <h4 class="text-xs font-bold uppercase tracking-wider text-rose-400 mb-3 flex items-center gap-1.5">
-                                    <i data-lucide="minus-circle" class="w-4 h-4"></i> Monthly Deductions (-$${deductionsMonthly.toFixed(2)})
+                                    <i data-lucide="minus-circle" class="w-4 h-4"></i> Monthly Deductions (-${formatINR(deductionsMonthly)})
                                 </h4>
                                 <div class="space-y-2 text-xs">
-                                    <div class="flex justify-between py-1 border-b border-white/5"><span class="text-slate-400">Provident Fund (PF 401k)</span><span class="font-mono text-slate-200">$${(s.pf / 12).toFixed(2)}</span></div>
-                                    <div class="flex justify-between py-1 border-b border-white/5"><span class="text-slate-400">TDS & Federal Income Tax</span><span class="font-mono text-slate-200">$${(s.tax / 12).toFixed(2)}</span></div>
-                                    <div class="flex justify-between py-1"><span class="text-slate-400">Health / Other Deductions</span><span class="font-mono text-slate-200">$${(s.deductions / 12).toFixed(2)}</span></div>
+                                    <div class="flex justify-between py-1 border-b border-white/5"><span class="text-slate-400">Employees' PF (EPF)</span><span class="font-mono text-slate-200">${formatINR(s.pf / 12)}</span></div>
+                                    <div class="flex justify-between py-1 border-b border-white/5"><span class="text-slate-400">Income Tax & TDS</span><span class="font-mono text-slate-200">${formatINR(s.tax / 12)}</span></div>
+                                    <div class="flex justify-between py-1"><span class="text-slate-400">Health / Other Deductions</span><span class="font-mono text-slate-200">${formatINR(s.deductions / 12)}</span></div>
                                 </div>
                             </div>
                         </div>
@@ -2965,6 +3694,18 @@
         // Initialize on DOM Ready
         document.addEventListener('DOMContentLoaded', () => {
             Dayflow.init();
+        });
+
+        // Real-Time Cross-Tab / Multi-Window State Synchronization
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'dayflow_leaves' || e.key === 'dayflow_users' || e.key === 'dayflow_attendance' || e.key === 'dayflow_auth_user') {
+                if (Dayflow.state.user) {
+                    const users = DayflowDB.getUsers();
+                    const freshUser = users.find(u => u.id === Dayflow.state.user.id);
+                    if (freshUser) Dayflow.state.user = freshUser;
+                }
+                renderApp();
+            }
         });
     </script>
 </body>
