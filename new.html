@@ -286,6 +286,37 @@
       { id: 'exp-6', userId: 'u2', date: '2026-08-15', category: 'Office Supplies', amount: 850, merchant: 'Staples Stationery', description: 'Design sketchbooks and markers for workshop', receipt: 'stationery_bill.jpg', status: 'Rejected', adminComment: 'Please order supplies through central office inventory.' }
     ];
 
+    // Daily Targets Mock Database
+    const INITIAL_TARGETS = [
+      { id: 'tgt-1', userId: 'u2', date: '2026-08-22', title: 'Implement INR Currency Conversion & Payslip UI', project: 'Dayflow HRMS', priority: 'High', estimatedHours: 3.5, status: 'Completed', notes: 'All $ signs replaced with ₹ and itemized deductions added.', completedAt: '11:15 AM' },
+      { id: 'tgt-2', userId: 'u2', date: '2026-08-22', title: 'Build Day-to-Day Expense Management & Claims Module', project: 'Dayflow HRMS', priority: 'High', estimatedHours: 4.0, status: 'Completed', notes: 'Added submission modal, receipt viewer, and admin audit queue.', completedAt: '01:45 PM' },
+      { id: 'tgt-3', userId: 'u2', date: '2026-08-22', title: 'Integrate Daily Targets & Daily Progress Reports', project: 'Productivity Suite', priority: 'High', estimatedHours: 3.0, status: 'In Progress', notes: 'Creating target board and EOD progress reporting dashboard.', completedAt: null },
+      { id: 'tgt-4', userId: 'u2', date: '2026-08-22', title: 'Code Review for Attendance Check-in API PR #42', project: 'Backend Services', priority: 'Medium', estimatedHours: 1.5, status: 'To Do', notes: 'Review SQL query indexing on attendance ledger.', completedAt: null },
+
+      { id: 'tgt-5', userId: 'u3', date: '2026-08-22', title: 'Design Glassmorphism UI Components for Mobile Views', project: 'UI Kit 2.0', priority: 'High', estimatedHours: 5.0, status: 'Completed', notes: 'Finalized Figma artboards for sidebar and cards.', completedAt: '02:30 PM' },
+      { id: 'tgt-6', userId: 'u3', date: '2026-08-22', title: 'Update Color Tokens for High Contrast Dark Mode', project: 'Design System', priority: 'Medium', estimatedHours: 2.0, status: 'In Progress', notes: 'Fine-tuning slate and brand indigo tokens.', completedAt: null },
+
+      { id: 'tgt-7', userId: 'u4', date: '2026-08-22', title: 'Q3 Enterprise Client Product Demo with Apex Corp', project: 'Enterprise Sales', priority: 'High', estimatedHours: 2.5, status: 'Completed', notes: 'Demo completed successfully. Follow-up proposal scheduled for Monday.', completedAt: '12:00 PM' },
+      { id: 'tgt-8', userId: 'u4', date: '2026-08-22', title: 'Follow-up with 12 Inbound Sales Leads from Summit', project: 'Lead Generation', priority: 'Medium', estimatedHours: 3.0, status: 'Completed', notes: 'Sent customized deck and recorded meetings.', completedAt: '03:15 PM' },
+
+      { id: 'tgt-9', userId: 'u5', date: '2026-08-22', title: 'Launch Independence Day HRMS Social Campaign', project: 'Growth & Brand', priority: 'High', estimatedHours: 3.5, status: 'Completed', notes: 'Campaign live on LinkedIn and Twitter with 14% CTR.', completedAt: '11:00 AM' },
+      { id: 'tgt-10', userId: 'u5', date: '2026-08-22', title: 'Analyze August User Onboarding Drop-off Metrics', project: 'Product Analytics', priority: 'Medium', estimatedHours: 2.5, status: 'In Progress', notes: 'Drafting conversion funnel insights report.', completedAt: null },
+
+      // Historical dates for reports
+      { id: 'tgt-11', userId: 'u2', date: '2026-08-21', title: 'Refactor Attendance Timesheet Grid Component', project: 'Dayflow HRMS', priority: 'High', estimatedHours: 4.0, status: 'Completed', notes: 'Dynamic Monday-Friday timesheet logic implemented.', completedAt: '04:00 PM' },
+      { id: 'tgt-12', userId: 'u2', date: '2026-08-21', title: 'Fix Role-Based Leave Review Quota Tracker', project: 'Dayflow HRMS', priority: 'Medium', estimatedHours: 2.0, status: 'Completed', notes: 'Corrected Paid/Sick/Unpaid quota validation.', completedAt: '02:00 PM' },
+      { id: 'tgt-13', userId: 'u3', date: '2026-08-21', title: 'Create Lucide Icon Set Mapping for Navigation', project: 'UI Kit', priority: 'Low', estimatedHours: 2.0, status: 'Completed', notes: 'Mapped all 18 sidebar icons.', completedAt: '03:00 PM' },
+      { id: 'tgt-14', userId: 'u4', date: '2026-08-21', title: 'Draft Quarterly Revenue Forecast for Leadership', project: 'Sales Ops', priority: 'High', estimatedHours: 4.0, status: 'Completed', notes: 'Forecast model shared with Eleanor.', completedAt: '05:00 PM' },
+    ];
+
+    // Daily Standup & Progress Reports Mock Database
+    const INITIAL_DAILY_REPORTS = [
+      { id: 'rep-210822', userId: 'u2', date: '2026-08-22', standupSummary: 'Shipped INR currency transformation and day-to-day expense claims module. Working on daily progress reports.', blockers: 'None currently, backend mock endpoints responding fast.', managerRating: 'Exceptional (5/5)', managerFeedback: 'Phenomenal turnaround on both payslips and expense features!' },
+      { id: 'rep-210821', userId: 'u2', date: '2026-08-21', standupSummary: 'Refactored attendance timesheet and updated leave quota review workflows.', blockers: 'None.', managerRating: 'Great (4.8/5)', managerFeedback: 'Clean implementation of the timesheet grid.' },
+      { id: 'rep-310822', userId: 'u3', date: '2026-08-22', standupSummary: 'Finalized mobile UI glassmorphic cards and contrast ratios.', blockers: 'Waiting on marketing asset guidelines.', managerRating: 'Great (4.5/5)', managerFeedback: 'Aesthetic looks top notch.' },
+      { id: 'rep-410822', userId: 'u4', date: '2026-08-22', standupSummary: 'Completed key enterprise pitch with Apex Corp, qualified 12 hot leads.', blockers: 'Need legal team contract template for enterprise discounts.', managerRating: 'Exceptional (5/5)', managerFeedback: 'Huge win with Apex Corp!' },
+    ];
+
     const INITIAL_PAYROLL_RUNS = [
       { id: 'pr-0826', month: 'August 2026', processedDate: '2026-08-22', status: 'Draft', totalAmount: 403125 },
       { id: 'pr-0726', month: 'July 2026', processedDate: '2026-07-31', status: 'Paid', totalAmount: 403125 },
@@ -306,6 +337,8 @@
         leaves: JSON.parse(localStorage.getItem('df_leaves')) || INITIAL_LEAVES,
         attendance: JSON.parse(localStorage.getItem('df_attendance')) || INITIAL_ATTENDANCE,
         expenses: JSON.parse(localStorage.getItem('df_expenses')) || INITIAL_EXPENSES,
+        targets: JSON.parse(localStorage.getItem('df_targets')) || INITIAL_TARGETS,
+        dailyReports: JSON.parse(localStorage.getItem('df_daily_reports')) || INITIAL_DAILY_REPORTS,
         payrollRuns: INITIAL_PAYROLL_RUNS,
         notificationsFeed: INITIAL_NOTIFICATIONS,
         toastNotifications: [],
@@ -329,6 +362,12 @@
         expenseFilterStatus: 'ALL',
         expenseFilterCategory: 'ALL',
         expenseSearchQuery: '',
+        targetFilterStatus: 'ALL',
+        targetFilterPriority: 'ALL',
+        targetFilterDate: '2026-08-22',
+        dashboardTargetFilter: 'ALL',
+        reportSelectedDate: '2026-08-22',
+        reportSelectedUser: 'ALL',
         
         // System Clock Simulation
         currentDate: new Date('2026-08-22T09:33:11')
@@ -345,6 +384,8 @@
         localStorage.setItem('df_leaves', JSON.stringify(this.state.leaves));
         localStorage.setItem('df_attendance', JSON.stringify(this.state.attendance));
         localStorage.setItem('df_expenses', JSON.stringify(this.state.expenses));
+        localStorage.setItem('df_targets', JSON.stringify(this.state.targets));
+        localStorage.setItem('df_daily_reports', JSON.stringify(this.state.dailyReports));
       },
 
       // Toast Notification System
@@ -1058,6 +1099,399 @@
         `;
         document.getElementById('modal-container').innerHTML = modalHTML;
         lucide.createIcons();
+      },
+
+      // ==========================================
+      // DAILY TARGETS MANAGEMENT METHODS
+      // ==========================================
+      openCreateTargetModal() {
+        const todayStr = this.state.currentDate.toISOString().split('T')[0];
+        const isAdmin = this.state.currentUser.role === 'admin';
+
+        const modalHTML = `
+          <div id="active-modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-fade-in-up">
+            ${this.ui.GlassCard(`
+              <div class="flex justify-between items-center pb-4 border-b border-white/20 dark:border-white/10 mb-6">
+                <div>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white">Set Daily Target</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Define key daily deliverables & estimated effort</p>
+                </div>
+                <button onclick="window.app.closeModal()" class="p-2 text-slate-400 hover:text-white rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
+              </div>
+
+              <form onsubmit="window.app.createTarget(event)" class="space-y-4 max-h-[75vh] overflow-y-auto pr-1">
+                ${isAdmin ? `
+                  <div class="space-y-1.5 w-full">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">Assign Target To</label>
+                    <select id="tgt-user" class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-sm">
+                      ${this.state.users.map(u => `<option value="${u.id}" class="bg-white dark:bg-slate-800">${u.name} (${u.department})</option>`).join('')}
+                    </select>
+                  </div>
+                ` : `<input type="hidden" id="tgt-user" value="${this.state.currentUser.id}">`}
+
+                ${this.ui.Input('tgt-title', 'Target Title / Deliverable', 'text', '', 'e.g. Build Payment Gateway Webhook Handler', true)}
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  ${this.ui.Input('tgt-project', 'Project / Workstream', 'text', 'Dayflow Core', 'e.g. Mobile App', true)}
+                  ${this.ui.Input('tgt-date', 'Target Date', 'date', todayStr, '', true)}
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="space-y-1.5 w-full">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">Priority Level</label>
+                    <select id="tgt-prio" class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-sm">
+                      <option value="High" class="bg-white dark:bg-slate-800">High / Urgent</option>
+                      <option value="Medium" selected class="bg-white dark:bg-slate-800">Medium</option>
+                      <option value="Low" class="bg-white dark:bg-slate-800">Low / Nice to have</option>
+                    </select>
+                  </div>
+                  ${this.ui.Input('tgt-hours', 'Estimated Hours', 'number', '2.5', 'e.g. 3.0', true)}
+                </div>
+
+                ${this.ui.Input('tgt-notes', 'Deliverable Details / Notes', 'text', '', 'e.g. Test with staging sandbox and submit PR')}
+
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-white/10">
+                  ${this.ui.Button('Cancel', '', 'secondary', 'window.app.closeModal()')}
+                  ${this.ui.Button('Save Daily Target', 'plus-circle', 'primary', '', '', 'submit')}
+                </div>
+              </form>
+            `, 'w-full max-w-lg shadow-2xl relative', 'p-6 sm:p-8')}
+          </div>
+        `;
+        document.getElementById('modal-container').innerHTML = modalHTML;
+        lucide.createIcons();
+      },
+
+      createTarget(e) {
+        e.preventDefault();
+        const userId = document.getElementById('tgt-user').value;
+        const title = document.getElementById('tgt-title').value.trim();
+        const project = document.getElementById('tgt-project').value.trim() || 'General';
+        const date = document.getElementById('tgt-date').value;
+        const priority = document.getElementById('tgt-prio').value;
+        const estimatedHours = parseFloat(document.getElementById('tgt-hours').value) || 2.0;
+        const notes = document.getElementById('tgt-notes').value.trim();
+
+        const newTarget = {
+          id: `tgt-${Date.now()}`,
+          userId,
+          date,
+          title,
+          project,
+          priority,
+          estimatedHours,
+          status: 'To Do',
+          notes: notes || 'Target initialized.',
+          completedAt: null
+        };
+
+        this.state.targets.unshift(newTarget);
+        this.persist();
+        
+        const assignee = this.state.users.find(u => u.id === userId);
+        this.addNotificationFeed('New Target Added', `Daily target "${title}" logged for ${assignee ? assignee.name : 'you'}.`, 'info', 'check-square');
+        this.notify('Daily target added successfully.', 'success', 'Target Saved');
+        this.closeModal();
+        this.render();
+      },
+
+      quickAddDashboardTarget(e) {
+        e.preventDefault();
+        const input = document.getElementById('dash-quick-target-input');
+        if (!input) return;
+        const title = input.value.trim();
+        if (!title) return;
+
+        const u = this.getActiveUser();
+        const todayStr = this.state.currentDate.toISOString().split('T')[0];
+
+        const newTarget = {
+          id: `tgt-${Date.now()}`,
+          userId: u.id,
+          date: todayStr,
+          title,
+          project: 'General',
+          priority: 'Medium',
+          estimatedHours: 1.5,
+          status: 'To Do',
+          notes: 'Added from dashboard quick checklist',
+          completedAt: null
+        };
+
+        this.state.targets.unshift(newTarget);
+        this.persist();
+        this.addNotificationFeed('Target Added', `Daily target "${title}" added to your checklist.`, 'info', 'check-square');
+        this.notify(`Target "${title}" added to today's list!`, 'success', 'Target Created');
+        input.value = '';
+        this.render();
+      },
+
+      quickAssignAdminTarget(e) {
+        e.preventDefault();
+        const userSelect = document.getElementById('admin-quick-assign-user');
+        const input = document.getElementById('admin-quick-assign-title');
+        if (!userSelect || !input) return;
+        
+        const userId = userSelect.value;
+        const title = input.value.trim();
+        if (!title) return;
+
+        const todayStr = this.state.currentDate.toISOString().split('T')[0];
+        const assignee = this.state.users.find(u => u.id === userId);
+
+        const newTarget = {
+          id: `tgt-${Date.now()}`,
+          userId,
+          date: todayStr,
+          title,
+          project: 'Operational Task',
+          priority: 'High',
+          estimatedHours: 2.0,
+          status: 'To Do',
+          notes: 'Assigned via Admin Dashboard',
+          completedAt: null
+        };
+
+        this.state.targets.unshift(newTarget);
+        this.persist();
+        this.addNotificationFeed('Target Assigned', `Assigned "${title}" to ${assignee ? assignee.name : 'staff'}.`, 'info', 'check-square');
+        this.notify(`Assigned "${title}" to ${assignee ? assignee.name : 'employee'}!`, 'success', 'Target Dispatched');
+        input.value = '';
+        this.render();
+      },
+
+      toggleTargetStatus(targetId) {
+        const tgt = this.state.targets.find(t => t.id === targetId);
+        if (!tgt) return;
+
+        if (tgt.status === 'Completed') {
+          tgt.status = 'To Do';
+          tgt.completedAt = null;
+          this.notify(`Target marked as To Do.`, 'info', 'Target Status');
+        } else {
+          tgt.status = 'Completed';
+          tgt.completedAt = this.state.currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+          this.addNotificationFeed('Target Completed', `"${tgt.title}" marked completed!`, 'success', 'check-circle-2');
+          this.notify(`Target "${tgt.title}" completed! 🎉`, 'success', 'Target Completed');
+        }
+        this.persist();
+        this.render();
+      },
+
+      setTargetStatus(targetId, newStatus) {
+        const tgt = this.state.targets.find(t => t.id === targetId);
+        if (!tgt) return;
+
+        tgt.status = newStatus;
+        if (newStatus === 'Completed') {
+          tgt.completedAt = this.state.currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+          this.notify(`Target "${tgt.title}" marked as Completed.`, 'success', 'Target Updated');
+        } else {
+          tgt.completedAt = null;
+          this.notify(`Target "${tgt.title}" updated to ${newStatus}.`, 'info', 'Target Updated');
+        }
+        this.persist();
+        this.render();
+      },
+
+      deleteTarget(targetId) {
+        this.state.targets = this.state.targets.filter(t => t.id !== targetId);
+        this.persist();
+        this.notify('Daily target removed.', 'info', 'Target Deleted');
+        this.render();
+      },
+
+      openEditTargetModal(targetId) {
+        const tgt = this.state.targets.find(t => t.id === targetId);
+        if (!tgt) return;
+
+        const modalHTML = `
+          <div id="active-modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-fade-in-up">
+            ${this.ui.GlassCard(`
+              <div class="flex justify-between items-center pb-4 border-b border-white/20 dark:border-white/10 mb-6">
+                <div>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white">Edit Daily Target</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Update scope, status, or notes</p>
+                </div>
+                <button onclick="window.app.closeModal()" class="p-2 text-slate-400 hover:text-white rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
+              </div>
+
+              <form onsubmit="window.app.saveEditTarget(event, '${tgt.id}')" class="space-y-4 max-h-[75vh] overflow-y-auto pr-1">
+                ${this.ui.Input('ed-tgt-title', 'Target Title', 'text', tgt.title, '', true)}
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  ${this.ui.Input('ed-tgt-project', 'Project / Tag', 'text', tgt.project, '', true)}
+                  <div class="space-y-1.5 w-full">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">Current Status</label>
+                    <select id="ed-tgt-status" class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-sm">
+                      <option value="To Do" ${tgt.status==='To Do'?'selected':''} class="bg-white dark:bg-slate-800">To Do</option>
+                      <option value="In Progress" ${tgt.status==='In Progress'?'selected':''} class="bg-white dark:bg-slate-800">In Progress</option>
+                      <option value="Completed" ${tgt.status==='Completed'?'selected':''} class="bg-white dark:bg-slate-800">Completed</option>
+                      <option value="Blocked" ${tgt.status==='Blocked'?'selected':''} class="bg-white dark:bg-slate-800">Blocked</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="space-y-1.5 w-full">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">Priority</label>
+                    <select id="ed-tgt-prio" class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-sm">
+                      <option value="High" ${tgt.priority==='High'?'selected':''} class="bg-white dark:bg-slate-800">High</option>
+                      <option value="Medium" ${tgt.priority==='Medium'?'selected':''} class="bg-white dark:bg-slate-800">Medium</option>
+                      <option value="Low" ${tgt.priority==='Low'?'selected':''} class="bg-white dark:bg-slate-800">Low</option>
+                    </select>
+                  </div>
+                  ${this.ui.Input('ed-tgt-hours', 'Estimated Hours', 'number', tgt.estimatedHours, '', true)}
+                </div>
+
+                ${this.ui.Input('ed-tgt-notes', 'Progress Notes / Blockers', 'text', tgt.notes || '')}
+
+                <div class="pt-4 flex justify-between items-center border-t border-slate-200 dark:border-white/10">
+                  <button type="button" onclick="window.app.deleteTarget('${tgt.id}'); window.app.closeModal();" class="px-4 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500 text-rose-600 hover:text-white text-xs font-bold transition-all flex items-center gap-1.5">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete
+                  </button>
+                  <div class="flex gap-2">
+                    ${this.ui.Button('Cancel', '', 'secondary', 'window.app.closeModal()')}
+                    ${this.ui.Button('Save Changes', 'check', 'primary', '', '', 'submit')}
+                  </div>
+                </div>
+              </form>
+            `, 'w-full max-w-lg shadow-2xl relative', 'p-6 sm:p-8')}
+          </div>
+        `;
+        document.getElementById('modal-container').innerHTML = modalHTML;
+        lucide.createIcons();
+      },
+
+      saveEditTarget(e, targetId) {
+        e.preventDefault();
+        const tgt = this.state.targets.find(t => t.id === targetId);
+        if (!tgt) return;
+
+        tgt.title = document.getElementById('ed-tgt-title').value.trim();
+        tgt.project = document.getElementById('ed-tgt-project').value.trim();
+        const newStatus = document.getElementById('ed-tgt-status').value;
+        tgt.priority = document.getElementById('ed-tgt-prio').value;
+        tgt.estimatedHours = parseFloat(document.getElementById('ed-tgt-hours').value) || 2.0;
+        tgt.notes = document.getElementById('ed-tgt-notes').value.trim();
+
+        if (newStatus === 'Completed' && tgt.status !== 'Completed') {
+          tgt.completedAt = this.state.currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+        } else if (newStatus !== 'Completed') {
+          tgt.completedAt = null;
+        }
+        tgt.status = newStatus;
+
+        this.persist();
+        this.notify('Target details updated.', 'success', 'Updated');
+        this.closeModal();
+        this.render();
+      },
+
+      // ==========================================
+      // DAILY PROGRESS REPORTS & STANDUP METHODS
+      // ==========================================
+      saveDailyStandupReport(e) {
+        e.preventDefault();
+        const user = this.getActiveUser();
+        const date = this.state.reportSelectedDate;
+        const summary = document.getElementById('rep-summary').value.trim();
+        const blockers = document.getElementById('rep-blockers').value.trim();
+
+        let report = this.state.dailyReports.find(r => r.userId === user.id && r.date === date);
+        if (report) {
+          report.standupSummary = summary;
+          report.blockers = blockers || 'None';
+        } else {
+          report = {
+            id: `rep-${Date.now()}`,
+            userId: user.id,
+            date,
+            standupSummary: summary,
+            blockers: blockers || 'None',
+            managerRating: '',
+            managerFeedback: ''
+          };
+          this.state.dailyReports.unshift(report);
+        }
+
+        this.persist();
+        this.addNotificationFeed('Daily Work Log Submitted', `${user.name} submitted end-of-day progress report for ${date}.`, 'success', 'file-text');
+        this.notify('Daily progress log saved successfully.', 'success', 'Report Filed');
+        this.render();
+      },
+
+      openManagerFeedbackModal(reportId, userId, date) {
+        const user = this.state.users.find(u => u.id === userId) || { name: 'Employee' };
+        const report = this.state.dailyReports.find(r => (reportId && r.id === reportId) || (r.userId === userId && r.date === date)) || { managerRating: 'Great (4.8/5)', managerFeedback: '' };
+
+        const modalHTML = `
+          <div id="active-modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-fade-in-up">
+            ${this.ui.GlassCard(`
+              <div class="flex justify-between items-center pb-4 border-b border-white/20 dark:border-white/10 mb-6">
+                <div>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white">Manager Appraisal & Feedback</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Evaluating progress for <strong class="text-indigo-500">${user.name}</strong> • ${date}</p>
+                </div>
+                <button onclick="window.app.closeModal()" class="p-2 text-slate-400 hover:text-white rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
+              </div>
+
+              <form onsubmit="window.app.saveManagerFeedback(event, '${reportId || ''}', '${userId}', '${date}')" class="space-y-4">
+                <div class="space-y-1.5 w-full">
+                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">Performance Rating</label>
+                  <select id="mgr-rating" class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-sm">
+                    <option value="Exceptional (5/5)" ${report.managerRating.includes('5/5')?'selected':''} class="bg-white dark:bg-slate-800">Exceptional (5/5) – Exceeded all deliverables</option>
+                    <option value="Great (4.5/5)" ${report.managerRating.includes('4.5')?'selected':''} class="bg-white dark:bg-slate-800">Great (4.5/5) – On schedule & quality output</option>
+                    <option value="Satisfactory (4/5)" ${report.managerRating.includes('4/5')?'selected':''} class="bg-white dark:bg-slate-800">Satisfactory (4/5) – Targets met</option>
+                    <option value="Needs Follow-up (3/5)" ${report.managerRating.includes('3/5')?'selected':''} class="bg-white dark:bg-slate-800">Needs Follow-up (3/5) – Blockers present</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Feedback / Recognition Note</label>
+                  <textarea id="mgr-feedback" rows="3" placeholder="Provide constructive feedback, appreciation, or action items..." class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-xs">${report.managerFeedback || ''}</textarea>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-white/10">
+                  ${this.ui.Button('Cancel', '', 'secondary', 'window.app.closeModal()')}
+                  ${this.ui.Button('Save Appraisal', 'check', 'primary', '', '', 'submit')}
+                </div>
+              </form>
+            `, 'w-full max-w-md shadow-2xl relative', 'p-6')}
+          </div>
+        `;
+        document.getElementById('modal-container').innerHTML = modalHTML;
+        lucide.createIcons();
+      },
+
+      saveManagerFeedback(e, reportId, userId, date) {
+        e.preventDefault();
+        const rating = document.getElementById('mgr-rating').value;
+        const feedback = document.getElementById('mgr-feedback').value.trim();
+
+        let report = this.state.dailyReports.find(r => (reportId && r.id === reportId) || (r.userId === userId && r.date === date));
+        if (report) {
+          report.managerRating = rating;
+          report.managerFeedback = feedback;
+        } else {
+          report = {
+            id: `rep-${Date.now()}`,
+            userId,
+            date,
+            standupSummary: 'Daily deliverables logged on target board.',
+            blockers: 'None',
+            managerRating: rating,
+            managerFeedback: feedback
+          };
+          this.state.dailyReports.unshift(report);
+        }
+
+        this.persist();
+        const emp = this.state.users.find(u => u.id === userId);
+        this.addNotificationFeed('Manager Feedback Received', `Feedback & rating "${rating}" added for ${date}.`, 'info', 'award');
+        this.notify(`Feedback saved for ${emp ? emp.name : 'employee'}.`, 'success', 'Appraisal Recorded');
+        this.closeModal();
+        this.render();
       },
 
       // ==========================================
@@ -1788,6 +2222,8 @@
         const u = this.state.currentUser;
         const navItems = [
           { id: 'dashboard', label: 'Dashboard', icon: 'activity', roles: ['admin', 'employee'] },
+          { id: 'targets', label: 'Daily Targets', icon: 'check-square', roles: ['admin', 'employee'] },
+          { id: 'reports', label: 'Progress & Reports', icon: 'trending-up', roles: ['admin', 'employee'] },
           { id: 'attendance', label: 'Attendance', icon: 'clock', roles: ['admin', 'employee'] },
           { id: 'leaves', label: 'Leave Requests', icon: 'calendar', roles: ['admin', 'employee'] },
           { id: 'expenses', label: 'Day-to-Day Expenses', icon: 'receipt', roles: ['admin', 'employee'] },
@@ -1973,60 +2409,187 @@
         html += `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">`;
         if (isAdmin) {
           const totalMonthlyPayroll = Math.round(this.state.users.reduce((a,c)=>a+c.salary/12*0.75,0));
+          const todayTargets = this.state.targets.filter(t => t.date === todayStr);
+          const completedTodayTargets = todayTargets.filter(t => t.status === 'Completed').length;
+          const targetPct = todayTargets.length ? Math.round((completedTodayTargets / todayTargets.length) * 100) : 0;
+
           html += StatCard('Total Headcount', this.state.users.length, 'All Teams', 'users', 'indigo', 'bg-gradient-to-br from-indigo-500 to-indigo-600');
           html += StatCard('Present Today', `${todayAttendance}/${this.state.users.length}`, `${Math.round((todayAttendance/this.state.users.length)*100)}% Turnout`, 'check-circle-2', 'emerald', 'bg-gradient-to-br from-emerald-500 to-teal-600');
-          html += StatCard('Pending Approvals', `${pendingLeaves.length + pendingExpenses.length}`, `${pendingLeaves.length} Leave / ${pendingExpenses.length} Expense`, 'calendar', 'amber', 'bg-gradient-to-br from-amber-500 to-orange-500');
+          html += StatCard('Daily Targets Velocity', `${targetPct}%`, `${completedTodayTargets}/${todayTargets.length} Completed`, 'check-square', 'amber', 'bg-gradient-to-br from-amber-500 to-orange-500');
           html += StatCard('Monthly Payroll', `₹${totalMonthlyPayroll.toLocaleString('en-IN')}`, 'Aug Payout', 'file-text', 'purple', 'bg-gradient-to-br from-purple-500 to-fuchsia-600');
         } else {
           // Employee Stats
           const approvedPaidDays = this.state.leaves.filter(l => l.userId === u.id && l.type === 'Paid Leave' && l.status === 'Approved').reduce((a,c)=>a+c.days, 0);
           const remainingPaid = Math.max(0, 15 - approvedPaidDays);
-          const myPendingExpenses = this.state.expenses.filter(e => e.userId === u.id && e.status === 'Pending').reduce((a,c)=>a+c.amount,0);
+          const myTodayTargets = this.state.targets.filter(t => t.userId === u.id && t.date === todayStr);
+          const myCompletedToday = myTodayTargets.filter(t => t.status === 'Completed').length;
+          const myTargetPct = myTodayTargets.length ? Math.round((myCompletedToday / myTodayTargets.length) * 100) : 0;
           
-          html += StatCard('Paid Leave Balance', `${remainingPaid} Days`, 'Out of 15', 'calendar', 'indigo', 'bg-gradient-to-br from-indigo-500 to-indigo-600');
+          html += StatCard('Today\'s Targets', `${myCompletedToday}/${myTodayTargets.length}`, `${myTargetPct}% Done`, 'check-square', 'indigo', 'bg-gradient-to-br from-indigo-500 to-indigo-600');
           html += StatCard('Attendance Rate', '96.5%', 'August', 'check-circle-2', 'emerald', 'bg-gradient-to-br from-emerald-500 to-teal-600');
-          html += StatCard('Pending Claims', `₹${myPendingExpenses.toLocaleString('en-IN')}`, 'In Review', 'receipt', 'amber', 'bg-gradient-to-br from-amber-500 to-orange-500');
+          html += StatCard('Paid Leave Balance', `${remainingPaid} Days`, 'Out of 15', 'calendar', 'amber', 'bg-gradient-to-br from-amber-500 to-orange-500');
           html += StatCard('Next Payday', 'Aug 31', 'Direct Transfer', 'wallet', 'purple', 'bg-gradient-to-br from-purple-500 to-fuchsia-600');
         }
         html += `</div>`;
 
-        // PDF 3.2: Quick-Access Cards for Employee
+        // PDF 3.2: Quick-Access Cards for Employee + Interactive Target Checklist + Standup Report
         if (!isAdmin) {
+          let myTodayTargets = this.state.targets.filter(t => t.userId === u.id && t.date === todayStr);
+          const allCount = myTodayTargets.length;
+          const myDoneCount = myTodayTargets.filter(t => t.status === 'Completed').length;
+          const myPendingCount = allCount - myDoneCount;
+          const myVelocityPct = allCount ? Math.round((myDoneCount / allCount) * 100) : 0;
+          const myTodayReport = this.state.dailyReports.find(r => r.userId === u.id && r.date === todayStr) || { standupSummary: '', blockers: '', managerRating: '', managerFeedback: '' };
+
+          // Apply Dashboard Filter
+          if (this.state.dashboardTargetFilter === 'Pending') {
+            myTodayTargets = myTodayTargets.filter(t => t.status !== 'Completed');
+          } else if (this.state.dashboardTargetFilter === 'Completed') {
+            myTodayTargets = myTodayTargets.filter(t => t.status === 'Completed');
+          }
+
           html += `
-            <div>
-              <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Quick Navigation Cards</h3>
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <!-- Column 1 & 2: Daily Targets Checklist & Quick Standup Log -->
+              <div class="lg:col-span-2 space-y-6">
+                <!-- Interactive Daily Targets Checklist -->
                 ${this.ui.GlassCard(`
-                  <div class="flex items-center gap-3.5 mb-3">
-                    <div class="p-3 rounded-2xl bg-indigo-500/10 text-indigo-500"><i data-lucide="user" class="w-5 h-5"></i></div>
-                    <div><h4 class="font-bold text-sm">My Profile</h4><p class="text-[11px] text-slate-400">View & Edit Contact</p></div>
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <div class="p-2 rounded-xl bg-indigo-500/10 text-indigo-500"><i data-lucide="check-square" class="w-4 h-4"></i></div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Today's Daily Target Checklist</h3>
+                      </div>
+                      <p class="text-xs text-slate-500 mt-1">${myDoneCount} of ${allCount} targets completed (${myVelocityPct}% Velocity)</p>
+                    </div>
+                    <div class="flex items-center gap-2 self-start sm:self-auto">
+                      <!-- Filter Pills on Dashboard -->
+                      <div class="flex items-center gap-1 bg-white/50 dark:bg-black/20 p-1 rounded-xl border border-white/60 dark:border-white/5 text-[11px]">
+                        <button onclick="window.app.state.dashboardTargetFilter = 'ALL'; window.app.render();" class="px-2.5 py-0.5 rounded-lg font-bold transition-all ${this.state.dashboardTargetFilter === 'ALL' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}">All (${allCount})</button>
+                        <button onclick="window.app.state.dashboardTargetFilter = 'Pending'; window.app.render();" class="px-2.5 py-0.5 rounded-lg font-bold transition-all ${this.state.dashboardTargetFilter === 'Pending' ? 'bg-amber-500 text-white shadow-xs' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}">Pending (${myPendingCount})</button>
+                        <button onclick="window.app.state.dashboardTargetFilter = 'Completed'; window.app.render();" class="px-2.5 py-0.5 rounded-lg font-bold transition-all ${this.state.dashboardTargetFilter === 'Completed' ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}">Done (${myDoneCount})</button>
+                      </div>
+                      ${this.ui.Button('Board', 'layout', 'secondary', 'window.app.navigate("targets")', '!text-xs !py-1.5 !px-2.5')}
+                    </div>
                   </div>
-                  <button onclick="window.app.navigate('profile')" class="w-full py-2 text-xs font-bold rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-indigo-600 hover:text-white transition-all text-center">Manage Profile →</button>
-                `, '', 'p-4', true)}
+
+                  <!-- Mini Progress Bar -->
+                  <div class="w-full bg-slate-200 dark:bg-slate-700/50 h-2 rounded-full overflow-hidden mb-4">
+                    <div class="bg-gradient-to-r from-indigo-500 to-emerald-500 h-full rounded-full transition-all duration-500" style="width: ${myVelocityPct}%"></div>
+                  </div>
+
+                  <!-- Inline Quick Add Target on Dashboard -->
+                  <form onsubmit="window.app.quickAddDashboardTarget(event)" class="flex gap-2 mb-4">
+                    <div class="relative flex-1">
+                      <i data-lucide="plus-circle" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-indigo-500"></i>
+                      <input id="dash-quick-target-input" type="text" placeholder="Type a target for today and press Enter..." class="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl bg-white/60 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                    </div>
+                    <button type="submit" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md shadow-indigo-500/20 flex items-center gap-1.5">
+                      <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add
+                    </button>
+                  </form>
+
+                  <!-- Target Items List -->
+                  <div class="space-y-2.5">
+                    ${myTodayTargets.length ? myTodayTargets.map(tgt => {
+                      const isDone = tgt.status === 'Completed';
+                      return `
+                        <div class="p-3.5 rounded-2xl ${isDone ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-white/40 dark:bg-white/5 border-white/60 dark:border-white/10'} border flex items-center justify-between gap-3 transition-all hover:bg-white/60 dark:hover:bg-white/10 group">
+                          <div class="flex items-center gap-3 min-w-0">
+                            <button onclick="window.app.toggleTargetStatus('${tgt.id}')" class="w-6 h-6 rounded-lg flex items-center justify-center transition-all flex-shrink-0 ${isDone ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/30' : 'border-2 border-slate-300 dark:border-slate-600 hover:border-indigo-500'}">
+                              ${isDone ? '<i data-lucide="check" class="w-4 h-4"></i>' : ''}
+                            </button>
+                            <div class="min-w-0">
+                              <p class="text-xs font-bold text-slate-900 dark:text-white truncate ${isDone ? 'line-through opacity-70' : ''}">${tgt.title}</p>
+                              <p class="text-[10px] text-slate-500 mt-0.5 flex items-center gap-2">
+                                <span class="px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-500 font-semibold">${tgt.project}</span>
+                                <span>Est: ${tgt.estimatedHours}h</span>
+                                ${tgt.completedAt ? `<span class="text-emerald-500 font-semibold">Done @ ${tgt.completedAt}</span>` : ''}
+                              </p>
+                            </div>
+                          </div>
+                          <div class="flex items-center gap-2 flex-shrink-0">
+                            ${this.ui.Badge(tgt.priority, tgt.priority === 'High' ? 'danger' : tgt.priority === 'Medium' ? 'warning' : 'default', '!text-[10px]')}
+                            <button onclick="window.app.openEditTargetModal('${tgt.id}')" class="p-1 rounded-lg text-slate-400 hover:text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity" title="Edit">
+                              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                            </button>
+                          </div>
+                        </div>
+                      `;
+                    }).join('') : `<p class="text-center py-6 text-xs text-slate-400">No targets found for current filter. Type above to add one!</p>`}
+                  </div>
+                `)}
+
+                <!-- Direct EOD Standup Work Log Submission on Dashboard -->
+                ${this.ui.GlassCard(`
+                  <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-white/10 mb-3">
+                    <div class="flex items-center gap-2">
+                      <div class="p-2 rounded-xl bg-purple-500/10 text-purple-500"><i data-lucide="file-text" class="w-4 h-4"></i></div>
+                      <div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Daily Standup Progress Log</h3>
+                        <p class="text-[11px] text-slate-400">Log today's accomplishments & flag blockers for management</p>
+                      </div>
+                    </div>
+                    ${this.ui.Button('Full Report', 'trending-up', 'secondary', 'window.app.navigate("reports")', '!text-xs !py-1.5 !px-3')}
+                  </div>
+
+                  <form onsubmit="window.app.saveDailyStandupReport(event)" class="space-y-3">
+                    <div>
+                      <input id="rep-summary" type="text" required value="${myTodayReport.standupSummary || ''}" placeholder="What key deliverable did you complete today? (e.g. Shipped payroll module)" class="w-full px-3.5 py-2.5 rounded-xl bg-white/50 dark:bg-black/20 border border-white/60 dark:border-white/10 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                    </div>
+                    <div class="flex gap-2">
+                      <input id="rep-blockers" type="text" value="${myTodayReport.blockers || ''}" placeholder="Blockers or dependencies? (or 'None')" class="flex-1 px-3.5 py-2 rounded-xl bg-white/50 dark:bg-black/20 border border-white/60 dark:border-white/10 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none" />
+                      ${this.ui.Button('Submit Log', 'send', 'primary', '', '!text-xs !py-2 !px-4', 'submit')}
+                    </div>
+                  </form>
+                `)}
+              </div>
+
+              <!-- Column 3: Manager Appraisal Card + Quick Navigation -->
+              <div class="space-y-4">
+                <!-- Manager Appraisal for Employee if available -->
+                ${myTodayReport.managerRating ? this.ui.GlassCard(`
+                  <div class="flex items-center gap-2 mb-2 text-amber-500">
+                    <i data-lucide="award" class="w-4 h-4"></i>
+                    <h4 class="text-xs font-bold uppercase tracking-wider">Manager Appraisal</h4>
+                  </div>
+                  <p class="text-sm font-extrabold text-slate-900 dark:text-white">${myTodayReport.managerRating}</p>
+                  ${myTodayReport.managerFeedback ? `<p class="text-xs text-slate-500 italic mt-1 bg-white/40 dark:bg-black/20 p-2.5 rounded-xl">"${myTodayReport.managerFeedback}"</p>` : ''}
+                `, 'p-4 border-amber-500/30 bg-amber-500/5') : ''}
+
+                <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Quick Navigation</h3>
+                
+                ${this.ui.GlassCard(`
+                  <div class="flex items-center gap-3.5 mb-2">
+                    <div class="p-2.5 rounded-2xl bg-indigo-500/10 text-indigo-500"><i data-lucide="trending-up" class="w-4 h-4"></i></div>
+                    <div><h4 class="font-bold text-xs text-slate-900 dark:text-white">Daily Progress & Reports</h4><p class="text-[10px] text-slate-400">View team velocity & standups</p></div>
+                  </div>
+                  <button onclick="window.app.navigate('reports')" class="w-full py-1.5 text-xs font-bold rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-indigo-600 hover:text-white transition-all text-center">View Reports →</button>
+                `, '', 'p-3.5', true)}
 
                 ${this.ui.GlassCard(`
-                  <div class="flex items-center gap-3.5 mb-3">
-                    <div class="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500"><i data-lucide="clock" class="w-5 h-5"></i></div>
-                    <div><h4 class="font-bold text-sm">Log Attendance</h4><p class="text-[11px] text-slate-400">Clock In / Out & Timesheet</p></div>
+                  <div class="flex items-center gap-3.5 mb-2">
+                    <div class="p-2.5 rounded-2xl bg-emerald-500/10 text-emerald-500"><i data-lucide="clock" class="w-4 h-4"></i></div>
+                    <div><h4 class="font-bold text-xs text-slate-900 dark:text-white">Log Attendance</h4><p class="text-[10px] text-slate-400">Clock In / Out & Timesheet</p></div>
                   </div>
-                  <button onclick="window.app.navigate('attendance')" class="w-full py-2 text-xs font-bold rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-emerald-600 hover:text-white transition-all text-center">Punch Time →</button>
-                `, '', 'p-4', true)}
+                  <button onclick="window.app.navigate('attendance')" class="w-full py-1.5 text-xs font-bold rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-emerald-600 hover:text-white transition-all text-center">Punch Time →</button>
+                `, '', 'p-3.5', true)}
 
                 ${this.ui.GlassCard(`
-                  <div class="flex items-center gap-3.5 mb-3">
-                    <div class="p-3 rounded-2xl bg-amber-500/10 text-amber-500"><i data-lucide="receipt" class="w-5 h-5"></i></div>
-                    <div><h4 class="font-bold text-sm">Day-to-Day Expenses</h4><p class="text-[11px] text-slate-400">Claim Bills & Receipts</p></div>
+                  <div class="flex items-center gap-3.5 mb-2">
+                    <div class="p-2.5 rounded-2xl bg-amber-500/10 text-amber-500"><i data-lucide="receipt" class="w-4 h-4"></i></div>
+                    <div><h4 class="font-bold text-xs text-slate-900 dark:text-white">Day-to-Day Expenses</h4><p class="text-[10px] text-slate-400">Claim Bills & Receipts (₹)</p></div>
                   </div>
-                  <button onclick="window.app.navigate('expenses')" class="w-full py-2 text-xs font-bold rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-amber-600 hover:text-white transition-all text-center">File Expense Claim →</button>
-                `, '', 'p-4', true)}
+                  <button onclick="window.app.navigate('expenses')" class="w-full py-1.5 text-xs font-bold rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-amber-600 hover:text-white transition-all text-center">File Expense Claim →</button>
+                `, '', 'p-3.5', true)}
 
                 ${this.ui.GlassCard(`
-                  <div class="flex items-center gap-3.5 mb-3">
-                    <div class="p-3 rounded-2xl bg-rose-500/10 text-rose-500"><i data-lucide="log-out" class="w-5 h-5"></i></div>
-                    <div><h4 class="font-bold text-sm">Sign Out</h4><p class="text-[11px] text-slate-400">End Session Safely</p></div>
+                  <div class="flex items-center gap-3.5 mb-2">
+                    <div class="p-2.5 rounded-2xl bg-rose-500/10 text-rose-500"><i data-lucide="log-out" class="w-4 h-4"></i></div>
+                    <div><h4 class="font-bold text-xs text-slate-900 dark:text-white">Sign Out</h4><p class="text-[10px] text-slate-400">End Session Safely</p></div>
                   </div>
-                  <button onclick="window.app.logout()" class="w-full py-2 text-xs font-bold rounded-xl bg-rose-500/10 text-rose-600 hover:bg-rose-600 hover:text-white transition-all text-center">Logout Now</button>
-                `, '', 'p-4', true)}
+                  <button onclick="window.app.logout()" class="w-full py-1.5 text-xs font-bold rounded-xl bg-rose-500/10 text-rose-600 hover:bg-rose-600 hover:text-white transition-all text-center">Logout Now</button>
+                `, '', 'p-3.5', true)}
               </div>
             </div>
           `;
@@ -2034,10 +2597,72 @@
 
         // Admin Dashboard direct sections
         if (isAdmin) {
+          const todayTargets = this.state.targets.filter(t => t.date === todayStr);
+          const completedTodayTargets = todayTargets.filter(t => t.status === 'Completed').length;
+          const targetPct = todayTargets.length ? Math.round((completedTodayTargets / todayTargets.length) * 100) : 0;
+
           html += `
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <!-- Column 1 & 2: Trends + Direct Actionable Approvals -->
+              <!-- Column 1 & 2: Trends + Daily Targets Velocity + Approvals -->
               <div class="lg:col-span-2 space-y-6">
+                <!-- Daily Target Velocity & Standup Feed on Admin Dashboard -->
+                ${this.ui.GlassCard(`
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <div class="p-2 rounded-xl bg-amber-500/10 text-amber-500"><i data-lucide="check-square" class="w-4 h-4"></i></div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Daily Target Velocity & Standups</h3>
+                      </div>
+                      <p class="text-xs text-slate-500 mt-1">${completedTodayTargets} of ${todayTargets.length} targets completed today across teams (${targetPct}% Velocity)</p>
+                    </div>
+                    <div class="flex gap-2 self-start sm:self-auto">
+                      ${this.ui.Button('Assign Target', 'plus', 'primary', 'window.app.openCreateTargetModal()', '!text-xs !py-1.5 !px-3')}
+                      ${this.ui.Button('Daily Reports', 'trending-up', 'secondary', 'window.app.navigate("reports")', '!text-xs !py-1.5 !px-3')}
+                    </div>
+                  </div>
+
+                  <!-- Velocity Progress Bar -->
+                  <div class="w-full bg-slate-200 dark:bg-slate-700/50 h-2.5 rounded-full overflow-hidden mb-4">
+                    <div class="bg-gradient-to-r from-indigo-500 via-amber-500 to-emerald-500 h-full rounded-full transition-all duration-500" style="width: ${targetPct}%"></div>
+                  </div>
+
+                  <!-- Inline Fast Target Dispatch Form for Admin -->
+                  <form onsubmit="window.app.quickAssignAdminTarget(event)" class="flex flex-col sm:flex-row gap-2 mb-4 p-3 rounded-2xl bg-white/60 dark:bg-black/20 border border-white/60 dark:border-white/10">
+                    <select id="admin-quick-assign-user" class="px-3 py-2 text-xs font-semibold rounded-xl bg-white dark:bg-slate-800 border border-white/60 dark:border-white/10 text-slate-800 dark:text-white focus:outline-none">
+                      ${this.state.users.map(u => `<option value="${u.id}">${u.name} (${u.department})</option>`).join('')}
+                    </select>
+                    <input id="admin-quick-assign-title" type="text" required placeholder="Assign deliverable (e.g. Conduct security vulnerability scan)..." class="flex-1 px-3 py-2 text-xs rounded-xl bg-white dark:bg-slate-800 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none" />
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition-all shadow-md shadow-amber-500/20 flex items-center justify-center gap-1.5">
+                      <i data-lucide="send" class="w-3.5 h-3.5"></i> Assign
+                    </button>
+                  </form>
+
+                  <!-- Standup & Target Ticker -->
+                  <div class="space-y-2.5">
+                    ${this.state.users.slice(0, 4).map(usr => {
+                      const uTargets = todayTargets.filter(t => t.userId === usr.id);
+                      const uDone = uTargets.filter(t => t.status === 'Completed').length;
+                      const uReport = this.state.dailyReports.find(r => r.userId === usr.id && r.date === todayStr);
+
+                      return `
+                        <div class="p-3 rounded-2xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-white/60 dark:hover:bg-white/10 transition-colors">
+                          <div class="flex items-center gap-3">
+                            ${this.ui.Avatar(usr.avatar, 'sm')}
+                            <div>
+                              <p class="text-xs font-bold text-slate-900 dark:text-white">${usr.name} <span class="font-normal text-slate-400">• ${usr.department}</span></p>
+                              <p class="text-[11px] text-slate-500 italic">Standup: ${uReport && uReport.standupSummary ? uReport.standupSummary : 'Deliverables in progress'}</p>
+                            </div>
+                          </div>
+                          <div class="flex items-center gap-3 self-end sm:self-auto">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-xl ${uDone === uTargets.length && uTargets.length ? 'bg-emerald-500/15 text-emerald-600' : 'bg-indigo-500/15 text-indigo-600'}">${uDone}/${uTargets.length} Done</span>
+                            <button onclick="window.app.openManagerFeedbackModal('${uReport ? uReport.id : ''}', '${usr.id}', '${todayStr}')" class="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-indigo-600 hover:text-white text-[11px] font-bold transition-all" title="Give Feedback">Appraise</button>
+                          </div>
+                        </div>
+                      `;
+                    }).join('')}
+                  </div>
+                `)}
+
                 ${this.ui.GlassCard(`
                   <div class="flex justify-between items-center mb-2">
                     <div>
@@ -2132,11 +2757,12 @@
                 `)}
 
                 ${this.ui.GlassCard(`
-                  <h3 class="text-base font-bold text-slate-900 dark:text-white mb-3">Quick HR Admin Tools</h3>
+                  <h3 class="text-base font-bold text-slate-900 dark:text-white mb-3">Quick HR & Operations</h3>
                   <div class="space-y-2">
+                    ${this.ui.Button('Daily Progress Reports', 'trending-up', 'secondary', 'window.app.navigate("reports")', 'w-full justify-start !text-xs !py-2.5')}
+                    ${this.ui.Button('Team Target Board', 'check-square', 'secondary', 'window.app.navigate("targets")', 'w-full justify-start !text-xs !py-2.5')}
                     ${this.ui.Button('Process August Payroll (₹)', 'wallet', 'secondary', 'window.app.processMonthlyPayroll()', 'w-full justify-start !text-xs !py-2.5')}
                     ${this.ui.Button('Audit Expense Claims', 'receipt', 'secondary', 'window.app.navigate("expenses")', 'w-full justify-start !text-xs !py-2.5')}
-                    ${this.ui.Button('Manual Attendance Punch', 'clock', 'secondary', 'window.app.openModal("manual-attendance-modal")', 'w-full justify-start !text-xs !py-2.5')}
                   </div>
                 `)}
               </div>
@@ -2710,6 +3336,405 @@
       },
 
       // ==========================================
+      // DAILY TARGETS VIEW
+      // ==========================================
+      renderTargets() {
+        const activeUser = this.getActiveUser();
+        const isAdmin = this.state.currentUser.role === 'admin' && !this.state.impersonatedUserId;
+        const selectedDate = this.state.targetFilterDate;
+
+        let displayTargets = this.state.targets.filter(t => t.date === selectedDate);
+        if (!isAdmin) {
+          displayTargets = displayTargets.filter(t => t.userId === activeUser.id);
+        }
+
+        if (this.state.targetFilterStatus !== 'ALL') {
+          displayTargets = displayTargets.filter(t => t.status === this.state.targetFilterStatus);
+        }
+        if (this.state.targetFilterPriority !== 'ALL') {
+          displayTargets = displayTargets.filter(t => t.priority === this.state.targetFilterPriority);
+        }
+
+        // Metrics computation
+        const totalCount = displayTargets.length;
+        const completedCount = displayTargets.filter(t => t.status === 'Completed').length;
+        const inProgressCount = displayTargets.filter(t => t.status === 'In Progress').length;
+        const blockedCount = displayTargets.filter(t => t.status === 'Blocked').length;
+        const totalHours = displayTargets.reduce((acc, t) => acc + (t.estimatedHours || 0), 0);
+        const completionPct = totalCount ? Math.round((completedCount / totalCount) * 100) : 0;
+
+        const targetCards = displayTargets.map(tgt => {
+          const user = this.state.users.find(u => u.id === tgt.userId) || { name: 'Unknown', avatar: '' };
+          const isDone = tgt.status === 'Completed';
+          const isBlocked = tgt.status === 'Blocked';
+          const isInProgress = tgt.status === 'In Progress';
+
+          const prioVariant = tgt.priority === 'High' ? 'danger' : tgt.priority === 'Medium' ? 'warning' : 'default';
+          const statusVariant = isDone ? 'success' : isBlocked ? 'danger' : isInProgress ? 'info' : 'default';
+
+          return this.ui.GlassCard(`
+            <div class="flex items-start justify-between gap-3 mb-3">
+              <div class="flex items-start gap-3 min-w-0">
+                <button onclick="window.app.toggleTargetStatus('${tgt.id}')" class="mt-0.5 w-6 h-6 rounded-xl flex items-center justify-center transition-all flex-shrink-0 ${isDone ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/30' : 'border-2 border-slate-300 dark:border-slate-600 hover:border-indigo-500'}">
+                  ${isDone ? '<i data-lucide="check" class="w-4 h-4"></i>' : ''}
+                </button>
+                <div class="min-w-0">
+                  <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug ${isDone ? 'line-through opacity-70' : ''}">${tgt.title}</h4>
+                  <div class="flex flex-wrap items-center gap-2 mt-1">
+                    <span class="px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-500 text-[10px] font-bold uppercase tracking-wider">${tgt.project}</span>
+                    <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${tgt.estimatedHours}h est.</span>
+                    ${tgt.completedAt ? `<span class="text-[11px] text-emerald-500 font-semibold flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3 h-3"></i> Done at ${tgt.completedAt}</span>` : ''}
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-1.5 flex-shrink-0">
+                ${this.ui.Badge(tgt.priority, prioVariant, '!text-[10px]')}
+                <button onclick="window.app.openEditTargetModal('${tgt.id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-500 hover:bg-indigo-500/10 transition-all" title="Edit Target">
+                  <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            ${tgt.notes ? `
+              <p class="text-xs text-slate-600 dark:text-slate-300 bg-white/40 dark:bg-black/20 p-2.5 rounded-xl border border-white/50 dark:border-white/5 italic mb-3">
+                "${tgt.notes}"
+              </p>
+            ` : ''}
+
+            <div class="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-white/10 text-xs">
+              <div class="flex items-center gap-2">
+                ${isAdmin ? `
+                  ${this.ui.Avatar(user.avatar, 'sm')}
+                  <span class="text-slate-700 dark:text-slate-300 font-semibold text-[11px]">${user.name}</span>
+                ` : `
+                  <span class="text-[11px] text-slate-400 font-medium">Status:</span>
+                  ${this.ui.Badge(tgt.status, statusVariant, '!text-[10px]')}
+                `}
+              </div>
+
+              <!-- Quick Status Selector -->
+              <div class="flex items-center gap-1">
+                <select onchange="window.app.setTargetStatus('${tgt.id}', this.value)" class="text-[11px] font-bold px-2 py-1 rounded-lg bg-white/60 dark:bg-white/10 border border-white/60 dark:border-white/10 text-slate-800 dark:text-slate-200 focus:outline-none cursor-pointer">
+                  <option value="To Do" ${tgt.status==='To Do'?'selected':''} class="bg-white dark:bg-slate-800">To Do</option>
+                  <option value="In Progress" ${tgt.status==='In Progress'?'selected':''} class="bg-white dark:bg-slate-800">In Progress</option>
+                  <option value="Completed" ${tgt.status==='Completed'?'selected':''} class="bg-white dark:bg-slate-800">Completed</option>
+                  <option value="Blocked" ${tgt.status==='Blocked'?'selected':''} class="bg-white dark:bg-slate-800">Blocked</option>
+                </select>
+              </div>
+            </div>
+          `, 'p-4', '', true);
+        }).join('');
+
+        return `
+          <div class="space-y-8 animate-fade-in-up">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight font-display">Daily Targets & Tasks</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${isAdmin ? 'Manage, assign, and track daily operational deliverables across all teams.' : 'Track, update, and complete your daily goals and deliverables.'}</p>
+              </div>
+              <div class="flex gap-2">
+                ${this.ui.Button('Daily Progress Report', 'trending-up', 'secondary', 'window.app.navigate("reports")')}
+                ${this.ui.Button('Set Daily Target', 'plus-circle', 'primary', 'window.app.openCreateTargetModal()')}
+              </div>
+            </div>
+
+            <!-- Daily Target Progress Summary Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              ${this.ui.GlassCard(`
+                <div class="flex justify-between items-start mb-2">
+                  <p class="text-xs font-bold text-indigo-500 uppercase tracking-widest">Daily Progress</p>
+                  <span class="text-xs font-bold text-indigo-500">${completionPct}%</span>
+                </div>
+                <p class="text-3xl font-extrabold text-slate-900 dark:text-white font-display mb-3">${completedCount} / ${totalCount} Done</p>
+                <div class="w-full bg-slate-200 dark:bg-slate-700/50 h-2 rounded-full overflow-hidden">
+                  <div class="bg-gradient-to-r from-indigo-500 to-emerald-500 h-full rounded-full transition-all duration-500" style="width: ${completionPct}%"></div>
+                </div>
+              `, 'p-5', '', true)}
+
+              ${this.ui.GlassCard(`
+                <p class="text-xs font-bold text-emerald-500 uppercase tracking-widest mb-1">Completed Deliverables</p>
+                <p class="text-3xl font-extrabold text-emerald-500 font-display">${completedCount}</p>
+                <p class="text-[11px] text-slate-400 mt-1">${completedCount ? 'Great velocity today!' : 'No tasks finished yet'}</p>
+              `, 'p-5', '', true)}
+
+              ${this.ui.GlassCard(`
+                <p class="text-xs font-bold text-amber-500 uppercase tracking-widest mb-1">In Progress / Pending</p>
+                <p class="text-3xl font-extrabold text-amber-500 font-display">${inProgressCount + (totalCount - completedCount - inProgressCount - blockedCount)}</p>
+                <p class="text-[11px] text-slate-400 mt-1">${blockedCount ? `${blockedCount} target(s) blocked` : 'On schedule'}</p>
+              `, 'p-5', '', true)}
+
+              ${this.ui.GlassCard(`
+                <p class="text-xs font-bold text-purple-500 uppercase tracking-widest mb-1">Estimated Effort</p>
+                <p class="text-3xl font-extrabold text-purple-500 font-display">${totalHours.toFixed(1)} hrs</p>
+                <p class="text-[11px] text-slate-400 mt-1">Daily workload allocation</p>
+              `, 'p-5', '', true)}
+            </div>
+
+            <!-- Filters & Date Selector -->
+            <div class="flex flex-wrap items-center gap-3 p-4 rounded-2xl bg-white/50 dark:bg-black/20 border border-white/60 dark:border-white/5">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4 text-indigo-500"></i> Date:</span>
+                <input type="date" value="${this.state.targetFilterDate}" onchange="window.app.state.targetFilterDate = this.value; window.app.render();" class="px-3 py-1.5 text-xs rounded-xl bg-white/60 dark:bg-white/5 border border-white/60 dark:border-white/10 font-bold text-slate-800 dark:text-white focus:outline-none" />
+                ${this.state.targetFilterDate !== this.state.currentDate.toISOString().split('T')[0] ? `
+                  <button onclick="window.app.state.targetFilterDate = '${this.state.currentDate.toISOString().split('T')[0]}'; window.app.render();" class="text-xs text-indigo-500 font-bold hover:underline">Jump to Today</button>
+                ` : ''}
+              </div>
+
+              <!-- Priority Dropdown -->
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold text-slate-400">Priority:</span>
+                <select onchange="window.app.state.targetFilterPriority = this.value; window.app.render();" class="px-3 py-1.5 text-xs rounded-xl bg-white/60 dark:bg-white/5 border border-white/60 dark:border-white/10 font-medium text-slate-700 dark:text-slate-300 focus:outline-none">
+                  ${['ALL', 'High', 'Medium', 'Low'].map(p => `<option value="${p}" ${this.state.targetFilterPriority===p?'selected':''} class="bg-white dark:bg-slate-800">${p}</option>`).join('')}
+                </select>
+              </div>
+
+              <!-- Status Pills -->
+              <div class="flex items-center gap-1 bg-white/40 dark:bg-white/5 p-1 rounded-xl border border-white/60 dark:border-white/5 text-xs ml-auto">
+                ${['ALL', 'To Do', 'In Progress', 'Completed', 'Blocked'].map(st => `
+                  <button onclick="window.app.state.targetFilterStatus = '${st}'; window.app.render();" class="px-3 py-1 rounded-lg font-semibold transition-all ${this.state.targetFilterStatus === st ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}">${st}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Target Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              ${targetCards.length ? targetCards : `
+                <div class="col-span-full py-16 text-center">
+                  <div class="w-16 h-16 rounded-3xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="check-square" class="w-8 h-8"></i>
+                  </div>
+                  <h3 class="text-base font-bold text-slate-900 dark:text-white mb-1">No Daily Targets Found</h3>
+                  <p class="text-xs text-slate-400 max-w-sm mx-auto mb-4">No targets logged for ${selectedDate} matching your filters.</p>
+                  ${this.ui.Button('Set a Target Now', 'plus', 'primary', 'window.app.openCreateTargetModal()', '!text-xs')}
+                </div>
+              `}
+            </div>
+          </div>
+        `;
+      },
+
+      // ==========================================
+      // DAILY PROGRESS & PRODUCTIVITY REPORTS VIEW
+      // ==========================================
+      renderReports() {
+        const activeUser = this.getActiveUser();
+        const isAdmin = this.state.currentUser.role === 'admin' && !this.state.impersonatedUserId;
+        const selectedDate = this.state.reportSelectedDate;
+
+        // Targets on this report date
+        const dateTargets = this.state.targets.filter(t => t.date === selectedDate);
+        const totalTargets = dateTargets.length;
+        const completedTargets = dateTargets.filter(t => t.status === 'Completed').length;
+        const overallVelocityPct = totalTargets ? Math.round((completedTargets / totalTargets) * 100) : 0;
+        const totalHoursLogged = dateTargets.reduce((acc, t) => acc + (t.estimatedHours || 0), 0);
+
+        // Standup note for active user
+        const myReport = this.state.dailyReports.find(r => r.userId === activeUser.id && r.date === selectedDate) || { standupSummary: '', blockers: '', managerRating: '', managerFeedback: '' };
+
+        // Department breakdown
+        const depts = ['Engineering', 'Design', 'Sales', 'Marketing'];
+        const deptStats = depts.map(dept => {
+          const deptUserIds = this.state.users.filter(u => u.department === dept).map(u => u.id);
+          const deptTargets = dateTargets.filter(t => deptUserIds.includes(t.userId));
+          const deptDone = deptTargets.filter(t => t.status === 'Completed').length;
+          const pct = deptTargets.length ? Math.round((deptDone / deptTargets.length) * 100) : (dept === 'Engineering' ? 90 : dept === 'Sales' ? 95 : 85);
+          return { dept, total: deptTargets.length || 2, done: deptDone || 2, pct };
+        });
+
+        // Team progress feed for Admins / Overview
+        const teamReportsHTML = this.state.users.map(usr => {
+          const uTargets = dateTargets.filter(t => t.userId === usr.id);
+          const uDone = uTargets.filter(t => t.status === 'Completed').length;
+          const uPct = uTargets.length ? Math.round((uDone / uTargets.length) * 100) : 0;
+          const uReport = this.state.dailyReports.find(r => r.userId === usr.id && r.date === selectedDate);
+
+          return this.ui.GlassCard(`
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+              <div class="flex items-center gap-3.5">
+                ${this.ui.Avatar(usr.avatar, 'md')}
+                <div>
+                  <h4 class="text-sm font-bold text-slate-900 dark:text-white">${usr.name}</h4>
+                  <p class="text-xs text-slate-400 font-medium">${usr.designation} • ${usr.department}</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 self-end sm:self-auto">
+                <div class="text-right">
+                  <span class="text-xs font-bold text-slate-900 dark:text-white">${uDone}/${uTargets.length} Deliverables</span>
+                  <p class="text-[10px] text-slate-400 font-semibold">${uPct}% Target Velocity</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center font-extrabold text-xs shadow-inner ${uPct >= 80 ? 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/20' : uPct >= 50 ? 'bg-amber-500/15 text-amber-500 border border-amber-500/20' : 'bg-slate-100 dark:bg-white/10 text-slate-500'}">
+                  ${uPct}%
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Highlights for this user -->
+            <div class="space-y-1.5 mb-3 bg-white/40 dark:bg-black/20 p-3 rounded-2xl border border-white/50 dark:border-white/5">
+              <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Target Deliverables:</p>
+              ${uTargets.length ? uTargets.map(t => `
+                <div class="flex items-center justify-between text-xs">
+                  <span class="flex items-center gap-2 ${t.status==='Completed' ? 'line-through text-slate-400' : 'font-medium text-slate-800 dark:text-slate-200'}">
+                    <i data-lucide="${t.status==='Completed'?'check-circle-2':'circle'}" class="w-3.5 h-3.5 ${t.status==='Completed'?'text-emerald-500':'text-slate-400'}"></i>
+                    ${t.title}
+                  </span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${t.status==='Completed'?'bg-emerald-500/10 text-emerald-500':t.status==='In Progress'?'bg-indigo-500/10 text-indigo-500':'bg-slate-200 dark:bg-white/10 text-slate-500'}">${t.status}</span>
+                </div>
+              `).join('') : `<p class="text-xs text-slate-400 italic">No targets set for this date.</p>`}
+            </div>
+
+            <!-- EOD Standup Note & Blockers -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-3">
+              <div class="p-3 rounded-xl bg-white/50 dark:bg-white/5 border border-white/50 dark:border-white/5">
+                <span class="font-bold text-indigo-500 block mb-0.5">EOD Accomplishments:</span>
+                <p class="text-slate-600 dark:text-slate-300 italic">${uReport && uReport.standupSummary ? uReport.standupSummary : 'Work log in progress...'}</p>
+              </div>
+              <div class="p-3 rounded-xl bg-white/50 dark:bg-white/5 border border-white/50 dark:border-white/5">
+                <span class="font-bold text-rose-500 block mb-0.5">Blockers / Dependencies:</span>
+                <p class="text-slate-600 dark:text-slate-300 italic">${uReport && uReport.blockers && uReport.blockers !== 'None' ? uReport.blockers : 'None reported (All clear)'}</p>
+              </div>
+            </div>
+
+            <!-- Manager Appraisal & Feedback -->
+            <div class="p-3 rounded-2xl bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div>
+                <span class="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                  <i data-lucide="award" class="w-4 h-4 text-amber-500"></i> Appraisal: ${uReport && uReport.managerRating ? uReport.managerRating : 'Pending Review'}
+                </span>
+                ${uReport && uReport.managerFeedback ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">"${uReport.managerFeedback}"</p>` : ''}
+              </div>
+              ${isAdmin ? `
+                <button onclick="window.app.openManagerFeedbackModal('${uReport ? uReport.id : ''}', '${usr.id}', '${selectedDate}')" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md shadow-indigo-500/20 flex items-center gap-1 self-end sm:self-auto">
+                  <i data-lucide="message-square" class="w-3.5 h-3.5"></i> ${uReport && uReport.managerRating ? 'Edit Feedback' : 'Give Feedback'}
+                </button>
+              ` : ''}
+            </div>
+          `, 'p-5', '', true);
+        }).join('');
+
+        return `
+          <div class="space-y-8 animate-fade-in-up">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight font-display">Daily Progress & Work Reports</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${isAdmin ? 'Audit daily team velocity, standup progress logs, and submit performance appraisals.' : 'Log your daily standup achievements, identify blockers, and track team velocity.'}</p>
+              </div>
+              <div class="flex gap-2">
+                <button onclick="window.print()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/70 dark:bg-white/10 hover:bg-white/90 text-xs font-bold transition-all border border-white/70 dark:border-white/10 shadow-sm">
+                  <i data-lucide="printer" class="w-4 h-4"></i> Export / Print Report
+                </button>
+                ${this.ui.Button('Daily Target Board', 'check-square', 'primary', 'window.app.navigate("targets")')}
+              </div>
+            </div>
+
+            <!-- Date Selector & Summary Banner -->
+            <div class="flex flex-wrap items-center justify-between gap-4 p-4 rounded-3xl bg-white/50 dark:bg-black/20 border border-white/60 dark:border-white/5">
+              <div class="flex items-center gap-3">
+                <div class="p-2.5 rounded-2xl bg-indigo-500/10 text-indigo-500 font-bold"><i data-lucide="calendar" class="w-5 h-5"></i></div>
+                <div>
+                  <span class="text-xs font-bold text-slate-400 block uppercase tracking-wider">Report For Date:</span>
+                  <input type="date" value="${this.state.reportSelectedDate}" onchange="window.app.state.reportSelectedDate = this.value; window.app.render();" class="px-3 py-1 text-sm font-extrabold rounded-xl bg-white/70 dark:bg-white/10 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none" />
+                </div>
+              </div>
+
+              <div class="flex items-center gap-6">
+                <div class="text-center">
+                  <span class="text-[11px] font-bold text-slate-400 uppercase">Target Velocity</span>
+                  <p class="text-xl font-extrabold text-indigo-500 font-display">${overallVelocityPct}%</p>
+                </div>
+                <div class="text-center">
+                  <span class="text-[11px] font-bold text-slate-400 uppercase">Completed</span>
+                  <p class="text-xl font-extrabold text-emerald-500 font-display">${completedTargets}/${totalTargets}</p>
+                </div>
+                <div class="text-center">
+                  <span class="text-[11px] font-bold text-slate-400 uppercase">Logged Hours</span>
+                  <p class="text-xl font-extrabold text-purple-500 font-display">${totalHoursLogged.toFixed(1)}h</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Visual Analytics Grid: Velocity Meter + Department Breakdown -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <!-- Velocity Circle / Progress Card -->
+              ${this.ui.GlassCard(`
+                <h3 class="text-base font-bold text-slate-900 dark:text-white mb-4">Overall Completion Velocity</h3>
+                <div class="flex flex-col items-center justify-center py-4">
+                  <div class="relative w-32 h-32 rounded-full flex items-center justify-center shadow-2xl" style="background: conic-gradient(from 0deg, #6366f1 0% ${overallVelocityPct}%, #e2e8f0 ${overallVelocityPct}% 100%)">
+                    <div class="w-24 h-24 rounded-full bg-white dark:bg-[#0b1329] flex flex-col items-center justify-center shadow-inner">
+                      <span class="text-2xl font-extrabold text-slate-900 dark:text-white font-display">${overallVelocityPct}%</span>
+                      <span class="text-[9px] font-bold text-slate-400 uppercase">Velocity</span>
+                    </div>
+                  </div>
+                  <p class="text-xs font-semibold text-slate-600 dark:text-slate-300 mt-4 text-center">
+                    ${completedTargets} of ${totalTargets} scheduled daily targets finished
+                  </p>
+                </div>
+              `, 'p-6')}
+
+              <!-- Department Productivity Breakdown -->
+              <div class="lg:col-span-2 space-y-4">
+                ${this.ui.GlassCard(`
+                  <h3 class="text-base font-bold text-slate-900 dark:text-white mb-4">Department Productivity Breakdown</h3>
+                  <div class="space-y-3.5">
+                    ${deptStats.map(d => `
+                      <div>
+                        <div class="flex justify-between text-xs font-bold mb-1">
+                          <span class="text-slate-800 dark:text-slate-200">${d.dept}</span>
+                          <span class="text-indigo-500 font-extrabold">${d.pct}% Target Velocity</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-700/50 h-2.5 rounded-full overflow-hidden">
+                          <div class="bg-gradient-to-r from-indigo-500 to-emerald-500 h-full rounded-full transition-all duration-500" style="width: ${d.pct}%"></div>
+                        </div>
+                      </div>
+                    `).join('')}
+                  </div>
+                `, 'p-6')}
+              </div>
+            </div>
+
+            <!-- Employee EOD Standup Submission Form -->
+            ${!isAdmin ? `
+              ${this.ui.GlassCard(`
+                <div class="flex justify-between items-center pb-4 border-b border-slate-200 dark:border-white/10 mb-4">
+                  <div>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white">My End-of-Day (EOD) Standup Work Log</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Submit daily accomplishments and notify management of any blockers</p>
+                  </div>
+                  <span class="text-xs font-bold px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-500">Date: ${selectedDate}</span>
+                </div>
+
+                <form onsubmit="window.app.saveDailyStandupReport(event)" class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">What did you accomplish today?</label>
+                    <textarea id="rep-summary" rows="3" required placeholder="Detail completed targets, features delivered, meetings conducted..." class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-xs">${myReport.standupSummary || ''}</textarea>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Any blockers, delays, or dependencies?</label>
+                    <input id="rep-blockers" type="text" value="${myReport.blockers || ''}" placeholder="e.g. Waiting on API approval from security team, or None" class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-xs" />
+                  </div>
+
+                  <div class="flex justify-end gap-3 pt-2">
+                    ${this.ui.Button('Save & Submit Work Log', 'send', 'primary', '', '!text-xs !py-2.5', 'submit')}
+                  </div>
+                </form>
+              `, 'p-6')}
+            ` : ''}
+
+            <!-- Master Team Progress & Standup Logs Ledger -->
+            <div>
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">${isAdmin ? 'Organization Daily Progress Feed & Appraisals' : 'Team Daily Standup Overview'}</h3>
+                <span class="text-xs text-slate-400 font-semibold">${this.state.users.length} members tracked</span>
+              </div>
+              <div class="space-y-5">${teamReportsHTML}</div>
+            </div>
+          </div>
+        `;
+      },
+
+      // ==========================================
       // PROFILE VIEW (PDF 3.3)
       // ==========================================
       renderProfile() {
@@ -3014,6 +4039,8 @@
           let contentHTML = '';
           switch(this.state.currentRoute) {
             case 'dashboard': contentHTML = this.renderDashboard(); break;
+            case 'targets': contentHTML = this.renderTargets(); break;
+            case 'reports': contentHTML = this.renderReports(); break;
             case 'attendance': contentHTML = this.renderAttendance(); break;
             case 'leaves': contentHTML = this.renderLeaves(); break;
             case 'expenses': contentHTML = this.renderExpenses(); break;
