@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dayflow HRMS</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Outfit', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-display: 'Outfit', system-ui, sans-serif;
+    }
+    
+    body {
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .font-display { font-family: var(--font-display); }
+
+    /* Premium Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.3);
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.5); }
+    .dark ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); }
+
+    /* Keyframes for Glassmorphism Blobs */
+    @keyframes blob {
+      0% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(30px, -50px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob { animation: blob 15s infinite alternate ease-in-out; }
+    .animation-delay-2000 { animation-delay: 2s; }
+    .animation-delay-4000 { animation-delay: 4s; }
+
+    /* UI Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); filter: blur(10px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(100%) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.95); }
+    }
+    
+    .animate-fade-in-up { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-fade-in-down { animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-slide-up { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-fade-out { animation: fadeOut 0.3s forwards; }
+
+    /* Hide elements globally */
+    .hidden-view { display: none !important; }
+  </style>
+</head>
+<body class="bg-[#fafafa] dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-700 selection:bg-indigo-500/30 overflow-hidden h-screen w-screen">
+
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10 bg-[#fafafa] dark:bg-[#020617] transition-colors duration-700">
+    <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-400/20 dark:bg-blue-600/20 blur-[100px] mix-blend-normal animate-blob"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-purple-400/20 dark:bg-purple-600/20 blur-[120px] mix-blend-normal animate-blob animation-delay-2000"></div>
+    <div class="absolute top-[20%] left-[40%] w-[40vw] h-[40vw] rounded-full bg-indigo-300/20 dark:bg-indigo-500/10 blur-[100px] mix-blend-normal animate-blob animation-delay-4000"></div>
+    <div class="absolute inset-0 bg-white/40 dark:bg-slate-950/40 backdrop-blur-[80px]"></div>
+  </div>
+
+  <!-- Notification Container -->
+  <div id="notification-root" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- Auth View -->
+  <div id="auth-view" class="h-full w-full flex flex-col items-center justify-center p-4 relative overflow-y-auto"></div>
+
+  <!-- Main App Layout -->
+  <div id="app-layout" class="hidden-view flex h-full w-full">
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden transition-opacity lg:hidden" onclick="window.app.toggleMobileSidebar()"></div>
+    
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 z-50 flex flex-col bg-white/50 dark:bg-[#0f172a]/50 backdrop-blur-[40px] border-r border-white/60 dark:border-white/[0.08] transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) -translate-x-full lg:translate-x-0"></aside>
+    
+    <!-- Main Content Wrapper -->
+    <main class="flex-1 flex flex-col min-w-0 lg:ml-80 transition-all duration-500 z-10 h-full">
+      <!-- Topbar -->
+      <header id="topbar" class="sticky top-0 z-30 w-full bg-white/40 dark:bg-[#0f172a]/40 backdrop-blur-[40px] border-b border-white/60 dark:border-white/[0.08] h-24 flex items-center justify-between px-6 lg:px-10 shadow-sm flex-shrink-0"></header>
+      
+      <!-- Dynamic Views Container -->
+      <div id="main-content" class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-10 scroll-smooth">
+        <div class="max-w-7xl mx-auto pb-12" id="route-container">
+          <!-- Views injected here -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // --- MOCK DATA ---
+    const MOCK_USERS = [
+      { id: 'u1', employeeId: 'DF-001', name: 'Eleanor Vance', email: 'admin@dayflow.com', password: 'password', role: 'admin', department: 'Management', designation: 'HR Director', joinDate: '2023-01-15', salary: 125000, phone: '+1 (555) 123-4567', avatar: 'https://i.pravatar.cc/150?u=u1' },
+      { id: 'u2', employeeId: 'DF-002', name: 'Marcus Sterling', email: 'marcus@dayflow.com', password: 'password', role: 'employee', department: 'Engineering', designation: 'Senior Frontend Engineer', joinDate: '2023-03-10', salary: 110000, phone: '+1 (555) 234-5678', avatar: 'https://i.pravatar.cc/150?u=u2' },
+      { id: 'u3', employeeId: 'DF-003', name: 'Sarah Chen', email: 'sarah@dayflow.com', password: 'password', role: 'employee', department: 'Design', designation: 'Product Designer', joinDate: '2023-06-22', salary: 95000, phone: '+1 (555) 345-6789', avatar: 'https://i.pravatar.cc/150?u=u3' },
+      { id: 'u4', employeeId: 'DF-004', name: 'David Miller', email: 'david@dayflow.com', password: 'password', role: 'employee', department: 'Sales', designation: 'Account Executive', joinDate: '2024-01-05', salary: 85000, phone: '+1 (555) 456-7890', avatar: 'https://i.pravatar.cc/150?u=u4' },
+      { id: 'u5', employeeId: 'DF-005', name: 'Aisha Patel', email: 'aisha@dayflow.com', password: 'password', role: 'employee', department: 'Marketing', designation: 'Growth Manager', joinDate: '2023-11-15', salary: 92000, phone: '+1 (555) 567-8901', avatar: 'https://i.pravatar.cc/150?u=u5' },
+    ];
+
+    const MOCK_LEAVES = [
+      { id: 'l1', userId: 'u2', type: 'Annual Leave', startDate: '2026-08-25', endDate: '2026-08-28', status: 'Approved', days: 4, remarks: 'Family vacation' },
+      { id: 'l2', userId: 'u3', type: 'Sick Leave', startDate: '2026-08-22', endDate: '2026-08-22', status: 'Pending', days: 1, remarks: 'Not feeling well today' },
+      { id: 'l3', userId: 'u5', type: 'Personal', startDate: '2026-09-01', endDate: '2026-09-02', status: 'Pending', days: 2, remarks: 'Moving houses' },
+    ];
+
+    const MOCK_ATTENDANCE = [
+      { id: 'a1', userId: 'u2', date: '2026-08-21', checkIn: '08:55 AM', checkOut: '05:05 PM', status: 'Present' },
+      { id: 'a2', userId: 'u2', date: '2026-08-20', checkIn: '09:10 AM', checkOut: '05:30 PM', status: 'Present' },
+      { id: 'a3', userId: 'u3', date: '2026-08-21', checkIn: '09:00 AM', checkOut: '05:00 PM', status: 'Present' },
+      { id: 'a4', userId: 'u4', date: '2026-08-21', checkIn: null, checkOut: null, status: 'Absent' },
+    ];
+
+    window.app = {
+      state: {
+        users: [...MOCK_USERS],
+        currentUser: null,
+        leaves: [...MOCK_LEAVES],
+        attendance: [...MOCK_ATTENDANCE],
+        theme: 'dark',
+        currentRoute: 'dashboard',
+        notifications: [],
+        mobileSidebarOpen: false,
+        notifDropdownOpen: false,
+        currentDate: new Date('2026-08-22T09:33:11')
+      },
+
+      // Core Methods
+      notify(message, type = 'info') {
+        const id = 'note_' + Date.now();
+        this.state.notifications.push({ id, message, type });
+        this.renderNotifications();
+        setTimeout(() => {
+          this.state.notifications = this.state.notifications.filter(n => n.id !== id);
+          const el = document.getElementById(id);
+          if (el) {
+            el.classList.replace('animate-slide-up', 'animate-fade-out');
+            setTimeout(() => el.remove(), 300);
+          }
+        }, 4000);
+      },
+
+      login(email, password) {
+        const user = this.state.users.find(u => u.email === email && u.password === password);
+        if (user) {
+          this.state.currentUser = user;
+          this.state.currentRoute = 'dashboard';
+          this.notify(`Welcome back, ${user.name}!`, 'success');
+          this.render();
+        } else {
+          this.notify('Invalid credentials.', 'error');
+        }
+      },
+
+      logout() {
+        this.state.currentUser = null;
+        this.notify('Logged out successfully.', 'info');
+        this.render();
+      },
+
+      toggleTheme() {
+        this.state.theme = this.state.theme === 'dark' ? 'light' : 'dark';
+        if (this.state.theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        this.renderTopbar();
+        lucide.createIcons();
+      },
+
+      navigate(route) {
+        this.state.currentRoute = route;
+        this.state.mobileSidebarOpen = false;
+        this.render();
+      },
+
+      toggleMobileSidebar() {
+        this.state.mobileSidebarOpen = !this.state.mobileSidebarOpen;
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('mobile-overlay');
+        if (this.state.mobileSidebarOpen) {
+          sidebar.classList.remove('-translate-x-full');
+          overlay.classList.remove('hidden');
+        } else {
+          sidebar.classList.add('-translate-x-full');
+          overlay.classList.add('hidden');
+        }
+      },
+
+      toggleNotifDropdown() {
+        this.state.notifDropdownOpen = !this.state.notifDropdownOpen;
+        this.renderTopbar();
+        lucide.createIcons();
+      },
+
+      checkIn() {
+        const todayStr = this.state.currentDate.toISOString().split('T')[0];
+        const newRecord = {
+          id: `a${Date.now()}`,
+          userId: this.state.currentUser.id,
+          date: todayStr,
+          checkIn: this.state.currentDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+          checkOut: null,
+          status: 'Present'
+        };
+        this.state.attendance.unshift(newRecord);
+        this.notify('Checked in successfully.', 'success');
+        this.render();
+      },
+
+      checkOut() {
+        const todayStr = this.state.currentDate.toISOString().split('T')[0];
+        this.state.attendance = this.state.attendance.map(a => 
+          (a.userId === this.state.currentUser.id && a.date === todayStr && !a.checkOut) 
+            ? { ...a, checkOut: this.state.currentDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
+            : a
+        );
+        this.notify('Checked out successfully.', 'success');
+        this.render();
+      },
+
+      applyLeave(event) {
+        event.preventDefault();
+        const type = document.getElementById('leave-type').value;
+        const startDate = document.getElementById('leave-start').value;
+        const endDate = document.getElementById('leave-end').value;
+        const remarks = document.getElementById('leave-remarks').value;
+
+        const d1 = new Date(startDate);
+        const d2 = new Date(endDate);
+        const days = Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24)) + 1;
+
+        const newLeave = {
+          id: `l${Date.now()}`,
+          userId: this.state.currentUser.id,
+          type, startDate, endDate, remarks,
+          status: 'Pending',
+          days: days > 0 ? days : 1
+        };
+        
+        this.state.leaves.unshift(newLeave);
+        this.notify('Leave request submitted.', 'success');
+        this.closeModal('apply-leave-modal');
+        this.render();
+      },
+
+      updateLeaveStatus(leaveId, status) {
+        this.state.leaves = this.state.leaves.map(l => l.id === leaveId ? { ...l, status } : l);
+        this.notify(`Leave ${status.toLowerCase()}.`, 'success');
+        this.render();
+      },
+
+      saveProfile(event) {
+        event.preventDefault();
+        const name = document.getElementById('profile-name').value;
+        const email = document.getElementById('profile-email').value;
+        const phone = document.getElementById('profile-phone').value;
+        
+        this.state.currentUser = { ...this.state.currentUser, name, email, phone };
+        this.state.users = this.state.users.map(u => u.id === this.state.currentUser.id ? this.state.currentUser : u);
+        
+        this.notify('Profile updated.', 'success');
+        this.render();
+      },
+
+      openModal(id) { document.getElementById(id).classList.remove('hidden-view'); },
+      closeModal(id) { document.getElementById(id).classList.add('hidden-view'); },
+
+      // --- UI TEMPLATE HELPERS ---
+      ui: {
+        GlassCard: (content, className = '', padding = 'p-6', hover = false) => `
+          <div class="relative overflow-hidden rounded-[2rem] bg-white/60 dark:bg-[#0f172a]/60 backdrop-blur-[40px] saturate-[1.2] border border-white/60 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.25)] transition-all duration-500 ${hover ? 'hover:-translate-y-1.5 hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_16px_48px_rgba(0,0,0,0.4)] hover:bg-white/80 dark:hover:bg-[#0f172a]/80' : ''} ${padding} ${className}">
+            <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:from-white/5 dark:to-transparent pointer-events-none"></div>
+            <div class="relative z-10">${content}</div>
+          </div>
+        `,
+        Button: (text, icon = '', variant = 'primary', onclick = '', className = '', type = 'button') => {
+          const variants = {
+            primary: "bg-gradient-to-b from-indigo-500 to-indigo-600 text-white shadow-[0_4px_20px_rgba(99,102,241,0.3)] hover:shadow-[0_8px_25px_rgba(99,102,241,0.5)] hover:from-indigo-400 hover:to-indigo-500 border border-indigo-400/20",
+            secondary: "bg-white/60 dark:bg-white/10 text-slate-700 dark:text-slate-200 border border-white/60 dark:border-white/10 hover:bg-white/90 dark:hover:bg-white/20 backdrop-blur-md shadow-sm",
+            ghost: "text-slate-600 dark:text-slate-300 hover:bg-slate-100/60 dark:hover:bg-white/10 rounded-xl",
+            danger: "bg-rose-500/10 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 border border-rose-500/10",
+            icon: "p-3 rounded-2xl bg-white/60 dark:bg-white/10 text-slate-700 dark:text-slate-300 border border-white/60 dark:border-white/10 hover:bg-white/90 dark:hover:bg-white/20 backdrop-blur-md shadow-sm transition-transform hover:scale-105"
+          };
+          const base = variant === 'icon' ? '' : 'px-6 py-3';
+          const iconHTML = icon ? `<i data-lucide="${icon}" class="w-4 h-4"></i>` : '';
+          return `<button type="${type}" onclick="${onclick}" class="inline-flex items-center justify-center gap-2 font-semibold rounded-2xl transition-all duration-300 active:scale-[0.97] disabled:opacity-50 ${variants[variant]} ${base} ${className}">${iconHTML} ${text}</button>`;
+        },
+        Badge: (text, variant = 'default', className = '') => {
+          const variants = {
+            default: "bg-slate-100 text-slate-700 dark:bg-white/10 dark:text-slate-300 border-white/50 dark:border-white/5",
+            success: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20",
+            warning: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400 border-amber-200 dark:border-amber-500/20",
+            danger: "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-400 border-rose-200 dark:border-rose-500/20",
+            info: "bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-400 border-indigo-200 dark:border-indigo-500/20",
+          };
+          return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border shadow-sm ${variants[variant]} ${className}">${text}</span>`;
+        },
+        Avatar: (src, size = 'md', className = '') => {
+          const sizes = { sm: "w-8 h-8", md: "w-10 h-10", lg: "w-16 h-16", xl: "w-28 h-28" };
+          return `<div class="relative rounded-full p-[3px] bg-gradient-to-tr from-indigo-500 to-purple-500 shadow-lg ${sizes[size]} ${className}"><img src="${src}" alt="Avatar" class="rounded-full w-full h-full object-cover border-2 border-white dark:border-slate-900 bg-slate-100 dark:bg-slate-800" /></div>`;
+        },
+        Input: (id, label, type, value = '', placeholder = '', required = false, readonly = false) => `
+          <div class="space-y-1.5 w-full">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">${label}</label>
+            <input id="${id}" type="${type}" value="${value}" placeholder="${placeholder}" ${required?'required':''} ${readonly?'readonly disabled':''}
+              class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md transition-all shadow-inner disabled:opacity-60" />
+          </div>
+        `
+      },
+
+      // --- RENDERING PIPELINE ---
+      renderNotifications() {
+        const root = document.getElementById('notification-root');
+        root.innerHTML = this.state.notifications.map(note => {
+          const icons = { success: 'check-circle-2', error: 'x-circle', info: 'bell' };
+          const colors = { success: 'text-emerald-500 bg-emerald-100 dark:bg-emerald-500/20', error: 'text-rose-500 bg-rose-100 dark:bg-rose-500/20', info: 'text-indigo-500 bg-indigo-100 dark:bg-indigo-500/20' };
+          return `
+            <div id="${note.id}" class="animate-slide-up pointer-events-auto">
+              ${this.ui.GlassCard(`
+                <div class="flex items-center gap-3">
+                  <div class="p-2 rounded-full ${colors[note.type]}"><i data-lucide="${icons[note.type]}" class="w-5 h-5"></i></div>
+                  <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">${note.message}</p>
+                </div>
+              `, 'w-80 shadow-2xl !rounded-2xl', 'p-4')}
+            </div>
+          `;
+        }).join('');
+        lucide.createIcons();
+      },
+
+      renderAuth() {
+        const authHTML = `
+          <div class="w-full max-w-md text-center mb-8 animate-fade-in-down">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-[2rem] bg-gradient-to-tr from-indigo-500 to-purple-500 shadow-2xl shadow-indigo-500/30 mb-6 border border-white/20">
+              <i data-lucide="activity" class="w-10 h-10 text-white"></i>
+            </div>
+            <h1 class="text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-3 font-display">Dayflow</h1>
+            <p class="text-lg text-slate-600 dark:text-slate-400 font-medium">Every workday, perfectly aligned.</p>
+          </div>
+          <div class="w-full max-w-md animate-fade-in-up">
+            ${this.ui.GlassCard(`
+              <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-8">Sign in to your account</h2>
+              <form onsubmit="event.preventDefault(); window.app.login(document.getElementById('email').value, document.getElementById('pwd').value)" class="space-y-5">
+                ${this.ui.Input('email', 'Email Address', 'email', 'admin@dayflow.com', 'name@company.com', true)}
+                ${this.ui.Input('pwd', 'Password', 'password', 'password', '••••••••', true)}
+                ${this.ui.Button('Sign In', '', 'primary', '', 'w-full mt-4 py-4 text-lg shadow-xl shadow-indigo-500/20', 'submit')}
+              </form>
+              <div class="mt-8 p-5 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/5 text-xs text-slate-600 dark:text-slate-400 shadow-inner">
+                <p class="font-bold text-slate-900 dark:text-white mb-2">Demo Credentials:</p>
+                <div class="flex flex-col gap-1">
+                  <span class="flex justify-between"><span>Admin:</span> <span class="font-mono bg-white/50 dark:bg-black/30 px-2 py-0.5 rounded">admin@dayflow.com</span></span>
+                  <span class="flex justify-between"><span>Employee:</span> <span class="font-mono bg-white/50 dark:bg-black/30 px-2 py-0.5 rounded">marcus@dayflow.com</span></span>
+                  <span class="flex justify-between mt-1"><span>Password:</span> <span class="font-mono bg-white/50 dark:bg-black/30 px-2 py-0.5 rounded">password</span></span>
+                </div>
+              </div>
+            `, '', 'p-8')}
+          </div>
+        `;
+        document.getElementById('auth-view').innerHTML = authHTML;
+      },
+
+      renderSidebar() {
+        const u = this.state.currentUser;
+        const navItems = [
+          { id: 'dashboard', label: 'Dashboard', icon: 'activity', roles: ['admin', 'employee'] },
+          { id: 'attendance', label: 'Attendance', icon: 'clock', roles: ['admin', 'employee'] },
+          { id: 'leaves', label: 'Leave Requests', icon: 'calendar', roles: ['admin', 'employee'] },
+          { id: 'team', label: 'Team Directory', icon: 'users', roles: ['admin'] },
+          { id: 'payroll', label: 'Payroll', icon: 'file-text', roles: ['admin', 'employee'] },
+          { id: 'profile', label: 'My Profile', icon: 'user', roles: ['admin', 'employee'] },
+        ].filter(item => item.roles.includes(u.role));
+
+        const sidebarHTML = `
+          <div class="p-8 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-[1.2rem] bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30 border border-white/20">
+              <i data-lucide="activity" class="w-6 h-6 text-white"></i>
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight font-display">Dayflow</h2>
+              ${this.ui.Badge(u.role, u.role === 'admin' ? 'info' : 'default', 'mt-1 !text-[10px] uppercase tracking-wider')}
+            </div>
+          </div>
+          <div class="flex-1 px-6 py-4 space-y-2 overflow-y-auto">
+            <p class="px-4 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4">Main Menu</p>
+            ${navItems.map(item => {
+              const isActive = this.state.currentRoute === item.id;
+              const activeClasses = isActive ? 'bg-white/80 dark:bg-white/10 text-indigo-600 dark:text-indigo-400 shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-none border border-white/60 dark:border-white/10 scale-[1.02]' : 'text-slate-600 hover:bg-white/50 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-slate-200';
+              const iconColor = isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500';
+              return `<button onclick="window.app.navigate('${item.id}')" class="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all duration-300 text-sm font-semibold ${activeClasses}"><i data-lucide="${item.icon}" class="w-5 h-5 ${iconColor}"></i> ${item.label}</button>`;
+            }).join('')}
+          </div>
+          <div class="p-6 mt-auto">
+            <div class="p-5 rounded-[2rem] bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/5 backdrop-blur-md shadow-inner text-center relative overflow-hidden">
+              <div class="absolute top-0 right-0 p-4 opacity-10 pointer-events-none"><i data-lucide="shield" class="w-16 h-16"></i></div>
+              ${this.ui.Avatar(u.avatar, 'lg', 'mx-auto mb-4')}
+              <p class="text-base font-bold text-slate-900 dark:text-white truncate">${u.name}</p>
+              <p class="text-xs font-medium text-slate-500 dark:text-slate-400 truncate mb-5">${u.designation}</p>
+              ${this.ui.Button('Sign Out', 'log-out', 'danger', 'window.app.logout()', 'w-full text-xs py-2.5 rounded-xl border-none')}
+            </div>
+          </div>
+        `;
+        document.getElementById('sidebar').innerHTML = sidebarHTML;
+      },
+
+      renderTopbar() {
+        const dateStr = this.state.currentDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+        const isDark = this.state.theme === 'dark';
+        const notifMenu = this.state.notifDropdownOpen ? `
+          <div class="absolute right-0 mt-4 w-80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border border-white/60 dark:border-white/10 rounded-3xl shadow-2xl p-2 animate-fade-in-down z-50">
+            <div class="p-3 border-b border-slate-100 dark:border-white/10 flex justify-between items-center">
+              <h4 class="font-bold text-slate-900 dark:text-white">Notifications</h4>
+              ${this.ui.Badge('3 New', 'info')}
+            </div>
+            <div class="p-1 max-h-80 overflow-y-auto space-y-1">
+              <div class="flex gap-3 p-3 rounded-2xl hover:bg-slate-100/50 dark:hover:bg-white/5 transition-colors cursor-pointer"><div class="p-2 rounded-xl h-fit text-emerald-500 bg-emerald-500/10"><i data-lucide="calendar" class="w-4 h-4"></i></div><div><p class="text-sm font-bold text-slate-900 dark:text-white mb-0.5">Leave Approved</p><p class="text-xs text-slate-500 line-clamp-2">Annual Leave approved by HR.</p></div></div>
+              <div class="flex gap-3 p-3 rounded-2xl hover:bg-slate-100/50 dark:hover:bg-white/5 transition-colors cursor-pointer"><div class="p-2 rounded-xl h-fit text-indigo-500 bg-indigo-500/10"><i data-lucide="file-text" class="w-4 h-4"></i></div><div><p class="text-sm font-bold text-slate-900 dark:text-white mb-0.5">Payroll Processed</p><p class="text-xs text-slate-500 line-clamp-2">Salary for August credited.</p></div></div>
+            </div>
+          </div>
+        ` : '';
+
+        const topbarHTML = `
+          <div class="flex items-center gap-4">
+            ${this.ui.Button('', 'menu', 'icon', 'window.app.toggleMobileSidebar()', 'lg:hidden')}
+            <div class="hidden md:block">
+              <h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Good Morning, ${this.state.currentUser.name.split(' ')[0]}</h1>
+              <p class="text-sm font-medium text-slate-500 dark:text-slate-400 mt-0.5">${dateStr}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 lg:gap-5">
+            <div class="hidden lg:flex relative group">
+              <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors"></i>
+              <input type="text" placeholder="Search employees, docs..." class="pl-12 pr-4 py-2.5 w-72 rounded-2xl bg-white/50 dark:bg-black/20 border border-white/60 dark:border-white/10 text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all focus:w-80 shadow-inner placeholder-slate-400" />
+            </div>
+            ${this.ui.Button('', isDark ? 'sun' : 'moon', 'icon', 'window.app.toggleTheme()')}
+            <div class="relative">
+              <button onclick="window.app.toggleNotifDropdown()" class="p-3 rounded-2xl bg-white/60 dark:bg-white/10 text-slate-700 dark:text-slate-300 border border-white/60 dark:border-white/10 hover:bg-white/90 dark:hover:bg-white/20 backdrop-blur-md shadow-sm transition-transform hover:scale-105">
+                <i data-lucide="bell" class="w-5 h-5"></i>
+                <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-rose-500 border-2 border-white dark:border-slate-800 rounded-full"></span>
+              </button>
+              ${notifMenu}
+            </div>
+            <div class="hidden sm:block h-8 w-px bg-slate-200 dark:bg-white/10 mx-2"></div>
+            ${this.ui.Avatar(this.state.currentUser.avatar, 'md', 'cursor-pointer hover:scale-105 transition-transform')}
+          </div>
+        `;
+        document.getElementById('topbar').innerHTML = topbarHTML;
+      },
+
+      renderDashboard() {
+        const u = this.state.currentUser;
+        const isAdmin = u.role === 'admin';
+        const todayStr = this.state.currentDate.toISOString().split('T')[0];
+        const pendingLeaves = this.state.leaves.filter(l => l.status === 'Pending').length;
+        const totalEmployees = this.state.users.filter(usr => usr.role === 'employee').length;
+        const todayAttendance = this.state.attendance.filter(a => a.date === todayStr && a.status === 'Present').length;
+
+        const StatCard = (title, value, subtitle, icon, colorClass, gradientClass) => this.ui.GlassCard(`
+          <div class="flex justify-between items-start mb-6">
+            <div class="p-4 rounded-[1.2rem] ${gradientClass} shadow-lg shadow-${colorClass}-500/20">
+              <i data-lucide="${icon}" class="w-6 h-6 text-white"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-4xl font-bold text-slate-900 dark:text-white mb-1 tracking-tight">${value}</h3>
+            <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">${title}</p>
+            ${subtitle ? `<p class="text-xs text-slate-400 dark:text-slate-500 mt-2 font-medium">${subtitle}</p>` : ''}
+          </div>
+        `, 'flex flex-col justify-between h-full group', 'p-6', true);
+
+        const areaChartHTML = `
+          <div class="w-full h-24 flex items-end gap-1 mt-6">
+            ${[30, 45, 40, 70, 50, 85, 60, 95, 75, 100].map(h => `
+              <div class="flex-1 group relative flex justify-center h-full items-end">
+                <div class="w-full bg-gradient-to-t from-indigo-500/20 to-indigo-500/80 rounded-t-sm group-hover:from-indigo-400/40 group-hover:to-indigo-400 transition-all duration-300" style="height: ${h}%"></div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+        const recentLeaves = this.state.leaves.filter(l => l.userId === u.id).slice(0,3);
+        const myLeavesHTML = recentLeaves.length ? recentLeaves.map(l => `
+          <div class="flex items-center justify-between p-4 rounded-2xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-sm mb-3">
+            <div class="flex items-center gap-4">
+              <div class="p-3 bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-xl"><i data-lucide="calendar" class="w-5 h-5"></i></div>
+              <div>
+                <p class="font-bold text-sm text-slate-900 dark:text-white">${l.type}</p>
+                <p class="text-xs font-medium text-slate-500">${l.startDate} to ${l.endDate}</p>
+              </div>
+            </div>
+            ${this.ui.Badge(l.status, l.status==='Approved'?'success':l.status==='Rejected'?'danger':'warning')}
+          </div>
+        `).join('') : '<p class="text-slate-500 py-4 text-center">No recent activity.</p>';
+
+        let html = `<div class="space-y-8 animate-fade-in-up"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">`;
+        if (isAdmin) {
+          html += StatCard('Total Employees', totalEmployees, '', 'users', 'indigo', 'bg-gradient-to-br from-indigo-500 to-indigo-600');
+          html += StatCard('Present Today', `${todayAttendance}/${totalEmployees}`, '', 'check-circle-2', 'emerald', 'bg-gradient-to-br from-emerald-500 to-emerald-600');
+          html += StatCard('Pending Leaves', pendingLeaves, 'Requires action', 'calendar', 'amber', 'bg-gradient-to-br from-amber-500 to-orange-500');
+          html += StatCard('Avg Attendance', '94%', '', 'activity', 'purple', 'bg-gradient-to-br from-purple-500 to-fuchsia-600');
+        } else {
+          const myPending = this.state.leaves.filter(l => l.userId === u.id && l.status === 'Pending').length;
+          html += StatCard('Leaves Available', '14 Days', '', 'calendar', 'indigo', 'bg-gradient-to-br from-indigo-500 to-indigo-600');
+          html += StatCard('Attendance Rate', '98%', '', 'check-circle-2', 'emerald', 'bg-gradient-to-br from-emerald-500 to-emerald-600');
+          html += StatCard('Next Holiday', 'Sep 4', 'Labor Day', 'sun', 'amber', 'bg-gradient-to-br from-amber-500 to-orange-500');
+          html += StatCard('Pending Requests', myPending, '', 'clock', 'purple', 'bg-gradient-to-br from-purple-500 to-fuchsia-600');
+        }
+        
+        html += `</div><div class="grid grid-cols-1 lg:grid-cols-3 gap-8">`;
+        
+        // Large Panel
+        html += this.ui.GlassCard(`
+          <div class="flex items-center justify-between mb-8">
+            <div>
+               <h3 class="text-xl font-bold text-slate-900 dark:text-white">${isAdmin ? 'Attendance Trends' : 'Recent Activity'}</h3>
+               <p class="text-sm font-medium text-slate-500 mt-1">${isAdmin ? '10 day overview' : 'Your latest updates'}</p>
+            </div>
+            ${isAdmin ? this.ui.Button('Report', 'trending-up', 'secondary') : ''}
+          </div>
+          ${isAdmin ? areaChartHTML : `<div class="space-y-2">${myLeavesHTML}</div>`}
+        `, 'lg:col-span-2');
+
+        // Quick Actions
+        html += this.ui.GlassCard(`
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6">Quick Actions</h3>
+          <div class="space-y-3">
+            ${!isAdmin ? `
+              ${this.ui.Button('Log Time Entry', 'clock', 'primary', 'window.app.navigate("attendance")', 'w-full justify-start py-4')}
+              ${this.ui.Button('Request Leave', 'calendar', 'secondary', 'window.app.navigate("leaves")', 'w-full justify-start py-4')}
+            ` : `
+              ${this.ui.Button('Add Employee', 'users', 'primary', 'window.app.navigate("team")', 'w-full justify-start py-4')}
+              ${this.ui.Button('Run Payroll', 'file-text', 'secondary', 'window.app.navigate("payroll")', 'w-full justify-start py-4')}
+            `}
+          </div>
+          <div class="mt-8 pt-6 border-t border-slate-200 dark:border-white/10">
+             <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4 text-amber-500"></i> Upcoming Birthdays</h4>
+             <div class="flex -space-x-3 overflow-hidden px-2">
+                ${this.ui.Avatar('https://i.pravatar.cc/150?u=u3', 'md', 'ring-4 ring-slate-50 dark:ring-slate-900')}
+                ${this.ui.Avatar('https://i.pravatar.cc/150?u=u5', 'md', 'ring-4 ring-slate-50 dark:ring-slate-900')}
+                ${this.ui.Avatar('https://i.pravatar.cc/150?u=u8', 'md', 'ring-4 ring-slate-50 dark:ring-slate-900')}
+             </div>
+          </div>
+        `);
+        
+        html += `</div></div>`;
+        return html;
+      },
+
+      renderAttendance() {
+        const todayStr = this.state.currentDate.toISOString().split('T')[0];
+        const todayRecord = this.state.attendance.find(a => a.userId === this.state.currentUser.id && a.date === todayStr);
+        const isCheckedIn = todayRecord && !todayRecord.checkOut;
+        const isCheckedOut = todayRecord && todayRecord.checkOut;
+        const myAttendance = this.state.attendance.filter(a => a.userId === this.state.currentUser.id);
+
+        const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+        const dates = ['17', '18', '19', '20', '21'];
+        const statuses = ['Present', 'Present', 'Half-day', 'Present', 'Pending'];
+        
+        const weeklyHTML = `
+          <div class="flex justify-between items-center bg-white/40 dark:bg-black/20 rounded-3xl p-6 border border-white/60 dark:border-white/5 shadow-inner">
+             ${days.map((day, i) => {
+               const st = statuses[i];
+               const icon = st==='Present'?'check-circle-2':st==='Half-day'?'clock':st==='Absent'?'x-circle':'calendar-days';
+               const colorClass = st==='Present'?'border-emerald-500 bg-emerald-500/10 text-emerald-500':st==='Half-day'?'border-amber-500 bg-amber-500/10 text-amber-500':st==='Absent'?'border-rose-500 bg-rose-500/10 text-rose-500':'border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-400';
+               return `
+                 <div class="flex flex-col items-center gap-3">
+                    <div class="text-center">
+                      <span class="block text-xs font-bold text-slate-400 uppercase">${day}</span>
+                      <span class="block text-lg font-bold text-slate-900 dark:text-white mt-1">${dates[i]}</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-[1.2rem] flex items-center justify-center border-2 shadow-sm ${colorClass}">
+                      <i data-lucide="${icon}" class="w-6 h-6"></i>
+                    </div>
+                 </div>`;
+             }).join('')}
+          </div>
+        `;
+
+        let actionBtn = '';
+        if (!isCheckedOut) {
+          if (isCheckedIn) {
+            actionBtn = this.ui.Button('Check Out', '', 'primary', 'window.app.checkOut()', 'w-64 py-4 text-lg bg-gradient-to-b from-amber-500 to-orange-500 shadow-amber-500/30 hover:from-amber-400 hover:to-amber-500 border-none');
+          } else {
+            actionBtn = this.ui.Button('Check In Now', '', 'primary', 'window.app.checkIn()', 'w-64 py-4 text-lg');
+          }
+        } else {
+          actionBtn = this.ui.Badge('Shift Completed', 'success', 'px-6 py-3 text-base');
+        }
+
+        const historyRows = myAttendance.map(record => `
+          <tr class="bg-white/40 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 transition-colors">
+            <td class="px-6 py-4 font-bold text-slate-900 dark:text-white rounded-l-2xl">${record.date}</td>
+            <td class="px-6 py-4 font-medium text-slate-600 dark:text-slate-300">${record.checkIn || '-'}</td>
+            <td class="px-6 py-4 font-medium text-slate-600 dark:text-slate-300">${record.checkOut || '-'}</td>
+            <td class="px-6 py-4 rounded-r-2xl">${this.ui.Badge(record.status, record.status==='Present'?'success':record.status==='Absent'?'danger':'warning')}</td>
+          </tr>
+        `).join('');
+
+        return `
+          <div class="space-y-8 animate-fade-in-up">
+            <div class="flex flex-col xl:flex-row gap-8">
+              ${this.ui.GlassCard(`
+                <div class="absolute top-0 right-0 p-8 opacity-5 pointer-events-none"><i data-lucide="clock" class="w-40 h-40"></i></div>
+                <div class="w-32 h-32 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/40 dark:to-purple-900/40 flex items-center justify-center mb-8 shadow-inner border border-white/50 dark:border-white/10 relative mx-auto">
+                   <div class="absolute inset-2 rounded-full border border-indigo-500/30 animate-[spin_10s_linear_infinite] border-dashed"></div>
+                   <i data-lucide="clock" class="w-12 h-12 text-indigo-600 dark:text-indigo-400"></i>
+                </div>
+                <h2 class="text-5xl font-bold text-slate-900 dark:text-white mb-2 font-display tracking-tight">${this.state.currentDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</h2>
+                <p class="text-slate-500 dark:text-slate-400 mb-10 font-medium text-lg">${this.state.currentDate.toDateString()}</p>
+                <div class="flex justify-center">${actionBtn}</div>
+                ${todayRecord ? `
+                  <div class="mt-10 flex justify-center gap-12 text-sm w-full border-t border-slate-200 dark:border-white/10 pt-8">
+                    <div><p class="text-slate-400 font-medium mb-1">Check In</p><p class="text-xl font-bold text-slate-900 dark:text-white">${todayRecord.checkIn || '--:--'}</p></div>
+                    <div><p class="text-slate-400 font-medium mb-1">Check Out</p><p class="text-xl font-bold text-slate-900 dark:text-white">${todayRecord.checkOut || '--:--'}</p></div>
+                  </div>
+                ` : ''}
+              `, 'flex-1 text-center py-12 flex flex-col items-center justify-center relative overflow-hidden')}
+              
+              <div class="flex-[2] space-y-8">
+                ${this.ui.GlassCard(`<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6">Current Week</h3>${weeklyHTML}`)}
+                ${this.ui.GlassCard(`
+                  <div class="p-6 border-b border-slate-200 dark:border-white/10"><h3 class="text-lg font-bold text-slate-900 dark:text-white">Attendance History</h3></div>
+                  <div class="overflow-x-auto p-4">
+                    <table class="w-full text-sm text-left border-separate border-spacing-y-2">
+                      <thead class="text-xs text-slate-400 uppercase font-bold tracking-wider px-4">
+                        <tr><th class="px-6 py-3">Date</th><th class="px-6 py-3">Check In</th><th class="px-6 py-3">Check Out</th><th class="px-6 py-3">Status</th></tr>
+                      </thead>
+                      <tbody>${historyRows || '<tr><td colspan="4" class="text-center py-4 text-slate-500">No records found.</td></tr>'}</tbody>
+                    </table>
+                  </div>
+                `, 'p-0')}
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      renderLeaves() {
+        const isAdmin = this.state.currentUser.role === 'admin';
+        const displayLeaves = isAdmin ? this.state.leaves : this.state.leaves.filter(l => l.userId === this.state.currentUser.id);
+
+        const rows = displayLeaves.map(leave => {
+          const user = this.state.users.find(u => u.id === leave.userId);
+          const badge = this.ui.Badge(leave.status, leave.status==='Approved'?'success':leave.status==='Rejected'?'danger':'warning');
+          
+          let actions = '';
+          if (isAdmin && leave.status === 'Pending') {
+            actions = `
+              <div class="flex gap-2">
+                <button onclick="window.app.updateLeaveStatus('${leave.id}', 'Approved')" class="p-2 text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/20 rounded-lg transition-colors"><i data-lucide="check-circle-2" class="w-5 h-5"></i></button>
+                <button onclick="window.app.updateLeaveStatus('${leave.id}', 'Rejected')" class="p-2 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/20 rounded-lg transition-colors"><i data-lucide="x-circle" class="w-5 h-5"></i></button>
+              </div>`;
+          } else if (isAdmin) {
+            actions = `<span class="text-xs font-bold text-slate-400">Reviewed</span>`;
+          }
+
+          return `
+            <tr class="bg-white/40 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 transition-colors">
+              ${isAdmin ? `<td class="px-6 py-4 font-bold text-slate-900 dark:text-white flex items-center gap-3 rounded-l-2xl">${this.ui.Avatar(user.avatar, 'sm')}${user.name}</td>` : ''}
+              <td class="px-6 py-4 font-bold text-slate-700 dark:text-slate-300 ${!isAdmin?'rounded-l-2xl':''}">${leave.type}</td>
+              <td class="px-6 py-4 font-medium text-slate-600 dark:text-slate-400">${leave.startDate} to ${leave.endDate}</td>
+              <td class="px-6 py-4 font-bold text-slate-600 dark:text-slate-400">${leave.days}</td>
+              <td class="px-6 py-4">${badge}</td>
+              ${isAdmin ? `<td class="px-6 py-4 rounded-r-2xl">${actions}</td>` : '<td class="rounded-r-2xl"></td>'}
+            </tr>`;
+        }).join('');
+
+        let balanceCards = '';
+        if (!isAdmin) {
+          balanceCards = `<div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">` + ['Annual Leave', 'Sick Leave', 'Personal', 'Unpaid'].map((type, i) => {
+             const total = 14; const used = i * 2; const pct = ((total - used) / total) * 100;
+             return this.ui.GlassCard(`
+                <div class="absolute right-[-10%] top-[-10%] w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-colors"></div>
+                <p class="text-3xl font-bold text-slate-900 dark:text-white mb-1">${total - used}</p>
+                <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">${type}</p>
+                <div class="w-full h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                   <div class="h-full bg-indigo-500 rounded-full" style="width: ${pct}%"></div>
+                </div>
+             `, 'relative overflow-hidden group hover:-translate-y-1', 'p-5');
+          }).join('') + `</div>`;
+        }
+
+        const applyModal = `
+          <div id="apply-leave-modal" class="hidden-view fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
+            ${this.ui.GlassCard(`
+              <button onclick="window.app.closeModal('apply-leave-modal')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
+              <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">Apply for Leave</h3>
+              <form onsubmit="window.app.applyLeave(event)" class="space-y-6">
+                <div class="space-y-1.5 w-full">
+                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">Leave Type</label>
+                  <select id="leave-type" class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md shadow-inner">
+                    <option value="Annual Leave" class="bg-white dark:bg-slate-800">Annual Leave</option>
+                    <option value="Sick Leave" class="bg-white dark:bg-slate-800">Sick Leave</option>
+                    <option value="Personal" class="bg-white dark:bg-slate-800">Personal</option>
+                  </select>
+                </div>
+                <div class="grid grid-cols-2 gap-5">
+                  ${this.ui.Input('leave-start', 'Start Date', 'date', '', '', true)}
+                  ${this.ui.Input('leave-end', 'End Date', 'date', '', '', true)}
+                </div>
+                ${this.ui.Input('leave-remarks', 'Remarks (Optional)', 'text')}
+                <div class="pt-4 flex justify-end gap-4">
+                  ${this.ui.Button('Cancel', '', 'secondary', 'window.app.closeModal("apply-leave-modal")')}
+                  ${this.ui.Button('Submit Request', '', 'primary', '', '', 'submit')}
+                </div>
+              </form>
+            `, 'w-full max-w-lg shadow-2xl relative animate-fade-in-down', 'p-8')}
+          </div>
+        `;
+
+        return `
+          <div class="space-y-8 animate-fade-in-up">
+            <div class="flex justify-between items-end mb-8">
+              <div>
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Leave Management</h2>
+                <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium">${isAdmin ? 'Review and manage employee leave requests.' : 'Track your leave balance and applications.'}</p>
+              </div>
+              ${!isAdmin ? this.ui.Button('Apply Leave', 'calendar', 'primary', 'window.app.openModal("apply-leave-modal")') : ''}
+            </div>
+            ${balanceCards}
+            ${this.ui.GlassCard(`
+              <div class="overflow-x-auto p-4">
+                <table class="w-full text-sm text-left border-separate border-spacing-y-2">
+                  <thead class="text-xs text-slate-400 uppercase font-bold tracking-wider px-4">
+                    <tr>
+                      ${isAdmin ? '<th class="px-6 py-3">Employee</th>' : ''}
+                      <th class="px-6 py-3">Leave Type</th><th class="px-6 py-3">Duration</th><th class="px-6 py-3">Days</th><th class="px-6 py-3">Status</th>
+                      ${isAdmin ? '<th class="px-6 py-3">Actions</th>' : '<th></th>'}
+                    </tr>
+                  </thead>
+                  <tbody>${rows || `<tr><td colspan="6" class="text-center py-8 text-slate-500">No leave records found.</td></tr>`}</tbody>
+                </table>
+              </div>
+            `, 'p-0')}
+            ${applyModal}
+          </div>
+        `;
+      },
+
+      renderProfile() {
+        const u = this.state.currentUser;
+        const docs = ['Offer_Letter.pdf', 'Employee_Handbook.pdf', 'Tax_Form_2026.pdf'].map(doc => `
+          <div class="flex items-center justify-between p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-white/60 dark:border-white/10 hover:border-indigo-500/50 hover:shadow-md transition-all group cursor-pointer">
+             <div class="flex items-center gap-4">
+                <div class="p-2.5 rounded-[1rem] bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400"><i data-lucide="file" class="w-5 h-5"></i></div>
+                <span class="text-sm font-bold text-slate-700 dark:text-slate-300 truncate w-28">${doc}</span>
+             </div>
+             ${this.ui.Button('', 'download-cloud', 'icon', '', '!p-2 opacity-0 group-hover:opacity-100 scale-90')}
+          </div>
+        `).join('');
+
+        return `
+          <div class="max-w-5xl mx-auto space-y-8 animate-fade-in-up mt-16">
+            ${this.ui.GlassCard(`
+              <div class="absolute -top-16 left-8">${this.ui.Avatar(u.avatar, 'xl', 'shadow-2xl border-4 border-white/50 dark:border-slate-800')}</div>
+              <div class="flex justify-between items-start mb-10 pl-[9rem]">
+                <div>
+                  <h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">${u.name}</h2>
+                  <p class="text-slate-500 font-medium mt-1 text-lg">${u.designation} • ${u.department}</p>
+                  <div class="mt-5 flex gap-3">
+                    ${this.ui.Badge(u.employeeId, 'info', 'px-4 py-1.5 text-sm')}
+                    ${this.ui.Badge(u.role, 'default', 'px-4 py-1.5 text-sm uppercase')}
+                  </div>
+                </div>
+              </div>
+              <form onsubmit="window.app.saveProfile(event)" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-5 bg-white/30 dark:bg-black/10 p-6 rounded-3xl border border-white/50 dark:border-white/5 shadow-inner">
+                  <div class="flex justify-between border-b border-slate-200 dark:border-white/10 pb-3 mb-2">
+                    <h4 class="font-bold text-slate-900 dark:text-white">Personal Information</h4>
+                    ${this.ui.Button('Save', '', 'primary', '', 'py-1 px-4 text-xs')}
+                  </div>
+                  ${this.ui.Input('profile-name', 'Full Name', 'text', u.name, '', true)}
+                  ${this.ui.Input('profile-email', 'Email Address', 'email', u.email, '', true)}
+                  ${this.ui.Input('profile-phone', 'Phone Number', 'text', u.phone, '', true)}
+                </div>
+                <div class="space-y-5 bg-white/30 dark:bg-black/10 p-6 rounded-3xl border border-white/50 dark:border-white/5 shadow-inner">
+                  <h4 class="font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/10 pb-3 mb-2">Job Details (Read Only)</h4>
+                  ${this.ui.Input('j-dep', 'Department', 'text', u.department, '', false, true)}
+                  ${this.ui.Input('j-join', 'Date of Joining', 'text', u.joinDate, '', false, true)}
+                  ${this.ui.Input('j-sal', 'Base Salary', 'text', '$' + u.salary.toLocaleString() + '/yr', '', false, true)}
+                </div>
+              </form>
+              <div class="mt-8 bg-white/30 dark:bg-black/10 p-6 rounded-3xl border border-white/50 dark:border-white/5 shadow-inner">
+                <h4 class="font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/10 pb-3 mb-5 flex items-center gap-2">
+                   <i data-lucide="file-text" class="w-5 h-5 text-indigo-500"></i> Essential Documents
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">${docs}</div>
+              </div>
+            `, 'relative overflow-visible', 'px-8 pb-8 pt-6')}
+          </div>
+        `;
+      },
+
+      renderPayroll() {
+        const isAdmin = this.state.currentUser.role === 'admin';
+        const dataList = isAdmin ? this.state.users : [{...this.state.currentUser, month: 'July 2026'}, {...this.state.currentUser, month: 'June 2026'}];
+        
+        const rows = dataList.map((row, i) => `
+          <tr class="bg-white/40 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 transition-colors rounded-2xl group">
+            ${isAdmin ? `<td class="px-6 py-4 font-bold text-slate-900 dark:text-white flex items-center gap-3 rounded-l-2xl">${this.ui.Avatar(row.avatar, 'sm')}${row.name}</td>` : `<td class="px-6 py-4 font-bold text-slate-900 dark:text-white rounded-l-2xl">${row.month}</td>`}
+            <td class="px-6 py-4 font-medium text-slate-600 dark:text-slate-400">$${(row.salary).toLocaleString()}</td>
+            <td class="px-6 py-4 font-bold text-indigo-600 dark:text-indigo-400 text-base">$${Math.round(row.salary / 12 * 0.75).toLocaleString()}</td>
+            <td class="px-6 py-4">${this.ui.Badge('Paid', 'success')}</td>
+            <td class="px-6 py-4 rounded-r-2xl">${this.ui.Button('PDF', 'download', 'ghost', '', 'text-xs !p-2')}</td>
+          </tr>
+        `).join('');
+
+        let adminWidgets = '';
+        if (isAdmin) {
+          adminWidgets = `
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+               ${this.ui.GlassCard(`
+                 <div><p class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Monthly Run</p><p class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">$89,450</p></div>
+                 <div class="p-4 bg-indigo-100 dark:bg-indigo-500/20 rounded-2xl text-indigo-500"><i data-lucide="file-text" class="w-8 h-8"></i></div>
+               `, 'flex justify-between items-center', 'p-8')}
+               
+               ${this.ui.GlassCard(`
+                 <div class="relative w-24 h-24 rounded-full flex items-center justify-center shadow-lg" style="background: conic-gradient(from 0deg, #6366f1 0% 45%, #8b5cf6 45% 75%, #10b981 75% 100%)">
+                   <div class="w-16 h-16 bg-slate-50 dark:bg-slate-900 rounded-full shadow-inner border border-white/20"></div>
+                 </div>
+                 <div>
+                   <p class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Breakdown</p>
+                   <ul class="space-y-1 text-sm font-medium text-slate-600 dark:text-slate-300">
+                      <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-500"></span> Base</li>
+                      <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-500"></span> Taxes</li>
+                      <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Bonus</li>
+                   </ul>
+                 </div>
+               `, 'flex gap-6 items-center', 'p-6')}
+               
+               ${this.ui.GlassCard(`
+                 <div class="absolute top-[-20%] right-[-10%] w-32 h-32 bg-white/20 rounded-full blur-2xl pointer-events-none"></div>
+                 <div><p class="text-indigo-100 font-bold uppercase tracking-widest text-sm mb-2">Next Pay Date</p><p class="text-4xl font-bold text-white tracking-tight">Aug 31</p></div>
+                 ${this.ui.Button('Process Payroll', '', 'secondary', '', 'w-full text-sm py-3 mt-4 border-none bg-white/20 hover:bg-white/30 text-white shadow-none')}
+               `, 'bg-gradient-to-br from-indigo-500 to-indigo-600 border-none shadow-[0_8px_30px_rgba(99,102,241,0.4)] relative overflow-hidden flex flex-col justify-between', 'p-8')}
+            </div>
+          `;
+        }
+
+        return `
+          <div class="space-y-8 animate-fade-in-up">
+            <div class="mb-8">
+              <h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Payroll System</h2>
+              <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium">${isAdmin ? 'Manage employee compensations and review distribution.' : 'View your recent payslips and salary details.'}</p>
+            </div>
+            ${adminWidgets}
+            ${this.ui.GlassCard(`
+              <div class="flex justify-between items-center p-6 border-b border-slate-200 dark:border-white/10">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">${isAdmin ? 'Employee Salary Overview' : 'Recent Payslips'}</h3>
+                ${!isAdmin ? this.ui.Button('Download All', 'download', 'secondary') : ''}
+              </div>
+              <div class="overflow-x-auto p-4">
+                <table class="w-full text-sm text-left border-separate border-spacing-y-2">
+                  <thead class="text-xs text-slate-400 uppercase font-bold tracking-wider px-4">
+                    <tr>
+                      ${isAdmin ? '<th class="px-6 py-3">Employee</th>' : '<th class="px-6 py-3">Month</th>'}
+                      <th class="px-6 py-3">Base Salary (Yr)</th><th class="px-6 py-3">Net Pay (Mo)</th><th class="px-6 py-3">Status</th><th class="px-6 py-3">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>${rows}</tbody>
+                </table>
+              </div>
+            `, 'p-0')}
+          </div>
+        `;
+      },
+
+      renderTeam() {
+        const cards = this.state.users.map(u => this.ui.GlassCard(`
+          ${this.ui.Avatar(u.avatar, 'lg')}
+          <div class="flex-1">
+            <h4 class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">${u.name}</h4>
+            <p class="text-sm font-medium text-slate-500 mb-3">${u.designation}</p>
+            <div class="flex flex-wrap gap-2">
+              ${this.ui.Badge(u.department)}
+              ${this.ui.Badge(u.role, u.role === 'admin' ? 'info' : 'default')}
+            </div>
+          </div>
+        `, 'flex items-center gap-5', 'p-6', true)).join('');
+
+        return `
+          <div class="space-y-8 animate-fade-in-up">
+             <div class="flex justify-between items-end mb-8">
+              <div>
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Team Directory</h2>
+                <p class="text-slate-500 mt-2 font-medium">Manage and view all members of the organization.</p>
+              </div>
+              ${this.ui.Button('Add Member', 'users', 'primary', '', 'py-3')}
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">${cards}</div>
+          </div>
+        `;
+      },
+
+      render() {
+        const authView = document.getElementById('auth-view');
+        const appLayout = document.getElementById('app-layout');
+        const routeContainer = document.getElementById('route-container');
+
+        if (!this.state.currentUser) {
+          authView.classList.remove('hidden-view');
+          appLayout.classList.add('hidden-view');
+          this.renderAuth();
+        } else {
+          authView.classList.add('hidden-view');
+          appLayout.classList.remove('hidden-view');
+          
+          this.renderSidebar();
+          this.renderTopbar();
+          
+          let contentHTML = '';
+          switch(this.state.currentRoute) {
+            case 'dashboard': contentHTML = this.renderDashboard(); break;
+            case 'attendance': contentHTML = this.renderAttendance(); break;
+            case 'leaves': contentHTML = this.renderLeaves(); break;
+            case 'profile': contentHTML = this.renderProfile(); break;
+            case 'team': contentHTML = this.renderTeam(); break;
+            case 'payroll': contentHTML = this.renderPayroll(); break;
+          }
+          routeContainer.innerHTML = contentHTML;
+        }
+        lucide.createIcons();
+      },
+
+      init() {
+        if (this.state.theme === 'dark') document.documentElement.classList.add('dark');
+        this.render();
+      }
+    };
+
+    // Boot App
+    document.addEventListener('DOMContentLoaded', () => {
+      window.app.init();
+    });
+  </script>
+</body>
+</html>
