@@ -154,7 +154,7 @@
   <div id="modal-container" class="relative z-[110]"></div>
 
   <script>
-    // --- MOCK DATABASE ---
+    // --- MOCK DATABASE (Salaries in INR / Rupees) ---
     const INITIAL_USERS = [
       { 
         id: 'u1', 
@@ -166,9 +166,9 @@
         department: 'Management', 
         designation: 'HR Director', 
         joinDate: '2023-01-15', 
-        salary: 125000, 
-        phone: '+1 (555) 123-4567', 
-        address: '742 Evergreen Terrace, Springfield, OR', 
+        salary: 1850000, 
+        phone: '+91 98765 43210', 
+        address: 'Plot 42, HSR Layout, Sector 2, Bengaluru, Karnataka 560102', 
         avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80' 
       },
       { 
@@ -181,9 +181,9 @@
         department: 'Engineering', 
         designation: 'Senior Frontend Engineer', 
         joinDate: '2023-03-10', 
-        salary: 110000, 
-        phone: '+1 (555) 234-5678', 
-        address: '456 Innovation Way, San Jose, CA', 
+        salary: 1450000, 
+        phone: '+91 98234 56789', 
+        address: 'Apt 501, Indiranagar 100ft Road, Bengaluru, Karnataka 560038', 
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80' 
       },
       { 
@@ -196,9 +196,9 @@
         department: 'Design', 
         designation: 'Product Designer', 
         joinDate: '2023-06-22', 
-        salary: 95000, 
-        phone: '+1 (555) 345-6789', 
-        address: '890 Creative Studio Rd, Austin, TX', 
+        salary: 1150000, 
+        phone: '+91 98345 67890', 
+        address: 'Flat 204, Jubilee Hills Road No. 36, Hyderabad, Telangana 500033', 
         avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80' 
       },
       { 
@@ -211,9 +211,9 @@
         department: 'Sales', 
         designation: 'Account Executive', 
         joinDate: '2024-01-05', 
-        salary: 85000, 
-        phone: '+1 (555) 456-7890', 
-        address: '120 Market Street, Denver, CO', 
+        salary: 950000, 
+        phone: '+91 98456 78901', 
+        address: 'Tower 4, DLF Cyber City, Phase 2, Gurugram, Haryana 122002', 
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' 
       },
       { 
@@ -226,17 +226,17 @@
         department: 'Marketing', 
         designation: 'Growth Manager', 
         joinDate: '2023-11-15', 
-        salary: 92000, 
-        phone: '+1 (555) 567-8901', 
-        address: '312 Skyline Blvd, Seattle, WA', 
+        salary: 1050000, 
+        phone: '+91 98567 89012', 
+        address: 'B-302, Hiranandani Gardens, Powai, Mumbai, Maharashtra 400076', 
         avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&auto=format&fit=crop&q=80' 
       },
     ];
 
     // PDF 3.5: Leave types are Paid Leave, Sick Leave, Unpaid Leave
     const INITIAL_LEAVES = [
-      { id: 'l1', userId: 'u2', type: 'Paid Leave', startDate: '2026-08-25', endDate: '2026-08-28', status: 'Approved', days: 4, remarks: 'Family vacation to coast', adminComment: 'Approved! Have a great trip Marcus.' },
-      { id: 'l2', userId: 'u3', type: 'Sick Leave', startDate: '2026-08-22', endDate: '2026-08-22', status: 'Pending', days: 1, remarks: 'Severe migraine, taking the day off to rest.', adminComment: '' },
+      { id: 'l1', userId: 'u2', type: 'Paid Leave', startDate: '2026-08-25', endDate: '2026-08-28', status: 'Approved', days: 4, remarks: 'Family vacation to Goa', adminComment: 'Approved! Have a great vacation Marcus.' },
+      { id: 'l2', userId: 'u3', type: 'Sick Leave', startDate: '2026-08-22', endDate: '2026-08-22', status: 'Pending', days: 1, remarks: 'Severe migraine, resting today.', adminComment: '' },
       { id: 'l3', userId: 'u5', type: 'Unpaid Leave', startDate: '2026-09-01', endDate: '2026-09-03', status: 'Pending', days: 3, remarks: 'Personal home relocation.', adminComment: '' },
       { id: 'l4', userId: 'u4', type: 'Paid Leave', startDate: '2026-08-10', endDate: '2026-08-12', status: 'Rejected', days: 3, remarks: 'Client visit conflict', adminComment: 'Cannot approve due to critical Q3 Sales Demo on the 11th.' }
     ];
@@ -276,16 +276,27 @@
       { id: 'a53', userId: 'u5', date: '2026-08-17', checkIn: '08:50 AM', checkOut: '05:05 PM', status: 'Present' },
     ];
 
+    // Day-to-Day Expense Mock Database in INR / ₹
+    const INITIAL_EXPENSES = [
+      { id: 'exp-1', userId: 'u2', date: '2026-08-20', category: 'Travel & Commute', amount: 1450, merchant: 'Uber Business', description: 'Cab to client onsite meeting at Whitefield', receipt: 'uber_receipt_200826.pdf', status: 'Approved', adminComment: 'Approved as per company travel policy.' },
+      { id: 'exp-2', userId: 'u2', date: '2026-08-21', category: 'Meals & Dining', amount: 2850, merchant: 'Taj Vivanta Dining', description: 'Client lunch meeting with FinTech stakeholders', receipt: 'lunch_bill_210826.jpg', status: 'Pending', adminComment: '' },
+      { id: 'exp-3', userId: 'u3', date: '2026-08-19', category: 'Software & Tools', amount: 3600, merchant: 'Figma Pro License', description: 'UI prototyping plugin bundle for Design sprint', receipt: 'figma_invoice_aug.pdf', status: 'Reimbursed', adminComment: 'Reimbursed in Aug cycle.' },
+      { id: 'exp-4', userId: 'u4', date: '2026-08-18', category: 'Hotel & Lodging', amount: 6500, merchant: 'Marriott Courtyard', description: '1 night stay for regional sales conference', receipt: 'hotel_folio_180826.pdf', status: 'Approved', adminComment: 'Approved within executive limits.' },
+      { id: 'exp-5', userId: 'u5', date: '2026-08-21', category: 'Internet & Phone', amount: 1499, merchant: 'Airtel Fiber Broadband', description: 'Monthly WFH high-speed fiber internet reimbursement', receipt: 'airtel_bill_aug.pdf', status: 'Pending', adminComment: '' },
+      { id: 'exp-6', userId: 'u2', date: '2026-08-15', category: 'Office Supplies', amount: 850, merchant: 'Staples Stationery', description: 'Design sketchbooks and markers for workshop', receipt: 'stationery_bill.jpg', status: 'Rejected', adminComment: 'Please order supplies through central office inventory.' }
+    ];
+
     const INITIAL_PAYROLL_RUNS = [
-      { id: 'pr-0826', month: 'August 2026', processedDate: '2026-08-22', status: 'Draft', totalAmount: 42250 },
-      { id: 'pr-0726', month: 'July 2026', processedDate: '2026-07-31', status: 'Paid', totalAmount: 42250 },
-      { id: 'pr-0626', month: 'June 2026', processedDate: '2026-06-30', status: 'Paid', totalAmount: 42250 },
+      { id: 'pr-0826', month: 'August 2026', processedDate: '2026-08-22', status: 'Draft', totalAmount: 403125 },
+      { id: 'pr-0726', month: 'July 2026', processedDate: '2026-07-31', status: 'Paid', totalAmount: 403125 },
+      { id: 'pr-0626', month: 'June 2026', processedDate: '2026-06-30', status: 'Paid', totalAmount: 403125 },
     ];
 
     const INITIAL_NOTIFICATIONS = [
       { id: 'n1', title: 'Leave Request Reviewed', message: 'Your Paid Leave request for Aug 25-28 has been Approved.', time: '1 hour ago', read: false, icon: 'calendar-check', type: 'success' },
-      { id: 'n2', title: 'Salary Credited', message: 'Salary for July 2026 has been deposited into your linked account.', time: '2 days ago', read: false, icon: 'file-text', type: 'info' },
-      { id: 'n3', title: 'System Announcement', message: 'Office will be closed on Labor Day (Sep 4).', time: '3 days ago', read: true, icon: 'bell', type: 'default' },
+      { id: 'n2', title: 'Salary Credited', message: 'Salary for July 2026 has been deposited into your linked HDFC account.', time: '2 days ago', read: false, icon: 'file-text', type: 'info' },
+      { id: 'n3', title: 'Expense Claim Approved', message: 'Travel expense claim ₹1,450 (Uber Business) has been approved for reimbursement.', time: '2 days ago', read: false, icon: 'receipt', type: 'success' },
+      { id: 'n4', title: 'System Announcement', message: 'Office will remain closed on Independence Day (Aug 15).', time: '5 days ago', read: true, icon: 'bell', type: 'default' },
     ];
 
     window.app = {
@@ -294,6 +305,7 @@
         currentUser: null,
         leaves: JSON.parse(localStorage.getItem('df_leaves')) || INITIAL_LEAVES,
         attendance: JSON.parse(localStorage.getItem('df_attendance')) || INITIAL_ATTENDANCE,
+        expenses: JSON.parse(localStorage.getItem('df_expenses')) || INITIAL_EXPENSES,
         payrollRuns: INITIAL_PAYROLL_RUNS,
         notificationsFeed: INITIAL_NOTIFICATIONS,
         toastNotifications: [],
@@ -314,9 +326,17 @@
         attendanceDateFilter: '2026-08-22',
         teamSearchQuery: '',
         teamDeptFilter: 'ALL',
+        expenseFilterStatus: 'ALL',
+        expenseFilterCategory: 'ALL',
+        expenseSearchQuery: '',
         
         // System Clock Simulation
         currentDate: new Date('2026-08-22T09:33:11')
+      },
+
+      // Currency Formatter Helper (INR / Rupees ₹)
+      formatINR(amount) {
+        return '₹' + Number(amount || 0).toLocaleString('en-IN');
       },
 
       // Save state changes to localStorage
@@ -324,6 +344,7 @@
         localStorage.setItem('df_users', JSON.stringify(this.state.users));
         localStorage.setItem('df_leaves', JSON.stringify(this.state.leaves));
         localStorage.setItem('df_attendance', JSON.stringify(this.state.attendance));
+        localStorage.setItem('df_expenses', JSON.stringify(this.state.expenses));
       },
 
       // Toast Notification System
@@ -477,7 +498,7 @@
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         this.state.generatedVerifyCode = code;
 
-        // Store pending user
+        // Store pending user in INR / ₹
         this.state.signupPendingUser = {
           id: 'u' + (this.state.users.length + 1),
           employeeId: empId || `DF-${String(this.state.users.length + 1).padStart(3, '0')}`,
@@ -488,9 +509,9 @@
           department: role === 'admin' ? 'Management' : 'Engineering',
           designation: role === 'admin' ? 'HR Specialist' : 'Software Engineer',
           joinDate: this.state.currentDate.toISOString().split('T')[0],
-          salary: role === 'admin' ? 95000 : 85000,
-          phone: '+1 (555) 000-0000',
-          address: 'Dayflow Corporate HQ, 100 Flow Street',
+          salary: role === 'admin' ? 1200000 : 950000,
+          phone: '+91 98000 00000',
+          address: 'Dayflow Tech Park, Outer Ring Road, Bengaluru, KA',
           avatar: `https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80`
         };
 
@@ -774,7 +795,6 @@
           leave.adminComment = comment;
           this.persist();
 
-          const targetUser = this.state.users.find(u => u.id === leave.userId);
           this.addNotificationFeed(
             `Leave ${status}`, 
             `Your ${leave.type} (${leave.startDate}) was marked ${status}.${comment ? ' Comment: ' + comment : ''}`,
@@ -787,6 +807,257 @@
 
         this.closeModal();
         this.render();
+      },
+
+      // ==========================================
+      // DAY-TO-DAY EXPENSE MANAGEMENT METHODS
+      // ==========================================
+      submitExpense(event) {
+        event.preventDefault();
+        const user = this.state.currentUser;
+        const date = document.getElementById('exp-date').value;
+        const category = document.getElementById('exp-cat').value;
+        const merchant = document.getElementById('exp-merchant').value.trim();
+        const amount = parseFloat(document.getElementById('exp-amount').value);
+        const description = document.getElementById('exp-desc').value.trim();
+        const receiptInput = document.getElementById('exp-receipt').value.trim() || 'receipt_invoice_' + Date.now().toString().slice(-4) + '.pdf';
+
+        if (isNaN(amount) || amount <= 0) {
+          this.notify('Please provide a valid expense amount in ₹.', 'error', 'Invalid Amount');
+          return;
+        }
+
+        const newExpense = {
+          id: `exp-${Date.now()}`,
+          userId: user.id,
+          date,
+          category,
+          amount,
+          merchant,
+          description: description || `${category} expense at ${merchant}`,
+          receipt: receiptInput,
+          status: 'Pending',
+          adminComment: ''
+        };
+
+        this.state.expenses.unshift(newExpense);
+        this.persist();
+        this.addNotificationFeed('Expense Claim Submitted', `${user.name} submitted a claim of ${this.formatINR(amount)} for ${merchant}.`, 'info', 'receipt');
+        this.notify(`Expense claim of ${this.formatINR(amount)} submitted for approval.`, 'success', 'Claim Filed');
+        this.closeModal();
+        this.render();
+      },
+
+      openExpenseReviewModal(expenseId, proposedStatus) {
+        const exp = this.state.expenses.find(e => e.id === expenseId);
+        if (!exp) return;
+        const user = this.state.users.find(u => u.id === exp.userId) || { name: 'Unknown' };
+
+        const modalHTML = `
+          <div id="active-modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-fade-in-up">
+            ${this.ui.GlassCard(`
+              <div class="flex justify-between items-center pb-4 border-b border-white/20 dark:border-white/10 mb-6">
+                <div>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white">Audit Expense Claim</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Submitted by: <strong class="text-indigo-500">${user.name}</strong> • ${exp.category}</p>
+                </div>
+                <button onclick="window.app.closeModal()" class="p-2 text-slate-400 hover:text-white rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/5 space-y-2.5 mb-6 text-xs">
+                <div class="flex justify-between"><span class="text-slate-500">Claim Amount:</span> <span class="font-extrabold text-base text-slate-900 dark:text-white">${this.formatINR(exp.amount)}</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Merchant / Vendor:</span> <span class="font-bold text-slate-800 dark:text-slate-200">${exp.merchant}</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Expense Date:</span> <span class="font-semibold">${exp.date}</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Receipt Attachment:</span> <span class="font-mono text-indigo-500 cursor-pointer hover:underline" onclick="window.app.viewReceiptModal('${exp.id}')">${exp.receipt} ↗</span></div>
+                <div class="pt-1 border-t border-white/10 text-slate-600 dark:text-slate-300">
+                  <span class="text-slate-400 block mb-0.5">Purpose / Description:</span>
+                  <p class="italic">"${exp.description}"</p>
+                </div>
+              </div>
+
+              <form onsubmit="window.app.confirmExpenseReview(event, '${exp.id}')" class="space-y-4">
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Audit Decision</label>
+                  <div class="grid grid-cols-2 gap-3">
+                    <label class="flex items-center gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all ${proposedStatus === 'Approved' ? 'border-emerald-500 bg-emerald-500/10 text-emerald-500 font-bold' : 'border-white/40 dark:border-white/10 hover:bg-white/30'}">
+                      <input type="radio" name="exp-decision" value="Approved" ${proposedStatus === 'Approved' ? 'checked' : ''} class="text-emerald-600 focus:ring-emerald-500">
+                      <span>Approve Claim</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all ${proposedStatus === 'Rejected' ? 'border-rose-500 bg-rose-500/10 text-rose-500 font-bold' : 'border-white/40 dark:border-white/10 hover:bg-white/30'}">
+                      <input type="radio" name="exp-decision" value="Rejected" ${proposedStatus === 'Rejected' ? 'checked' : ''} class="text-rose-600 focus:ring-rose-500">
+                      <span>Reject Claim</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Audit Note / Comment</label>
+                  <textarea id="exp-audit-comment" rows="2" placeholder="Add remarks or justification regarding this claim..." class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-xs">${exp.adminComment || ''}</textarea>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-white/10">
+                  ${this.ui.Button('Cancel', '', 'secondary', 'window.app.closeModal()')}
+                  ${this.ui.Button('Confirm Decision', 'check', 'primary', '', '', 'submit')}
+                </div>
+              </form>
+            `, 'w-full max-w-md shadow-2xl relative', 'p-6')}
+          </div>
+        `;
+        document.getElementById('modal-container').innerHTML = modalHTML;
+        lucide.createIcons();
+      },
+
+      confirmExpenseReview(e, expenseId) {
+        e.preventDefault();
+        const status = document.querySelector('input[name="exp-decision"]:checked').value;
+        const comment = document.getElementById('exp-audit-comment').value.trim();
+
+        const exp = this.state.expenses.find(item => item.id === expenseId);
+        if (exp) {
+          exp.status = status;
+          exp.adminComment = comment;
+          this.persist();
+
+          this.addNotificationFeed(
+            `Expense ${status}`,
+            `Your ${this.formatINR(exp.amount)} claim for ${exp.merchant} was ${status.toLowerCase()}.${comment ? ' Note: ' + comment : ''}`,
+            status === 'Approved' ? 'success' : 'error',
+            status === 'Approved' ? 'receipt' : 'x-circle'
+          );
+
+          this.notify(`Expense claim marked ${status}.`, 'success', 'Audit Saved');
+        }
+        this.closeModal();
+        this.render();
+      },
+
+      markExpenseReimbursed(expenseId) {
+        const exp = this.state.expenses.find(item => item.id === expenseId);
+        if (exp) {
+          exp.status = 'Reimbursed';
+          this.persist();
+          this.addNotificationFeed('Expense Reimbursed', `Reimbursement of ${this.formatINR(exp.amount)} for ${exp.merchant} has been deposited.`, 'success', 'check-circle-2');
+          this.notify(`Claim for ${exp.merchant} (${this.formatINR(exp.amount)}) marked as Reimbursed.`, 'success', 'Disbursed');
+          this.render();
+        }
+      },
+
+      bulkReimburseExpenses() {
+        const approvedList = this.state.expenses.filter(e => e.status === 'Approved');
+        if (!approvedList.length) {
+          this.notify('No approved expense claims waiting for disbursement.', 'info', 'Reimbursements');
+          return;
+        }
+
+        const total = approvedList.reduce((acc, c) => acc + c.amount, 0);
+        approvedList.forEach(e => e.status = 'Reimbursed');
+        this.persist();
+
+        this.addNotificationFeed('Bulk Reimbursement Completed', `Total ${this.formatINR(total)} disbursed across ${approvedList.length} approved claims.`, 'success', 'wallet');
+        this.notify(`Disbursed ${this.formatINR(total)} across ${approvedList.length} expense claims!`, 'success', 'Reimbursement Processed');
+        this.render();
+      },
+
+      viewReceiptModal(expenseId) {
+        const exp = this.state.expenses.find(item => item.id === expenseId);
+        if (!exp) return;
+        const user = this.state.users.find(u => u.id === exp.userId) || { name: 'Unknown' };
+
+        const modalHTML = `
+          <div id="active-modal" class="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-fade-in-up">
+            ${this.ui.GlassCard(`
+              <div class="flex justify-between items-center pb-4 border-b border-white/20 dark:border-white/10 mb-6">
+                <div>
+                  <h3 class="text-lg font-bold text-slate-900 dark:text-white">Receipt Attachment</h3>
+                  <p class="text-xs text-slate-500">${exp.merchant} • ${exp.date}</p>
+                </div>
+                <button onclick="window.app.closeModal()" class="p-2 text-slate-400 hover:text-white rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
+              </div>
+
+              <div class="p-6 rounded-2xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-white/10 text-center space-y-4">
+                <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center mx-auto">
+                  <i data-lucide="file-check" class="w-8 h-8"></i>
+                </div>
+                <div>
+                  <p class="text-sm font-bold text-slate-900 dark:text-white font-mono">${exp.receipt}</p>
+                  <p class="text-xs text-slate-500 mt-1">Verified Digital Voucher • ${this.formatINR(exp.amount)}</p>
+                </div>
+                <div class="p-4 rounded-xl bg-white/60 dark:bg-white/5 text-xs text-left space-y-1 text-slate-600 dark:text-slate-300 font-mono">
+                  <div class="flex justify-between"><span>Merchant:</span> <strong>${exp.merchant}</strong></div>
+                  <div class="flex justify-between"><span>Claimant:</span> <strong>${user.name}</strong></div>
+                  <div class="flex justify-between"><span>Category:</span> <strong>${exp.category}</strong></div>
+                  <div class="flex justify-between"><span>Txn Amount:</span> <strong class="text-emerald-500">${this.formatINR(exp.amount)}</strong></div>
+                </div>
+              </div>
+
+              <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-white/10">
+                <button onclick="window.app.notify('Downloading ${exp.receipt}...', 'info')" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/10 text-xs font-semibold hover:bg-slate-200 dark:hover:bg-white/20 transition-all">Download Copy</button>
+                <button onclick="window.app.closeModal()" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-500 transition-all">Close</button>
+              </div>
+            `, 'w-full max-w-sm shadow-2xl relative', 'p-6')}
+          </div>
+        `;
+        document.getElementById('modal-container').innerHTML = modalHTML;
+        lucide.createIcons();
+      },
+
+      openSubmitExpenseModal() {
+        const todayStr = this.state.currentDate.toISOString().split('T')[0];
+        const modalHTML = `
+          <div id="active-modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-fade-in-up">
+            ${this.ui.GlassCard(`
+              <div class="flex justify-between items-center pb-4 border-b border-white/20 dark:border-white/10 mb-6">
+                <div>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white">Submit Day-to-Day Expense Claim</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Upload business receipts for quick management reimbursement</p>
+                </div>
+                <button onclick="window.app.closeModal()" class="p-2 text-slate-400 hover:text-white rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
+              </div>
+
+              <form onsubmit="window.app.submitExpense(event)" class="space-y-4 max-h-[75vh] overflow-y-auto pr-1">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  ${this.ui.Input('exp-date', 'Expense Date', 'date', todayStr, '', true)}
+                  <div class="space-y-1.5 w-full">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">Expense Category</label>
+                    <select id="exp-cat" class="w-full px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-sm">
+                      <option value="Travel & Commute" class="bg-white dark:bg-slate-800">Travel & Commute (Cab / Metro / Fuel)</option>
+                      <option value="Meals & Dining" class="bg-white dark:bg-slate-800">Meals & Client Dining</option>
+                      <option value="Office Supplies" class="bg-white dark:bg-slate-800">Office Supplies & Stationery</option>
+                      <option value="Hotel & Lodging" class="bg-white dark:bg-slate-800">Hotel & Lodging</option>
+                      <option value="Internet & Phone" class="bg-white dark:bg-slate-800">Internet & Phone Reimbursement</option>
+                      <option value="Software & Tools" class="bg-white dark:bg-slate-800">Software & Professional Tools</option>
+                      <option value="Miscellaneous" class="bg-white dark:bg-slate-800">Miscellaneous Business Out-of-pocket</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  ${this.ui.Input('exp-merchant', 'Merchant / Vendor Name', 'text', '', 'e.g. Uber / Taj Vivanta / Airtel', true)}
+                  ${this.ui.Input('exp-amount', 'Claim Amount (INR ₹)', 'number', '', 'e.g. 1500', true)}
+                </div>
+
+                ${this.ui.Input('exp-desc', 'Business Purpose / Description', 'text', '', 'e.g. Client presentation visit to Electronic City', true)}
+
+                <div class="space-y-1.5">
+                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">Receipt / Invoice Voucher (PDF / JPG)</label>
+                  <div class="flex items-center gap-3">
+                    <input id="exp-receipt" type="text" placeholder="bill_receipt_scan.pdf" class="flex-1 px-4 py-3 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/10 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                    <button type="button" onclick="document.getElementById('exp-receipt').value = 'receipt_claim_' + Date.now().toString().slice(-4) + '.pdf'; window.app.notify('Mock receipt file attached!', 'info');" class="px-4 py-3 rounded-2xl bg-slate-100 dark:bg-white/10 text-xs font-semibold hover:bg-slate-200 dark:hover:bg-white/20 transition-all flex items-center gap-1.5">
+                      <i data-lucide="paperclip" class="w-3.5 h-3.5"></i> Attach File
+                    </button>
+                  </div>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-white/10">
+                  ${this.ui.Button('Cancel', '', 'secondary', 'window.app.closeModal()')}
+                  ${this.ui.Button('Submit Expense Claim', 'send', 'primary', '', '', 'submit')}
+                </div>
+              </form>
+            `, 'w-full max-w-lg shadow-2xl relative', 'p-6 sm:p-8')}
+          </div>
+        `;
+        document.getElementById('modal-container').innerHTML = modalHTML;
+        lucide.createIcons();
       },
 
       // ==========================================
@@ -910,7 +1181,7 @@
                       <option value="admin" ${user.role==='admin'?'selected':''} class="bg-white dark:bg-slate-800">HR Admin</option>
                     </select>
                   </div>
-                  ${this.ui.Input('adm-salary', 'Base Salary (Annual USD)', 'number', user.salary, '', true)}
+                  ${this.ui.Input('adm-salary', 'Base CTC Salary (Annual INR ₹)', 'number', user.salary, '', true)}
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -936,7 +1207,7 @@
         e.preventDefault();
         const salary = parseFloat(document.getElementById('adm-salary').value);
         if (isNaN(salary) || salary <= 0) {
-          this.notify('Please enter a valid base salary above 0.', 'error', 'Invalid Salary');
+          this.notify('Please enter a valid base salary above ₹0.', 'error', 'Invalid Salary');
           return;
         }
 
@@ -975,7 +1246,7 @@
               <form onsubmit="window.app.createNewMember(event)" class="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   ${this.ui.Input('new-empid', 'Employee ID', 'text', `DF-${String(this.state.users.length + 1).padStart(3, '0')}`, '', true)}
-                  ${this.ui.Input('new-name', 'Full Name', 'text', '', 'e.g. Johnathan Cross', true)}
+                  ${this.ui.Input('new-name', 'Full Name', 'text', '', 'e.g. Rahul Sharma', true)}
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -990,7 +1261,7 @@
                       ${['Engineering', 'Design', 'Sales', 'Marketing', 'Management', 'HR'].map(d => `<option value="${d}" class="bg-white dark:bg-slate-800">${d}</option>`).join('')}
                     </select>
                   </div>
-                  ${this.ui.Input('new-desig', 'Designation', 'text', '', 'e.g. Product Specialist', true)}
+                  ${this.ui.Input('new-desig', 'Designation', 'text', '', 'e.g. Full Stack Developer', true)}
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1001,15 +1272,15 @@
                       <option value="admin" class="bg-white dark:bg-slate-800">HR Admin</option>
                     </select>
                   </div>
-                  ${this.ui.Input('new-salary', 'Base Salary (Annual USD)', 'number', '90000', '', true)}
+                  ${this.ui.Input('new-salary', 'Annual CTC Salary (INR ₹)', 'number', '1000000', '', true)}
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  ${this.ui.Input('new-phone', 'Phone Number', 'text', '+1 (555) 789-0123', '', true)}
+                  ${this.ui.Input('new-phone', 'Phone Number', 'text', '+91 98111 22233', '', true)}
                   ${this.ui.Input('new-join', 'Date of Joining', 'date', this.state.currentDate.toISOString().split('T')[0], '', true)}
                 </div>
 
-                ${this.ui.Input('new-address', 'Residential Address', 'text', '100 Silicon Valley Way, San Jose, CA', '', true)}
+                ${this.ui.Input('new-address', 'Residential Address', 'text', 'Prestige Tech Cloud, Devanahalli, Bengaluru, KA', '', true)}
 
                 <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-white/10">
                   ${this.ui.Button('Cancel', '', 'secondary', 'window.app.closeModal()')}
@@ -1035,7 +1306,7 @@
         }
 
         if (isNaN(salary) || salary <= 0) {
-          this.notify('Please provide a positive salary value.', 'error', 'Error');
+          this.notify('Please provide a positive salary value in ₹.', 'error', 'Error');
           return;
         }
 
@@ -1064,7 +1335,7 @@
       },
 
       // ==========================================
-      // PAYROLL MANAGEMENT (PDF 3.6)
+      // PAYROLL MANAGEMENT (PDF 3.6 - In Rupees ₹)
       // ==========================================
       openEditSalaryModal(userId) {
         const user = this.state.users.find(u => u.id === userId);
@@ -1075,20 +1346,20 @@
             ${this.ui.GlassCard(`
               <div class="flex justify-between items-center pb-4 border-b border-white/20 dark:border-white/10 mb-6">
                 <div>
-                  <h3 class="text-xl font-bold text-slate-900 dark:text-white">Adjust Salary Structure</h3>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white">Adjust Salary Structure (INR ₹)</h3>
                   <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">${user.name} (${user.employeeId}) • ${user.designation}</p>
                 </div>
                 <button onclick="window.app.closeModal()" class="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
               </div>
 
               <form onsubmit="window.app.saveSalaryStructure(event, '${user.id}')" class="space-y-4">
-                ${this.ui.Input('sal-base', 'Annual Base Salary (USD)', 'number', user.salary, '100000', true)}
+                ${this.ui.Input('sal-base', 'Annual CTC Salary (INR ₹)', 'number', user.salary, '1200000', true)}
                 
                 <div class="p-4 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/5 space-y-2 text-xs">
-                  <p class="font-bold text-slate-700 dark:text-slate-300">Estimated Monthly Computation:</p>
-                  <div class="flex justify-between text-slate-500"><span>Gross Monthly:</span> <span id="est-gross" class="font-semibold text-slate-900 dark:text-white">$${Math.round(user.salary / 12).toLocaleString()}</span></div>
-                  <div class="flex justify-between text-slate-500"><span>Statutory Deductions (Est 25%):</span> <span id="est-ded" class="font-semibold text-rose-500">-$${Math.round((user.salary / 12) * 0.25).toLocaleString()}</span></div>
-                  <div class="flex justify-between text-slate-700 dark:text-slate-300 font-bold pt-2 border-t border-white/10"><span>Net Take-Home:</span> <span id="est-net" class="text-emerald-500 text-sm">$${Math.round((user.salary / 12) * 0.75).toLocaleString()}</span></div>
+                  <p class="font-bold text-slate-700 dark:text-slate-300">Estimated Monthly Computation (INR):</p>
+                  <div class="flex justify-between text-slate-500"><span>Gross Monthly:</span> <span id="est-gross" class="font-semibold text-slate-900 dark:text-white">₹${Math.round(user.salary / 12).toLocaleString('en-IN')}</span></div>
+                  <div class="flex justify-between text-slate-500"><span>Statutory Deductions (PF, PT & TDS ~25%):</span> <span id="est-ded" class="font-semibold text-rose-500">-₹${Math.round((user.salary / 12) * 0.25).toLocaleString('en-IN')}</span></div>
+                  <div class="flex justify-between text-slate-700 dark:text-slate-300 font-bold pt-2 border-t border-white/10"><span>Net Take-Home:</span> <span id="est-net" class="text-emerald-500 text-sm font-extrabold">₹${Math.round((user.salary / 12) * 0.75).toLocaleString('en-IN')}</span></div>
                 </div>
 
                 <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-white/10">
@@ -1102,15 +1373,15 @@
         document.getElementById('modal-container').innerHTML = modalHTML;
         lucide.createIcons();
 
-        // Live calculation on input
+        // Live calculation on input in Rupees
         document.getElementById('sal-base').addEventListener('input', (e) => {
           const val = parseFloat(e.target.value) || 0;
           const gross = Math.round(val / 12);
           const ded = Math.round(gross * 0.25);
           const net = gross - ded;
-          document.getElementById('est-gross').innerText = `$${gross.toLocaleString()}`;
-          document.getElementById('est-ded').innerText = `-$${ded.toLocaleString()}`;
-          document.getElementById('est-net').innerText = `$${net.toLocaleString()}`;
+          document.getElementById('est-gross').innerText = `₹${gross.toLocaleString('en-IN')}`;
+          document.getElementById('est-ded').innerText = `-₹${ded.toLocaleString('en-IN')}`;
+          document.getElementById('est-net').innerText = `₹${net.toLocaleString('en-IN')}`;
         });
       },
 
@@ -1118,7 +1389,7 @@
         e.preventDefault();
         const base = parseFloat(document.getElementById('sal-base').value);
         if (isNaN(base) || base <= 0) {
-          this.notify('Please provide a valid annual salary greater than 0.', 'error', 'Validation Error');
+          this.notify('Please provide a valid annual salary in ₹ greater than 0.', 'error', 'Validation Error');
           return;
         }
 
@@ -1127,8 +1398,8 @@
           const old = user.salary;
           user.salary = base;
           this.persist();
-          this.addNotificationFeed('Salary Updated', `Annual compensation adjusted to $${base.toLocaleString()}/yr for ${user.name}.`, 'info', 'file-text');
-          this.notify(`Salary updated for ${user.name} ($${old.toLocaleString()} -> $${base.toLocaleString()}).`, 'success', 'Payroll Updated');
+          this.addNotificationFeed('Salary Updated', `Annual compensation adjusted to ₹${base.toLocaleString('en-IN')}/yr for ${user.name}.`, 'info', 'file-text');
+          this.notify(`Salary updated for ${user.name} (₹${old.toLocaleString('en-IN')} -> ₹${base.toLocaleString('en-IN')}).`, 'success', 'Payroll Updated');
         }
         this.closeModal();
         this.render();
@@ -1143,8 +1414,8 @@
             ${this.ui.GlassCard(`
               <div class="flex justify-between items-center pb-4 border-b border-white/20 dark:border-white/10 mb-6">
                 <div>
-                  <h3 class="text-xl font-bold text-slate-900 dark:text-white">Run Monthly Payroll</h3>
-                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Pay Period: August 2026 • Direct Deposit</p>
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white">Run Monthly Payroll (INR)</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Pay Period: August 2026 • Direct NEFT/IMPS Transfer</p>
                 </div>
                 <button onclick="window.app.closeModal()" class="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
               </div>
@@ -1152,13 +1423,13 @@
               <div class="space-y-4">
                 <div class="p-5 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-center">
                   <p class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-1">Total Net Disbursement</p>
-                  <p class="text-4xl font-extrabold text-slate-900 dark:text-white font-display">$${total.toLocaleString()}</p>
+                  <p class="text-4xl font-extrabold text-slate-900 dark:text-white font-display">₹${total.toLocaleString('en-IN')}</p>
                   <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Across <strong>${count} employees</strong></p>
                 </div>
 
                 <div class="p-4 rounded-2xl bg-white/40 dark:bg-black/20 border border-white/60 dark:border-white/5 space-y-2 text-xs">
-                  <div class="flex justify-between text-slate-500"><span>Tax Withholdings:</span> <span class="font-semibold text-slate-800 dark:text-slate-200">~$${Math.round(total * 0.20).toLocaleString()}</span></div>
-                  <div class="flex justify-between text-slate-500"><span>Direct Deposit Gateway:</span> <span class="font-semibold text-emerald-500">Connected (Ready)</span></div>
+                  <div class="flex justify-between text-slate-500"><span>Statutory PF & TDS Withholdings:</span> <span class="font-semibold text-slate-800 dark:text-slate-200">~₹${Math.round(total * 0.25).toLocaleString('en-IN')}</span></div>
+                  <div class="flex justify-between text-slate-500"><span>Bank Gateway (HDFC/ICICI Direct):</span> <span class="font-semibold text-emerald-500">Connected (Ready)</span></div>
                   <div class="flex justify-between text-slate-500"><span>Disbursement Date:</span> <span class="font-semibold text-slate-800 dark:text-slate-200">August 31, 2026</span></div>
                 </div>
 
@@ -1178,8 +1449,8 @@
         const run = this.state.payrollRuns.find(r => r.month === 'August 2026');
         if (run) run.status = 'Paid';
         
-        this.addNotificationFeed('Payroll Processed', 'August 2026 payroll run completed. Direct deposits queued.', 'success', 'file-check');
-        this.notify('August 2026 Payroll successfully processed and verified!', 'success', 'Disbursement Complete');
+        this.addNotificationFeed('Payroll Processed', 'August 2026 payroll run completed. Direct salary credits queued.', 'success', 'file-check');
+        this.notify('August 2026 Payroll in Rupees successfully processed and credited!', 'success', 'Disbursement Complete');
         this.closeModal();
         this.render();
       },
@@ -1188,10 +1459,16 @@
         const user = this.state.users.find(u => u.name === userName) || this.getActiveUser();
         const baseYearly = user.salary;
         const grossMonth = Math.round(baseYearly / 12);
-        const tax = Math.round(grossMonth * 0.15);
-        const health = Math.round(grossMonth * 0.05);
-        const pension = Math.round(grossMonth * 0.05);
-        const totalDeductions = tax + health + pension;
+        
+        // Indian Payslip Structure
+        const basicSalary = Math.round(grossMonth * 0.50);
+        const hra = Math.round(grossMonth * 0.30);
+        const specialAllowance = grossMonth - basicSalary - hra;
+
+        const pf = Math.round(basicSalary * 0.12);
+        const professionalTax = 200;
+        const tds = Math.round(grossMonth * 0.10);
+        const totalDeductions = pf + professionalTax + tds;
         const netPay = grossMonth - totalDeductions;
 
         const modalHTML = `
@@ -1203,10 +1480,10 @@
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white"><i data-lucide="activity" class="w-5 h-5"></i></div>
                     <span class="text-2xl font-bold font-display">Dayflow HRMS</span>
                   </div>
-                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">100 Flow Street, Silicon Valley, CA • hr@dayflow.com</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Embassy TechVillage, Outer Ring Road, Bengaluru, KA • payroll@dayflow.com</p>
                 </div>
                 <div class="text-right">
-                  <span class="inline-block px-3 py-1 bg-emerald-500/10 text-emerald-500 font-bold text-xs rounded-full uppercase tracking-wider mb-1">Official Payslip</span>
+                  <span class="inline-block px-3 py-1 bg-emerald-500/10 text-emerald-500 font-bold text-xs rounded-full uppercase tracking-wider mb-1">Official Salary Payslip</span>
                   <p class="text-sm font-bold text-slate-700 dark:text-slate-300">Period: ${month}</p>
                 </div>
               </div>
@@ -1219,38 +1496,38 @@
                 <div><span class="text-slate-400 block mb-0.5">Designation</span><strong>${user.designation}</strong></div>
               </div>
 
-              <!-- Earnings & Deductions Breakdown -->
+              <!-- Earnings & Deductions Breakdown in Rupees ₹ -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6 text-sm">
                 <div class="p-4 rounded-2xl bg-white/40 dark:bg-slate-900/40 border border-slate-200 dark:border-white/10">
-                  <h4 class="font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/10 pb-2 mb-3 text-xs uppercase tracking-wider text-indigo-500">Earnings</h4>
+                  <h4 class="font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/10 pb-2 mb-3 text-xs uppercase tracking-wider text-indigo-500">Earnings (INR ₹)</h4>
                   <div class="space-y-2">
-                    <div class="flex justify-between"><span class="text-slate-500">Basic Salary</span> <span class="font-medium">$${grossMonth.toLocaleString()}</span></div>
-                    <div class="flex justify-between"><span class="text-slate-500">House Allowance</span> <span class="font-medium">$0.00</span></div>
-                    <div class="flex justify-between"><span class="text-slate-500">Special Allowance</span> <span class="font-medium">$0.00</span></div>
-                    <div class="flex justify-between pt-2 border-t border-slate-200 dark:border-white/5 font-bold"><span>Gross Earnings</span> <span>$${grossMonth.toLocaleString()}</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Basic Salary</span> <span class="font-medium">₹${basicSalary.toLocaleString('en-IN')}</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">House Rent Allowance (HRA)</span> <span class="font-medium">₹${hra.toLocaleString('en-IN')}</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Special Allowance</span> <span class="font-medium">₹${specialAllowance.toLocaleString('en-IN')}</span></div>
+                    <div class="flex justify-between pt-2 border-t border-slate-200 dark:border-white/5 font-bold"><span>Gross Earnings</span> <span>₹${grossMonth.toLocaleString('en-IN')}</span></div>
                   </div>
                 </div>
 
                 <div class="p-4 rounded-2xl bg-white/40 dark:bg-slate-900/40 border border-slate-200 dark:border-white/10">
-                  <h4 class="font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/10 pb-2 mb-3 text-xs uppercase tracking-wider text-rose-500">Deductions</h4>
+                  <h4 class="font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/10 pb-2 mb-3 text-xs uppercase tracking-wider text-rose-500">Deductions (INR ₹)</h4>
                   <div class="space-y-2">
-                    <div class="flex justify-between"><span class="text-slate-500">Income Tax (15%)</span> <span class="font-medium text-rose-500">-$${tax.toLocaleString()}</span></div>
-                    <div class="flex justify-between"><span class="text-slate-500">Health Insurance (5%)</span> <span class="font-medium text-rose-500">-$${health.toLocaleString()}</span></div>
-                    <div class="flex justify-between"><span class="text-slate-500">Retirement / 401(k) (5%)</span> <span class="font-medium text-rose-500">-$${pension.toLocaleString()}</span></div>
-                    <div class="flex justify-between pt-2 border-t border-slate-200 dark:border-white/5 font-bold"><span>Total Deductions</span> <span class="text-rose-500">-$${totalDeductions.toLocaleString()}</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Provident Fund (PF 12%)</span> <span class="font-medium text-rose-500">-₹${pf.toLocaleString('en-IN')}</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Professional Tax (PT)</span> <span class="font-medium text-rose-500">-₹${professionalTax.toLocaleString('en-IN')}</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Income Tax (TDS)</span> <span class="font-medium text-rose-500">-₹${tds.toLocaleString('en-IN')}</span></div>
+                    <div class="flex justify-between pt-2 border-t border-slate-200 dark:border-white/5 font-bold"><span>Total Deductions</span> <span class="text-rose-500">-₹${totalDeductions.toLocaleString('en-IN')}</span></div>
                   </div>
                 </div>
               </div>
 
-              <!-- Net Pay Highlight -->
+              <!-- Net Pay Highlight in Rupees ₹ -->
               <div class="p-5 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 flex justify-between items-center mb-6">
                 <div>
-                  <p class="text-xs font-bold uppercase tracking-widest text-indigo-500 dark:text-indigo-400">Net Payable Amount</p>
-                  <p class="text-3xl font-extrabold text-slate-900 dark:text-white font-display mt-0.5">$${netPay.toLocaleString()}</p>
+                  <p class="text-xs font-bold uppercase tracking-widest text-indigo-500 dark:text-indigo-400">Net Take-Home Salary</p>
+                  <p class="text-3xl font-extrabold text-slate-900 dark:text-white font-display mt-0.5">₹${netPay.toLocaleString('en-IN')}</p>
                 </div>
                 <div class="text-right">
-                  <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-500"><i data-lucide="check-circle-2" class="w-4 h-4"></i> Transferred to Bank</span>
-                  <p class="text-xs text-slate-400 mt-0.5">Ref: DF-PAY-${Date.now().toString().slice(-6)}</p>
+                  <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-500"><i data-lucide="check-circle-2" class="w-4 h-4"></i> Transferred to Bank Account</span>
+                  <p class="text-xs text-slate-400 mt-0.5">Ref: DF-PAY-IN-${Date.now().toString().slice(-6)}</p>
                 </div>
               </div>
 
@@ -1429,11 +1706,11 @@
                 <form onsubmit="window.app.handleSignup(event)" class="space-y-3.5">
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     ${this.ui.Input('su-empid', 'Employee ID', 'text', `DF-${String(this.state.users.length + 1).padStart(3, '0')}`, 'DF-006', true)}
-                    ${this.ui.Input('su-name', 'Full Name', 'text', '', 'e.g. Jordan Hayes', true)}
+                    ${this.ui.Input('su-name', 'Full Name', 'text', '', 'e.g. Rahul Sharma', true)}
                   </div>
 
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    ${this.ui.Input('su-email', 'Corporate Email', 'email', '', 'jordan@dayflow.com', true)}
+                    ${this.ui.Input('su-email', 'Corporate Email', 'email', '', 'rahul@dayflow.com', true)}
                     <div class="space-y-1.5 w-full">
                       <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">Account Role</label>
                       <select id="su-role" class="w-full px-4 py-3 rounded-2xl bg-white/50 dark:bg-black/20 border border-white/70 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md text-sm">
@@ -1513,8 +1790,9 @@
           { id: 'dashboard', label: 'Dashboard', icon: 'activity', roles: ['admin', 'employee'] },
           { id: 'attendance', label: 'Attendance', icon: 'clock', roles: ['admin', 'employee'] },
           { id: 'leaves', label: 'Leave Requests', icon: 'calendar', roles: ['admin', 'employee'] },
+          { id: 'expenses', label: 'Day-to-Day Expenses', icon: 'receipt', roles: ['admin', 'employee'] },
           { id: 'team', label: 'Team Directory', icon: 'users', roles: ['admin', 'employee'] },
-          { id: 'payroll', label: 'Payroll & Compensation', icon: 'file-text', roles: ['admin', 'employee'] },
+          { id: 'payroll', label: 'Payroll & Salary', icon: 'file-text', roles: ['admin', 'employee'] },
           { id: 'profile', label: 'My Profile', icon: 'user', roles: ['admin', 'employee'] },
         ].filter(item => item.roles.includes(u.role));
 
@@ -1553,7 +1831,7 @@
 
       renderTopbar() {
         const activeUser = this.getActiveUser();
-        const dateStr = this.state.currentDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+        const dateStr = this.state.currentDate.toLocaleDateString('en-IN', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
         const isDark = this.state.theme === 'dark';
         const unreadCount = this.state.notificationsFeed.filter(n => !n.read).length;
 
@@ -1593,7 +1871,7 @@
             ${this.ui.Button('', 'menu', 'icon', 'window.app.toggleMobileSidebar()', 'lg:hidden')}
             <div>
               <h1 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight">
-                Hello, ${this.state.currentUser.name.split(' ')[0]}
+                Namaste, ${this.state.currentUser.name.split(' ')[0]}
                 ${this.state.impersonatedUserId ? `<span class="text-xs px-2.5 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full font-bold ml-2">Viewing ${activeUser.name}</span>` : ''}
               </h1>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 hidden sm:block">${dateStr}</p>
@@ -1637,6 +1915,7 @@
         const todayStr = this.state.currentDate.toISOString().split('T')[0];
 
         const pendingLeaves = this.state.leaves.filter(l => l.status === 'Pending');
+        const pendingExpenses = this.state.expenses.filter(e => e.status === 'Pending');
         const totalEmployees = this.state.users.filter(usr => usr.role === 'employee').length;
         const todayAttendance = this.state.attendance.filter(a => a.date === todayStr && a.status === 'Present').length;
 
@@ -1653,7 +1932,7 @@
           </div>
         `, 'flex flex-col justify-between h-full group', 'p-5', true);
 
-        // Real aggregated Attendance Trends chart (PDF 3.4 / 3.2)
+        // Real aggregated Attendance Trends chart
         const pastDays = ['2026-08-17', '2026-08-18', '2026-08-19', '2026-08-20', '2026-08-21', '2026-08-22'];
         const dayLabels = ['Mon 17', 'Tue 18', 'Wed 19', 'Thu 20', 'Fri 21', 'Sat 22'];
         const trendData = pastDays.map(d => {
@@ -1690,27 +1969,28 @@
           `;
         }
 
-        // Top Stat Cards
+        // Top Stat Cards in Rupees ₹
         html += `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">`;
         if (isAdmin) {
+          const totalMonthlyPayroll = Math.round(this.state.users.reduce((a,c)=>a+c.salary/12*0.75,0));
           html += StatCard('Total Headcount', this.state.users.length, 'All Teams', 'users', 'indigo', 'bg-gradient-to-br from-indigo-500 to-indigo-600');
           html += StatCard('Present Today', `${todayAttendance}/${this.state.users.length}`, `${Math.round((todayAttendance/this.state.users.length)*100)}% Turnout`, 'check-circle-2', 'emerald', 'bg-gradient-to-br from-emerald-500 to-teal-600');
-          html += StatCard('Pending Approvals', pendingLeaves.length, 'Requires Action', 'calendar', 'amber', 'bg-gradient-to-br from-amber-500 to-orange-500');
-          html += StatCard('Monthly Payroll', `$${Math.round(this.state.users.reduce((a,c)=>a+c.salary/12*0.75,0)).toLocaleString()}`, 'Aug Payout', 'file-text', 'purple', 'bg-gradient-to-br from-purple-500 to-fuchsia-600');
+          html += StatCard('Pending Approvals', `${pendingLeaves.length + pendingExpenses.length}`, `${pendingLeaves.length} Leave / ${pendingExpenses.length} Expense`, 'calendar', 'amber', 'bg-gradient-to-br from-amber-500 to-orange-500');
+          html += StatCard('Monthly Payroll', `₹${totalMonthlyPayroll.toLocaleString('en-IN')}`, 'Aug Payout', 'file-text', 'purple', 'bg-gradient-to-br from-purple-500 to-fuchsia-600');
         } else {
           // Employee Stats
           const approvedPaidDays = this.state.leaves.filter(l => l.userId === u.id && l.type === 'Paid Leave' && l.status === 'Approved').reduce((a,c)=>a+c.days, 0);
           const remainingPaid = Math.max(0, 15 - approvedPaidDays);
-          const myPending = this.state.leaves.filter(l => l.userId === u.id && l.status === 'Pending').length;
+          const myPendingExpenses = this.state.expenses.filter(e => e.userId === u.id && e.status === 'Pending').reduce((a,c)=>a+c.amount,0);
           
           html += StatCard('Paid Leave Balance', `${remainingPaid} Days`, 'Out of 15', 'calendar', 'indigo', 'bg-gradient-to-br from-indigo-500 to-indigo-600');
           html += StatCard('Attendance Rate', '96.5%', 'August', 'check-circle-2', 'emerald', 'bg-gradient-to-br from-emerald-500 to-teal-600');
-          html += StatCard('Next Payday', 'Aug 31', 'Direct Deposit', 'sun', 'amber', 'bg-gradient-to-br from-amber-500 to-orange-500');
-          html += StatCard('Pending Requests', myPending, myPending ? 'In Review' : 'Up to date', 'clock', 'purple', 'bg-gradient-to-br from-purple-500 to-fuchsia-600');
+          html += StatCard('Pending Claims', `₹${myPendingExpenses.toLocaleString('en-IN')}`, 'In Review', 'receipt', 'amber', 'bg-gradient-to-br from-amber-500 to-orange-500');
+          html += StatCard('Next Payday', 'Aug 31', 'Direct Transfer', 'wallet', 'purple', 'bg-gradient-to-br from-purple-500 to-fuchsia-600');
         }
         html += `</div>`;
 
-        // PDF 3.2: Explicit Quick-Access Cards for Employee (Profile, Attendance, Leave Requests, Logout)
+        // PDF 3.2: Quick-Access Cards for Employee
         if (!isAdmin) {
           html += `
             <div>
@@ -1734,10 +2014,10 @@
 
                 ${this.ui.GlassCard(`
                   <div class="flex items-center gap-3.5 mb-3">
-                    <div class="p-3 rounded-2xl bg-amber-500/10 text-amber-500"><i data-lucide="calendar" class="w-5 h-5"></i></div>
-                    <div><h4 class="font-bold text-sm">Leave Requests</h4><p class="text-[11px] text-slate-400">Apply & Check Quotas</p></div>
+                    <div class="p-3 rounded-2xl bg-amber-500/10 text-amber-500"><i data-lucide="receipt" class="w-5 h-5"></i></div>
+                    <div><h4 class="font-bold text-sm">Day-to-Day Expenses</h4><p class="text-[11px] text-slate-400">Claim Bills & Receipts</p></div>
                   </div>
-                  <button onclick="window.app.navigate('leaves')" class="w-full py-2 text-xs font-bold rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-amber-600 hover:text-white transition-all text-center">Apply Time Off →</button>
+                  <button onclick="window.app.navigate('expenses')" class="w-full py-2 text-xs font-bold rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-amber-600 hover:text-white transition-all text-center">File Expense Claim →</button>
                 `, '', 'p-4', true)}
 
                 ${this.ui.GlassCard(`
@@ -1752,11 +2032,11 @@
           `;
         }
 
-        // PDF 3.2: Admin Dashboard must show: Employee list, Attendance records, and Leave approvals directly accessible
+        // Admin Dashboard direct sections
         if (isAdmin) {
           html += `
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <!-- Column 1 & 2: Trends + Direct Leave Approvals -->
+              <!-- Column 1 & 2: Trends + Direct Actionable Approvals -->
               <div class="lg:col-span-2 space-y-6">
                 ${this.ui.GlassCard(`
                   <div class="flex justify-between items-center mb-2">
@@ -1764,30 +2044,33 @@
                       <h3 class="text-base font-bold text-slate-900 dark:text-white">Organization Attendance Trends</h3>
                       <p class="text-xs text-slate-500 mt-0.5">Aggregated daily turnout percentage across all company staff</p>
                     </div>
-                    ${this.ui.Button('View Attendance Sheet', 'clock', 'secondary', 'window.app.navigate("attendance")', '!text-xs !py-1.5')}
+                    ${this.ui.Button('View Timesheets', 'clock', 'secondary', 'window.app.navigate("attendance")', '!text-xs !py-1.5')}
                   </div>
                   ${realChartHTML}
                 `)}
 
-                <!-- Direct Leave Approvals Section on Dashboard -->
+                <!-- Direct Actionable Leave & Expense Approvals Section on Dashboard -->
                 ${this.ui.GlassCard(`
                   <div class="flex justify-between items-center mb-4">
                     <div>
-                      <h3 class="text-base font-bold text-slate-900 dark:text-white">Actionable Leave Approvals</h3>
-                      <p class="text-xs text-slate-500 mt-0.5">${pendingLeaves.length} pending time-off request${pendingLeaves.length!==1?'s':''}</p>
+                      <h3 class="text-base font-bold text-slate-900 dark:text-white">Pending Approvals Queue</h3>
+                      <p class="text-xs text-slate-500 mt-0.5">${pendingLeaves.length} leave & ${pendingExpenses.length} expense claims waiting</p>
                     </div>
-                    ${this.ui.Button('All Requests', 'calendar', 'secondary', 'window.app.navigate("leaves")', '!text-xs !py-1.5')}
+                    <div class="flex gap-2">
+                      ${this.ui.Button('Leaves', 'calendar', 'secondary', 'window.app.navigate("leaves")', '!text-xs !py-1.5')}
+                      ${this.ui.Button('Expenses', 'receipt', 'secondary', 'window.app.navigate("expenses")', '!text-xs !py-1.5')}
+                    </div>
                   </div>
 
                   <div class="space-y-3">
-                    ${pendingLeaves.length ? pendingLeaves.map(l => {
+                    ${pendingLeaves.slice(0,2).map(l => {
                       const applicant = this.state.users.find(usr => usr.id === l.userId) || { name: 'Unknown', avatar: '' };
                       return `
                         <div class="p-3.5 rounded-2xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div class="flex items-center gap-3">
                             ${this.ui.Avatar(applicant.avatar, 'sm')}
                             <div>
-                              <p class="text-xs font-bold text-slate-900 dark:text-white">${applicant.name} <span class="font-normal text-slate-400">• ${l.type}</span></p>
+                              <p class="text-xs font-bold text-slate-900 dark:text-white">${applicant.name} <span class="font-normal text-indigo-500">• Leave: ${l.type}</span></p>
                               <p class="text-[11px] text-slate-500">${l.startDate} to ${l.endDate} (${l.days}d) - "${l.remarks}"</p>
                             </div>
                           </div>
@@ -1797,7 +2080,27 @@
                           </div>
                         </div>
                       `;
-                    }).join('') : `<p class="text-center py-6 text-xs text-slate-400">All leave requests have been reviewed.</p>`}
+                    }).join('')}
+
+                    ${pendingExpenses.slice(0,2).map(exp => {
+                      const claimant = this.state.users.find(usr => usr.id === exp.userId) || { name: 'Unknown', avatar: '' };
+                      return `
+                        <div class="p-3.5 rounded-2xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div class="flex items-center gap-3">
+                            ${this.ui.Avatar(claimant.avatar, 'sm')}
+                            <div>
+                              <p class="text-xs font-bold text-slate-900 dark:text-white">${claimant.name} <span class="font-normal text-amber-500">• Expense: ${exp.category}</span></p>
+                              <p class="text-[11px] text-slate-500">₹${exp.amount.toLocaleString('en-IN')} @ ${exp.merchant} - "${exp.description}"</p>
+                            </div>
+                          </div>
+                          <div class="flex items-center gap-2 self-end sm:self-auto">
+                            <button onclick="window.app.openExpenseReviewModal('${exp.id}', 'Approved')" class="px-3 py-1.5 bg-emerald-500/15 hover:bg-emerald-500 text-emerald-600 hover:text-white text-xs font-bold rounded-xl transition-all">Audit Claim</button>
+                          </div>
+                        </div>
+                      `;
+                    }).join('')}
+
+                    ${!pendingLeaves.length && !pendingExpenses.length ? `<p class="text-center py-6 text-xs text-slate-400">All pending requests have been reviewed.</p>` : ''}
                   </div>
                 `)}
               </div>
@@ -1831,9 +2134,9 @@
                 ${this.ui.GlassCard(`
                   <h3 class="text-base font-bold text-slate-900 dark:text-white mb-3">Quick HR Admin Tools</h3>
                   <div class="space-y-2">
-                    ${this.ui.Button('Process August Payroll', 'file-text', 'secondary', 'window.app.processMonthlyPayroll()', 'w-full justify-start !text-xs !py-2.5')}
+                    ${this.ui.Button('Process August Payroll (₹)', 'wallet', 'secondary', 'window.app.processMonthlyPayroll()', 'w-full justify-start !text-xs !py-2.5')}
+                    ${this.ui.Button('Audit Expense Claims', 'receipt', 'secondary', 'window.app.navigate("expenses")', 'w-full justify-start !text-xs !py-2.5')}
                     ${this.ui.Button('Manual Attendance Punch', 'clock', 'secondary', 'window.app.openModal("manual-attendance-modal")', 'w-full justify-start !text-xs !py-2.5')}
-                    ${this.ui.Button('Adjust Salary Structures', 'dollar-sign', 'secondary', 'window.app.navigate("payroll")', 'w-full justify-start !text-xs !py-2.5')}
                   </div>
                 `)}
               </div>
@@ -1847,7 +2150,6 @@
 
       // ==========================================
       // ATTENDANCE VIEW (PDF 3.4)
-      // Bug Fix: Admins see all employee records, Employees see own
       // ==========================================
       renderAttendance() {
         const activeUser = this.getActiveUser();
@@ -1899,7 +2201,6 @@
         // Attendance Table
         let displayRecords = [];
         if (isAdmin) {
-          // Admin Master Attendance View with Search & Filter
           displayRecords = this.state.attendance;
           if (this.state.attendanceFilterStatus !== 'ALL') {
             displayRecords = displayRecords.filter(r => r.status === this.state.attendanceFilterStatus);
@@ -1915,7 +2216,6 @@
             });
           }
         } else {
-          // Employee sees only their own
           displayRecords = this.state.attendance.filter(a => a.userId === activeUser.id);
         }
 
@@ -2223,15 +2523,200 @@
       },
 
       // ==========================================
+      // DAY-TO-DAY EXPENSES VIEW (NEW FEATURE)
+      // ==========================================
+      renderExpenses() {
+        const activeUser = this.getActiveUser();
+        const isAdmin = this.state.currentUser.role === 'admin' && !this.state.impersonatedUserId;
+
+        let displayExpenses = isAdmin ? this.state.expenses : this.state.expenses.filter(e => e.userId === activeUser.id);
+
+        if (this.state.expenseFilterStatus !== 'ALL') {
+          displayExpenses = displayExpenses.filter(e => e.status === this.state.expenseFilterStatus);
+        }
+        if (this.state.expenseFilterCategory !== 'ALL') {
+          displayExpenses = displayExpenses.filter(e => e.category === this.state.expenseFilterCategory);
+        }
+        if (this.state.expenseSearchQuery) {
+          const q = this.state.expenseSearchQuery.toLowerCase();
+          displayExpenses = displayExpenses.filter(e => {
+            const u = this.state.users.find(usr => usr.id === e.userId);
+            return e.merchant.toLowerCase().includes(q) || e.description.toLowerCase().includes(q) || (u && u.name.toLowerCase().includes(q));
+          });
+        }
+
+        // Metrics
+        const totalClaimed = displayExpenses.reduce((acc, c) => acc + c.amount, 0);
+        const pendingAmount = displayExpenses.filter(e => e.status === 'Pending').reduce((acc, c) => acc + c.amount, 0);
+        const approvedAmount = displayExpenses.filter(e => e.status === 'Approved').reduce((acc, c) => acc + c.amount, 0);
+        const reimbursedAmount = displayExpenses.filter(e => e.status === 'Reimbursed').reduce((acc, c) => acc + c.amount, 0);
+
+        const rows = displayExpenses.map(exp => {
+          const user = this.state.users.find(u => u.id === exp.userId) || { name: 'Unknown', avatar: '', department: 'N/A' };
+          const badgeVariant = exp.status === 'Reimbursed' ? 'success' : exp.status === 'Approved' ? 'info' : exp.status === 'Rejected' ? 'danger' : 'warning';
+
+          let actions = '';
+          if (isAdmin) {
+            if (exp.status === 'Pending') {
+              actions = `
+                <div class="flex gap-2">
+                  <button onclick="window.app.openExpenseReviewModal('${exp.id}', 'Approved')" class="p-2 text-emerald-500 hover:bg-emerald-500/15 rounded-xl transition-all" title="Approve Claim"><i data-lucide="check" class="w-4 h-4"></i></button>
+                  <button onclick="window.app.openExpenseReviewModal('${exp.id}', 'Rejected')" class="p-2 text-rose-500 hover:bg-rose-500/15 rounded-xl transition-all" title="Reject Claim"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
+              `;
+            } else if (exp.status === 'Approved') {
+              actions = `
+                <button onclick="window.app.markExpenseReimbursed('${exp.id}')" class="px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500 text-emerald-600 hover:text-white text-xs font-bold transition-all">
+                  Reimburse ₹
+                </button>
+              `;
+            } else {
+              actions = `<span class="text-[11px] font-bold text-slate-400">Processed</span>`;
+            }
+          }
+
+          return `
+            <tr class="bg-white/40 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 transition-colors">
+              ${isAdmin ? `
+                <td class="px-5 py-4 font-bold text-slate-900 dark:text-white flex items-center gap-3 rounded-l-2xl">
+                  ${this.ui.Avatar(user.avatar, 'sm')}
+                  <div>
+                    <p class="text-xs font-bold">${user.name}</p>
+                    <p class="text-[10px] text-slate-400 font-normal">${user.department}</p>
+                  </div>
+                </td>
+              ` : ''}
+              <td class="px-5 py-4 text-xs font-semibold text-slate-600 dark:text-slate-400 ${!isAdmin?'rounded-l-2xl':''}">${exp.date}</td>
+              <td class="px-5 py-4">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
+                  <i data-lucide="${exp.category.includes('Travel')?'car':exp.category.includes('Meals')?'utensils':exp.category.includes('Hotel')?'building':exp.category.includes('Internet')?'wifi':'receipt'}" class="w-3.5 h-3.5 text-indigo-500"></i>
+                  ${exp.category}
+                </span>
+              </td>
+              <td class="px-5 py-4">
+                <p class="text-xs font-bold text-slate-900 dark:text-white">${exp.merchant}</p>
+                <p class="text-[11px] text-slate-500 truncate max-w-xs">${exp.description}</p>
+              </td>
+              <td class="px-5 py-4 font-extrabold text-slate-900 dark:text-white text-sm">
+                ${this.formatINR(exp.amount)}
+              </td>
+              <td class="px-5 py-4">
+                <button onclick="window.app.viewReceiptModal('${exp.id}')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-white/10 hover:bg-indigo-500 hover:text-white text-[11px] font-semibold text-slate-600 dark:text-slate-300 transition-all font-mono">
+                  <i data-lucide="paperclip" class="w-3 h-3"></i> Receipt
+                </button>
+              </td>
+              <td class="px-5 py-4">
+                <div class="flex flex-col gap-1">
+                  ${this.ui.Badge(exp.status, badgeVariant)}
+                  ${exp.adminComment ? `<span class="text-[10px] text-slate-400 italic">Note: "${exp.adminComment}"</span>` : ''}
+                </div>
+              </td>
+              ${isAdmin ? `<td class="px-5 py-4 rounded-r-2xl">${actions}</td>` : '<td class="rounded-r-2xl"></td>'}
+            </tr>
+          `;
+        }).join('');
+
+        const categories = ['ALL', 'Travel & Commute', 'Meals & Dining', 'Office Supplies', 'Hotel & Lodging', 'Internet & Phone', 'Software & Tools', 'Miscellaneous'];
+
+        return `
+          <div class="space-y-8 animate-fade-in-up">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight font-display">Day-to-Day Expense Claims</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${isAdmin ? 'Audit, approve, and reimburse employee business expenses in Indian Rupees (₹).' : 'File daily travel, meals, internet, and office expenses for prompt reimbursement.'}</p>
+              </div>
+              <div class="flex gap-2">
+                ${isAdmin ? this.ui.Button('Disburse Approved Claims', 'wallet', 'secondary', 'window.app.bulkReimburseExpenses()') : ''}
+                ${this.ui.Button('Submit Expense Claim', 'plus-circle', 'primary', 'window.app.openSubmitExpenseModal()')}
+              </div>
+            </div>
+
+            <!-- Expense Summary Metrics in Rupees ₹ -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              ${this.ui.GlassCard(`
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Total Claims Value</p>
+                <p class="text-3xl font-extrabold text-slate-900 dark:text-white font-display">${this.formatINR(totalClaimed)}</p>
+                <p class="text-[11px] text-slate-400 mt-1">${displayExpenses.length} claims submitted</p>
+              `, 'p-5', '', true)}
+
+              ${this.ui.GlassCard(`
+                <p class="text-xs font-bold text-amber-500 uppercase tracking-widest mb-1">Pending Audit</p>
+                <p class="text-3xl font-extrabold text-amber-500 font-display">${this.formatINR(pendingAmount)}</p>
+                <p class="text-[11px] text-slate-400 mt-1">${displayExpenses.filter(e => e.status === 'Pending').length} awaiting approval</p>
+              `, 'p-5', '', true)}
+
+              ${this.ui.GlassCard(`
+                <p class="text-xs font-bold text-indigo-500 uppercase tracking-widest mb-1">Approved for Payout</p>
+                <p class="text-3xl font-extrabold text-indigo-500 font-display">${this.formatINR(approvedAmount)}</p>
+                <p class="text-[11px] text-slate-400 mt-1">${displayExpenses.filter(e => e.status === 'Approved').length} in payout queue</p>
+              `, 'p-5', '', true)}
+
+              ${this.ui.GlassCard(`
+                <p class="text-xs font-bold text-emerald-500 uppercase tracking-widest mb-1">Total Reimbursed</p>
+                <p class="text-3xl font-extrabold text-emerald-500 font-display">${this.formatINR(reimbursedAmount)}</p>
+                <p class="text-[11px] text-slate-400 mt-1">Direct bank settlements</p>
+              `, 'p-5', '', true)}
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="flex flex-wrap items-center gap-3 p-4 rounded-2xl bg-white/50 dark:bg-black/20 border border-white/60 dark:border-white/5">
+              <div class="flex-1 min-w-[200px] relative">
+                <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" placeholder="Search by merchant, purpose, or employee..." value="${this.state.expenseSearchQuery}" oninput="window.app.state.expenseSearchQuery = this.value; window.app.render();" class="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-white/60 dark:bg-white/5 border border-white/60 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+              </div>
+
+              <!-- Category Dropdown Filter -->
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold text-slate-400">Category:</span>
+                <select onchange="window.app.state.expenseFilterCategory = this.value; window.app.render();" class="px-3 py-1.5 text-xs rounded-xl bg-white/60 dark:bg-white/5 border border-white/60 dark:border-white/10 font-medium text-slate-700 dark:text-slate-300 focus:outline-none">
+                  ${categories.map(c => `<option value="${c}" ${this.state.expenseFilterCategory===c?'selected':''} class="bg-white dark:bg-slate-800">${c}</option>`).join('')}
+                </select>
+              </div>
+
+              <!-- Status Pills -->
+              <div class="flex items-center gap-1 bg-white/40 dark:bg-white/5 p-1 rounded-xl border border-white/60 dark:border-white/5 text-xs">
+                ${['ALL', 'Pending', 'Approved', 'Reimbursed', 'Rejected'].map(st => `
+                  <button onclick="window.app.state.expenseFilterStatus = '${st}'; window.app.render();" class="px-3 py-1 rounded-lg font-semibold transition-all ${this.state.expenseFilterStatus === st ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}">${st}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Expense Claims Table -->
+            ${this.ui.GlassCard(`
+              <div class="p-5 border-b border-slate-200 dark:border-white/10 flex justify-between items-center">
+                <h3 class="text-base font-bold text-slate-900 dark:text-white">${isAdmin ? 'Master Expense Audit Ledger' : 'My Expense Reimbursements'}</h3>
+                <span class="text-xs text-slate-400 font-semibold">${displayExpenses.length} claim${displayExpenses.length!==1?'s':''} listed</span>
+              </div>
+              <div class="overflow-x-auto p-4">
+                <table class="w-full text-sm text-left border-separate border-spacing-y-2">
+                  <thead class="text-[11px] text-slate-400 uppercase font-bold tracking-wider px-4">
+                    <tr>
+                      ${isAdmin ? '<th class="px-5 py-3">Claimant</th>' : ''}
+                      <th class="px-5 py-3">Date</th>
+                      <th class="px-5 py-3">Category</th>
+                      <th class="px-5 py-3">Merchant & Purpose</th>
+                      <th class="px-5 py-3">Amount (INR)</th>
+                      <th class="px-5 py-3">Receipt</th>
+                      <th class="px-5 py-3">Status</th>
+                      ${isAdmin ? '<th class="px-5 py-3">Audit Action</th>' : '<th></th>'}
+                    </tr>
+                  </thead>
+                  <tbody>${rows.length ? rows : `<tr><td colspan="${isAdmin?8:7}" class="text-center py-8 text-xs text-slate-400">No expense claims match current filters.</td></tr>`}</tbody>
+                </table>
+              </div>
+            `, 'p-0')}
+          </div>
+        `;
+      },
+
+      // ==========================================
       // PROFILE VIEW (PDF 3.3)
-      // Employee: Edit Address, Phone, Photo (Name/Email/Role Read-Only)
-      // Admin: Full Edit Capability
       // ==========================================
       renderProfile() {
         const u = this.getActiveUser();
         const isAdmin = this.state.currentUser.role === 'admin';
 
-        const docs = ['Employment_Agreement.pdf', 'Employee_Handbook_2026.pdf', 'W4_Tax_Form.pdf'].map(doc => `
+        const docs = ['Employment_Agreement.pdf', 'Employee_Handbook_2026.pdf', 'Form_16_Tax_Certificate.pdf'].map(doc => `
           <div class="flex items-center justify-between p-3.5 rounded-2xl bg-white/60 dark:bg-white/5 border border-white/60 dark:border-white/10 hover:border-indigo-500/50 hover:shadow-md transition-all group">
              <div class="flex items-center gap-3">
                 <div class="p-2.5 rounded-xl bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400"><i data-lucide="file-text" class="w-4 h-4"></i></div>
@@ -2276,12 +2761,12 @@
                     </div>
                     ${this.ui.Button('Save Changes', 'save', 'primary', '', '!py-1.5 !px-3 text-xs', 'submit')}
                   </div>
-                  ${this.ui.Input('prof-phone', 'Phone Number', 'text', u.phone, '+1 (555) 000-0000', true)}
-                  ${this.ui.Input('prof-address', 'Residential Address', 'text', u.address || '', 'Street, City, State, ZIP', true)}
+                  ${this.ui.Input('prof-phone', 'Phone Number', 'text', u.phone, '+91 98000 00000', true)}
+                  ${this.ui.Input('prof-address', 'Residential Address', 'text', u.address || '', 'Flat, Street, City, State, PIN', true)}
                   <p class="text-[11px] text-slate-400 italic">Click on your avatar above to upload or choose a new profile photo.</p>
                 </div>
 
-                <!-- Read-Only Organizational Info (PDF 3.3) -->
+                <!-- Read-Only Organizational Info in Rupees ₹ -->
                 <div class="space-y-4 bg-white/30 dark:bg-black/10 p-5 rounded-3xl border border-white/50 dark:border-white/5 shadow-inner">
                   <div class="border-b border-slate-200 dark:border-white/10 pb-3 mb-2 flex justify-between items-center">
                     <div>
@@ -2296,14 +2781,14 @@
                     ${this.ui.Input('j-dep', 'Department', 'text', u.department, '', false, true)}
                     ${this.ui.Input('j-join', 'Joined On', 'text', u.joinDate, '', false, true)}
                   </div>
-                  ${this.ui.Input('j-sal', 'Annual Compensation', 'text', '$' + u.salary.toLocaleString() + ' / year', '', false, true)}
+                  ${this.ui.Input('j-sal', 'Annual CTC Compensation', 'text', '₹' + u.salary.toLocaleString('en-IN') + ' / year', '', false, true)}
                 </div>
               </form>
 
               <!-- Essential Documents -->
               <div class="mt-6 bg-white/30 dark:bg-black/10 p-5 rounded-3xl border border-white/50 dark:border-white/5 shadow-inner">
                 <h4 class="font-bold text-sm text-slate-900 dark:text-white border-b border-slate-200 dark:border-white/10 pb-3 mb-4 flex items-center gap-2">
-                   <i data-lucide="folder" class="w-4 h-4 text-indigo-500"></i> Official Records & Documents
+                   <i data-lucide="folder" class="w-4 h-4 text-indigo-500"></i> Official Records & Compliance
                 </h4>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">${docs}</div>
               </div>
@@ -2313,7 +2798,7 @@
       },
 
       // ==========================================
-      // PAYROLL VIEW (PDF 3.6)
+      // PAYROLL VIEW (PDF 3.6 - In Rupees ₹)
       // ==========================================
       renderPayroll() {
         const activeUser = this.getActiveUser();
@@ -2344,17 +2829,17 @@
               ` : `
                 <td class="px-5 py-4 font-bold text-slate-900 dark:text-white rounded-l-2xl text-xs">${row.month}</td>
               `}
-              <td class="px-5 py-4 text-xs font-semibold text-slate-600 dark:text-slate-300">$${baseYearly.toLocaleString()}</td>
-              <td class="px-5 py-4 text-xs font-bold text-indigo-600 dark:text-indigo-400">$${netMonthly.toLocaleString()}/mo</td>
+              <td class="px-5 py-4 text-xs font-semibold text-slate-600 dark:text-slate-300">₹${baseYearly.toLocaleString('en-IN')}</td>
+              <td class="px-5 py-4 text-xs font-bold text-indigo-600 dark:text-indigo-400">₹${netMonthly.toLocaleString('en-IN')}/mo</td>
               <td class="px-5 py-4">${this.ui.Badge('Paid', 'success')}</td>
               <td class="px-5 py-4 rounded-r-2xl">
                 <div class="flex gap-2">
                   <button onclick="window.app.openPayslipModal('${row.name}', '${row.month || 'August 2026'}')" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-indigo-600 hover:text-white text-xs font-bold transition-all flex items-center gap-1">
-                    <i data-lucide="file-text" class="w-3.5 h-3.5"></i> Payslip
+                    <i data-lucide="file-text" class="w-3.5 h-3.5"></i> Payslip (₹)
                   </button>
                   ${isAdmin ? `
                     <button onclick="window.app.openEditSalaryModal('${row.id}')" class="px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500 text-indigo-600 hover:text-white text-xs font-bold transition-all flex items-center gap-1">
-                      <i data-lucide="edit-2" class="w-3.5 h-3.5"></i> Edit Salary
+                      <i data-lucide="edit-2" class="w-3.5 h-3.5"></i> Edit CTC
                     </button>
                   ` : ''}
                 </div>
@@ -2370,11 +2855,11 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
                ${this.ui.GlassCard(`
                  <div>
-                   <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Monthly Payroll Run</p>
-                   <p class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight font-display">$${totalNetRun.toLocaleString()}</p>
-                   <p class="text-[11px] text-slate-400 mt-1">${this.state.users.length} active staff compensation</p>
+                   <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Monthly Payroll (INR ₹)</p>
+                   <p class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight font-display">₹${totalNetRun.toLocaleString('en-IN')}</p>
+                   <p class="text-[11px] text-slate-400 mt-1">${this.state.users.length} active staff disbursement</p>
                  </div>
-                 <div class="p-3.5 bg-indigo-100 dark:bg-indigo-500/20 rounded-2xl text-indigo-500"><i data-lucide="dollar-sign" class="w-6 h-6"></i></div>
+                 <div class="p-3.5 bg-indigo-100 dark:bg-indigo-500/20 rounded-2xl text-indigo-500"><i data-lucide="wallet" class="w-6 h-6"></i></div>
                `, 'flex justify-between items-center', 'p-6')}
                
                ${this.ui.GlassCard(`
@@ -2382,21 +2867,21 @@
                    <div class="w-14 h-14 bg-slate-50 dark:bg-slate-900 rounded-full shadow-inner"></div>
                  </div>
                  <div>
-                   <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Breakdown</p>
+                   <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Statutory Split</p>
                    <ul class="space-y-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">
-                      <li class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-indigo-500"></span> Net Take-Home (75%)</li>
-                      <li class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Tax & Benefits (20%)</li>
-                      <li class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Bonus (5%)</li>
+                      <li class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-indigo-500"></span> Take-Home (75%)</li>
+                      <li class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500"></span> PF, PT & TDS (20%)</li>
+                      <li class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Performance Bonus (5%)</li>
                    </ul>
                  </div>
                `, 'flex gap-4 items-center', 'p-5')}
                
                ${this.ui.GlassCard(`
                  <div>
-                   <p class="text-indigo-100 font-bold uppercase tracking-widest text-xs mb-1">Pay Period Finalization</p>
+                   <p class="text-indigo-100 font-bold uppercase tracking-widest text-xs mb-1">Cycle Settlement</p>
                    <p class="text-2xl font-bold text-white tracking-tight">August 31, 2026</p>
                  </div>
-                 ${this.ui.Button('Process Monthly Payroll', 'send', 'secondary', 'window.app.processMonthlyPayroll()', 'w-full text-xs py-2.5 mt-3 border-none bg-white/20 hover:bg-white/30 text-white shadow-none')}
+                 ${this.ui.Button('Process August Payout (₹)', 'send', 'secondary', 'window.app.processMonthlyPayroll()', 'w-full text-xs py-2.5 mt-3 border-none bg-white/20 hover:bg-white/30 text-white shadow-none')}
                `, 'bg-gradient-to-br from-indigo-500 to-indigo-600 border-none shadow-[0_8px_30px_rgba(99,102,241,0.4)] relative overflow-hidden flex flex-col justify-between', 'p-6')}
             </div>
           `;
@@ -2406,17 +2891,17 @@
           <div class="space-y-8 animate-fade-in-up">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight font-display">Compensation & Payroll</h2>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${isAdmin ? 'Manage employee salaries, structure adjustments, and monthly disbursement.' : 'View your itemized payslips and annual compensation structure.'}</p>
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight font-display">Compensation & Payroll (Rupees ₹)</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${isAdmin ? 'Manage employee CTC structures, PF/TDS deductions, and monthly salary disbursement.' : 'View your itemized monthly payslips and annual compensation structure.'}</p>
               </div>
-              ${isAdmin ? this.ui.Button('Run Monthly Payroll', 'credit-card', 'primary', 'window.app.processMonthlyPayroll()') : ''}
+              ${isAdmin ? this.ui.Button('Run Monthly Payroll', 'wallet', 'primary', 'window.app.processMonthlyPayroll()') : ''}
             </div>
 
             ${adminWidgets}
 
             ${this.ui.GlassCard(`
               <div class="flex justify-between items-center p-5 border-b border-slate-200 dark:border-white/10">
-                <h3 class="text-base font-bold text-slate-900 dark:text-white">${isAdmin ? 'Employee Salary Master List' : 'My Historical Payslips'}</h3>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white">${isAdmin ? 'Employee CTC Master Register' : 'My Historical Salary Payslips'}</h3>
                 <span class="text-xs text-slate-400 font-semibold">${dataList.length} record${dataList.length!==1?'s':''}</span>
               </div>
               <div class="overflow-x-auto p-4">
@@ -2424,8 +2909,8 @@
                   <thead class="text-[11px] text-slate-400 uppercase font-bold tracking-wider px-4">
                     <tr>
                       ${isAdmin ? '<th class="px-5 py-3">Employee</th>' : '<th class="px-5 py-3">Period</th>'}
-                      <th class="px-5 py-3">Base Annual</th>
-                      <th class="px-5 py-3">Net Take-Home</th>
+                      <th class="px-5 py-3">Annual CTC</th>
+                      <th class="px-5 py-3">Monthly Net Pay</th>
                       <th class="px-5 py-3">Status</th>
                       <th class="px-5 py-3">Actions</th>
                     </tr>
@@ -2531,6 +3016,7 @@
             case 'dashboard': contentHTML = this.renderDashboard(); break;
             case 'attendance': contentHTML = this.renderAttendance(); break;
             case 'leaves': contentHTML = this.renderLeaves(); break;
+            case 'expenses': contentHTML = this.renderExpenses(); break;
             case 'profile': contentHTML = this.renderProfile(); break;
             case 'team': contentHTML = this.renderTeam(); break;
             case 'payroll': contentHTML = this.renderPayroll(); break;
@@ -2542,6 +3028,15 @@
       },
 
       init() {
+        // Clear any old stored data with dollar salaries so user gets fresh INR values
+        if (localStorage.getItem('df_users')) {
+          const stored = JSON.parse(localStorage.getItem('df_users'));
+          if (stored.length && stored[0].salary < 500000) {
+            localStorage.removeItem('df_users');
+            this.state.users = INITIAL_USERS;
+          }
+        }
+
         if (this.state.theme === 'dark') document.documentElement.classList.add('dark');
 
         // Click outside listener to close notification dropdown
